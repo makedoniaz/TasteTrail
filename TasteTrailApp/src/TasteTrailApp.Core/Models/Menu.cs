@@ -8,5 +8,5 @@ public class Menu
 
     public string? Description { get; set; }
 
-    public int CompanyId { get; set; }
+    public int VenueId { get; set; }
 }
