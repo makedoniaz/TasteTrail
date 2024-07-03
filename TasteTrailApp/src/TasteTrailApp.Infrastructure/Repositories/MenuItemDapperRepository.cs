@@ -5,46 +5,46 @@ using TasteTrailApp.Infrastructure.Context;
 
 namespace TasteTrailApp.Infrastructure.Repositories
 {
-    public class FeedbackDapperRepository : IFeedbackRepository
+    public class MenuItemDapperRepository : IMenuItemRepository
     {
         private readonly DapperContext context;
 
-        public FeedbackDapperRepository(DapperContext context)
+        public MenuItemDapperRepository(DapperContext context)
         {
             this.context = context;
         }
 
-        public async Task<int> CreateAsync(Feedback entity)
+        public async Task<int> CreateAsync(MenuItem entity)
         {
-            var query = "Insert into Table(Text, Rating, CreationDate, UserId) Values (@Text, @Rating, @CreationDate, @UserId)";
+            var query = "Insert into Table(Name, Description, Price, PopularityRate, PhotoUrlPath) Values (@Name, @Description, @Price, @PopularityRate, @PhotoUrlPath)";
 
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<Feedback>> GetByCountAsync(int count)
+        public async Task<List<MenuItem>> GetByCountAsync(int count)
         {
-            var query = $"Select TOP {count} From Table"; //Может понадобится ORDER BY
+            var query = $"Select TOP {count} From Table";
 
             using var connection = this.context.CreateConnection();
-            var result = await connection.QueryAsync<Feedback>(sql: query);
+            var result = await connection.QueryAsync<MenuItem>(sql: query);
 
             return result.ToList();
         }
 
-        public async Task<Feedback> GetByIdAsync(int id)
+        public async Task<MenuItem> GetByIdAsync(int id)
         {
             var query = "Select * From Table Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
-            var result = await connection.QueryFirstOrDefaultAsync<Feedback>(sql: query, param: id);
+            var result = await connection.QueryFirstOrDefaultAsync<MenuItem>(sql: query, param: id);
 
             return result!;
         }
 
-        public async Task<int> IDeleteByIdAsync(Feedback id)
+        public async Task<int> IDeleteByIdAsync(MenuItem id)
         {
             var query = "Delete * From Table Where Id = @Id";
 
@@ -53,9 +53,9 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: id);
         }
 
-        public async Task<int> IPutAsync(Feedback entity)
+        public async Task<int> IPutAsync(MenuItem entity)
         {
-            var query = "Update Table Set Text = @Text, Rating = @Rating, CreationDate = @CreationDate, UserId = @UserId Where Id = @Id";
+            var query = "Update Table Set Name = @Name, Description = @Description, Price = @Price, PopularityRate = @PopularityRate, PhotoUrlPath = @PhotoUrlPath Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
