@@ -5,7 +5,7 @@ namespace TasteTrailApp.Presentation.Controllers
 {
     public class VenueController : Controller
     {
-        public IActionResult AdminPage()
+        public IActionResult VenueCreation()
         {
             return View();
         }
