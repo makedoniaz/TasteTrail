@@ -16,6 +16,17 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult SearchPage()
+    {
+        return View();
+    }
+
+    public IActionResult venueDetails()
+    {
+        return View();
+    }
+
+
     public IActionResult Privacy()
     {
         return View();
