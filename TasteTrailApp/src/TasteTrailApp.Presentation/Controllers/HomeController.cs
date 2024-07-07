@@ -21,7 +21,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult RestourantDetails()
+    public IActionResult venueDetails()
     {
         return View();
     }
