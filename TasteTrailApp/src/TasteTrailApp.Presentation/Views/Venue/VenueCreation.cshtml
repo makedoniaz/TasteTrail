@@ -54,14 +54,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="LogoPath">Logo Path</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="LogoPath" name="LogoPath" />
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="logoPathButton">+</button>
-                        </div>
-                    </div>
-                    <input type="file" id="logoFileInput" style="display: none;" />
+                    <label for="LogoPath">Logo</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="Description">Description</label>
@@ -78,15 +72,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.getElementById('logoPathButton').addEventListener('click', function () {
-            document.getElementById('logoFileInput').click();
-        });
-
-        document.getElementById('logoFileInput').addEventListener('change', function (event) {
-            var filePath = event.target.value.split('\\').pop();
-            document.getElementById('LogoPath').value = filePath;
-        });
-
         document.getElementById('clearFormButton').addEventListener('click', function () {
             document.getElementById('venueForm').reset();
             document.getElementById('contactNumberError').style.display = 'none';
@@ -96,7 +81,7 @@
             var contactNumber = document.getElementById('ContactNumber').value;
             var isValid = /^\d+$/.test(contactNumber);
             if (!isValid) {
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault(); 
                 document.getElementById('contactNumberError').style.display = 'block';
             } else {
                 document.getElementById('contactNumberError').style.display = 'none';
