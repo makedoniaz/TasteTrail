@@ -5,19 +5,16 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{38CDE69C-4F4F-4F0C-81D9-E257BB3ADF5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasteTrailApp.Core", "src\TasteTrailApp.Core\TasteTrailApp.Core.csproj", "{9DEE2EE1-0125-4CA5-9CBC-638B5ACE7BE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasteTrailApp.Core", "src\TasteTrailApp.Core\TasteTrailApp.Core.csproj", "{9DEE2EE1-0125-4CA5-9CBC-638B5ACE7BE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasteTrailApp.Presentation", "src\TasteTrailApp.Presentation\TasteTrailApp.Presentation.csproj", "{BBE4EB58-58F2-46E0-880A-6C0839FF4759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasteTrailApp.Presentation", "src\TasteTrailApp.Presentation\TasteTrailApp.Presentation.csproj", "{BBE4EB58-58F2-46E0-880A-6C0839FF4759}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasteTrailApp.Infrastructure", "src\TasteTrailApp.Infrastructure\TasteTrailApp.Infrastructure.csproj", "{696F3279-4823-4462-956E-75EE60B06652}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasteTrailApp.Infrastructure", "src\TasteTrailApp.Infrastructure\TasteTrailApp.Infrastructure.csproj", "{696F3279-4823-4462-956E-75EE60B06652}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9DEE2EE1-0125-4CA5-9CBC-638B5ACE7BE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -32,6 +29,9 @@ Global
 		{696F3279-4823-4462-956E-75EE60B06652}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696F3279-4823-4462-956E-75EE60B06652}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696F3279-4823-4462-956E-75EE60B06652}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9DEE2EE1-0125-4CA5-9CBC-638B5ACE7BE6} = {38CDE69C-4F4F-4F0C-81D9-E257BB3ADF5B}
