@@ -23,14 +23,18 @@ namespace TasteTrailApp.Infrastructure.Services
             return this.menuRepository.DeleteByIdAsync(id);
         }
 
-        public Task<List<Menu>?> GetAllAsync()
+        public Task<List<Menu>> GetAllAsync()
         {
-            return this.menuRepository.GetAllAsync();
+            var result = this.menuRepository.GetAllAsync();
+            ArgumentNullException.ThrowIfNull(result);
+            return result;
         }
 
-        public Task<Menu?> GetByIdAsync(int id)
+        public Task<Menu> GetByIdAsync(int id)
         {
-            return this.menuRepository.GetByIdAsync(id);
+            var result = this.menuRepository.GetByIdAsync(id);
+            ArgumentNullException.ThrowIfNull(result);
+            return result;
         }
 
         public Task<int> PutAsync(Menu entity)

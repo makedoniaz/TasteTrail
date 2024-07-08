@@ -15,7 +15,9 @@ namespace TasteTrailApp.Infrastructure.Services
 
         public async Task<int> CreateAsync(Venue entity)
         {
-            return await this.venueRepository.CreateAsync(entity);
+            var result = await this.venueRepository.CreateAsync(entity);
+            ArgumentNullException.ThrowIfNull(result);
+            return result;
         }
 
         public async Task<int> DeleteByIdAsync(int id)
@@ -23,15 +25,18 @@ namespace TasteTrailApp.Infrastructure.Services
             return await this.venueRepository.DeleteByIdAsync(id);
         }
 
-        public async Task<List<Venue>?> GetByCountAsync(int count)
+        public async Task<List<Venue>> GetByCountAsync(int count)
         {
-            return await this.venueRepository.GetByCountAsync(count);
+            var result = await this.venueRepository.GetByCountAsync(count);
+            ArgumentNullException.ThrowIfNull(result);
+            return result;
         }
 
-        public async Task<Venue?> GetByIdAsync(int id)
+        public async Task<Venue> GetByIdAsync(int id)
         {
-            return await this.venueRepository.GetByIdAsync(id);
-
+            var result = await this.venueRepository.GetByIdAsync(id);
+            ArgumentNullException.ThrowIfNull(result);
+            return result;
         }
 
         public async Task<int> PutAsync(Venue entity)
