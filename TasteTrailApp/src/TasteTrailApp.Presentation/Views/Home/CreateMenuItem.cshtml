@@ -33,6 +33,41 @@
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <div>
+        <label for="Menus">Select Menus:</label>
+        <div>
+        </div>
+        <table id="menusTable">
+            <thead>
+                <tr>
+                    <th> <button type="button" id="toggleSelectAll"><i class="fas fa-check-square"></i></button> </th>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="MenusIds" /></td>
+                    <td>Name1</td>
+                    <td>Description1</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="MenusIds" /></td>
+                    <td>Name1</td>
+                    <td>Description1</td>
+                </tr>
+                @* @foreach (var menuItem in Model.MenuItems)
+                {
+                <tr>
+                <td><input type="checkbox" name="MenuItemIds" value="@menuItem.Id" /></td>
+                <td>@menuItem.Name</td>
+                <td>@menuItem.Description</td>
+                </tr>
+                } *@
+            </tbody>
+        </table>
+        <span class="text-danger"></span> @* asp-validation-for="MenuItemIds" *@
+    </div>
+    <div>
         <label for="Description">Description:</label>
         <textarea name="Description" id="Description"></textarea>
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
@@ -124,12 +159,43 @@
         font-size: 16px;
         margin-left: 10px;
     }
+
+     table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+    th:first-child, td:first-child {
+        width: 3px;
+        text-align: center;
+    }
+
+    #toggleSelectAll{
+        background-color: #f2f2f2;
+        color: #ccc;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 </style>
 
 @section Scripts {
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         function updateFileName(input) {
             var fileName = input.files[0].name;
@@ -160,8 +226,19 @@
 
                 restaurantRatingElement.text(value.toFixed(1));
                 container.data('rating', value.toFixed(1));
-            });
+            }); 
 
+            $('#toggleSelectAll').on('click', function () {
+                var icon = $(this).find('i');
+                $('#menusTable input[type="checkbox"]').prop('checked', function (i, val) {
+                    return !val;
+                });
+                if (icon.hasClass('fa-check-square')) {
+                    icon.removeClass('fa-check-square').addClass('fa-square');
+                } else {
+                    icon.removeClass('fa-square').addClass('fa-check-square');
+                }
+            });
         });
     </script>
 }
