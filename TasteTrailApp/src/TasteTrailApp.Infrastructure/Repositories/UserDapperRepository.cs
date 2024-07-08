@@ -32,7 +32,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result.ToList();
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             var query = "Select * From Table Where Id = @Id";
 
@@ -40,10 +40,10 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             var result = await connection.QueryFirstOrDefaultAsync<User>(sql: query, param: id);
 
-            return result!;
+            return result;
         }
 
-        public async Task<int> IPutAsync(User entity)
+        public async Task<int> PutAsync(User entity)
         {
             var query = "Update Table Set Login = @Login, Password = @Password, Email = @Email, AvatarUrlPath = @AvatarUrlPath, IsActive = @IsActive, IsMuted = @IsMuted Where Id = @Id";
 

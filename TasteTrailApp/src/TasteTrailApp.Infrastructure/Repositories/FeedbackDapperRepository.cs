@@ -33,7 +33,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result.ToList();
         }
 
-        public async Task<Feedback> GetByIdAsync(int id)
+        public async Task<Feedback?> GetByIdAsync(int id)
         {
             var query = "Select * From Table Where Id = @Id";
 
@@ -41,10 +41,10 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             var result = await connection.QueryFirstOrDefaultAsync<Feedback>(sql: query, param: id);
 
-            return result!;
+            return result;
         }
 
-        public async Task<int> IDeleteByIdAsync(Feedback id)
+        public async Task<int> DeleteByIdAsync(Feedback id)
         {
             var query = "Delete * From Table Where Id = @Id";
 
@@ -53,7 +53,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: id);
         }
 
-        public async Task<int> IPutAsync(Feedback entity)
+        public async Task<int> PutAsync(Feedback entity)
         {
             var query = "Update Table Set Text = @Text, Rating = @Rating, CreationDate = @CreationDate, UserId = @UserId Where Id = @Id";
 
