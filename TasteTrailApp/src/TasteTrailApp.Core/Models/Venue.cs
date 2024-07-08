@@ -20,5 +20,5 @@ public class Venue
 
     public float OverallRating { get; set; }
 
-    public int OwnerId { get; set; }
+    //public int OwnerId { get; set; }
 }

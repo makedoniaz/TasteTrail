@@ -23,7 +23,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<MenuItemMenus>> GetByCountAsync(int count)
+        public async Task<List<MenuItemMenus>?> GetByCountAsync(int count)
         {
             var query = $"Select TOP {count} From Table";
 
@@ -33,7 +33,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result.ToList();
         }
 
-        public async Task<int> IDeleteByIdAsync(MenuItemMenus id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
             var query = "Delete * From Table Where Id = @Id";
 
@@ -42,7 +42,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: id);
         }
 
-        public async Task<int> IPutAsync(MenuItemMenus entity)
+        public async Task<int> PutAsync(MenuItemMenus entity)
         {
             var query = "Update Table Set MenuId = @MenuId, MenuItemId = @MenuItemId Where Id = @Id";
 

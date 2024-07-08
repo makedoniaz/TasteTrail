@@ -22,7 +22,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<VenuePhotos>> GetAllAsync()
+        public async Task<List<VenuePhotos>?> GetAllAsync()
         {
             var query = "Select * From Table";
 
@@ -32,7 +32,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result.ToList();
         }
 
-        public async Task<int> IDeleteByIdAsync(VenuePhotos id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
             var query = "Delete * From Table Where Id = @Id";
 
@@ -41,7 +41,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: id);
         }
 
-        public async Task<int> IPutAsync(VenuePhotos entity)
+        public async Task<int> PutAsync(VenuePhotos entity)
         {
             var query = "Update Table Set VenueId = @VenueId, PhotoUrlPath = @PhotoUrlPath Where Id = @Id";
 

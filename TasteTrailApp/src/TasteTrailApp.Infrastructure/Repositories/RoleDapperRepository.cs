@@ -23,15 +23,15 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<Role>> GetAllAsync()
+        public async Task<List<Role>?> GetAllAsync()
         {
-            var query = "Select * From Table Where Id = @Id";
+            var query = "Select * From Table";
 
             using var connection = this.context.CreateConnection();
 
-            var result = await connection.QueryFirstOrDefaultAsync<Role>(sql: query, param: id);
+            var result = await connection.QueryAsync<Role>(sql: query);
 
-            return result!;
+            return result.ToList();
         }
     }
 }

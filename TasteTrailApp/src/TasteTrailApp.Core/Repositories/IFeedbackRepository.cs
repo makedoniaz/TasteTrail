@@ -8,7 +8,7 @@ using TasteTrailApp.Core.Repositories.Base;
 namespace TasteTrailApp.Core.Repositories;
 
 public interface IFeedbackRepository : IGetByCountAsync<Feedback>, IGetByIdAsync<Feedback, int>,
-ICreateAsync<Feedback>, IDeleteByIdAsync<Feedback>, IPutAsync<Feedback>
+ICreateAsync<Feedback>, IDeleteByIdAsync<int>, IPutAsync<Feedback>
 {
     
 }
