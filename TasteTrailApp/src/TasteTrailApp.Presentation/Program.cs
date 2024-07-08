@@ -1,16 +1,43 @@
+using TasteTrailApp.Core.Repositories;
+using TasteTrailApp.Infrastructure.Context;
+using TasteTrailApp.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+//One more
+builder.Services.AddSwaggerGen();
 
+#region DI_Repositories
+
+builder.Services.AddSingleton<DapperContext>();
+
+builder.Services.AddTransient<IFeedbackRepository, FeedbackDapperRepository>();
+builder.Services.AddTransient<IMenuItemMenusRepository, MenuItemMenusDapperRepository>();
+builder.Services.AddTransient<IMenuItemRepository, MenuItemDapperRepository>();
+builder.Services.AddTransient<IRoleRepository, RoleDapperRepository>();
+builder.Services.AddTransient<IUserRepository, UserDapperRepository>();
+builder.Services.AddTransient<IUserRolesRepository, UserRolesDapperRepository>();
+builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosDapperRepository>();
+builder.Services.AddTransient<IVenueRepository, VenueDapperRepository>();
+builder.Services.AddTransient<IMenuRepository, MenuDapperRepository>();
+
+#endregion
+
+var app = builder.Build();
+    
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else //FIX this
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
