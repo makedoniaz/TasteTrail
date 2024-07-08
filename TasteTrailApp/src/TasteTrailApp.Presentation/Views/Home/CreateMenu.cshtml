@@ -1,0 +1,169 @@
+﻿@* @model Menu *@
+@{
+    ViewData["Title"] = "Create Menu Page";
+}
+
+<form asp-route="CreateMenuApi" method="post" class="createForm">
+    <div>
+        <label for="Name">Menu Name:</label> @*asp-for*@
+        <input name="Name" type="text" /> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+
+    <div>
+        <label for="Venue">Venue:</label> @*asp-for*@
+        <select name="Venue"> @*asp-for*@
+            <option value="">Select Venue</option>
+            <option value="1">Venue name 1</option>
+            <option value="2">Venue name 2</option>
+
+            @* @foreach (Venue venue in Model.Venues)
+            {
+            <option value="@venue.Id">@venue.Name</option>
+            } *@
+        </select>
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="MenuItems">Select Menu Items:</label>
+        <div>
+        </div>
+        <table id="menuItemsTable">
+            <thead>
+                <tr>
+                    <th> <button type="button" id="toggleSelectAll"><i class="fas fa-check-square"></i></button> </th>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="MenuItemIds" /></td>
+                    <td>Name1</td>
+                    <td>Description1</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="MenuItemIds" /></td>
+                    <td>Name1</td>
+                    <td>Description1</td>
+                </tr>
+                @* @foreach (var menuItem in Model.MenuItems)
+                {
+                <tr>
+                <td><input type="checkbox" name="MenuItemIds" value="@menuItem.Id" /></td>
+                <td>@menuItem.Name</td>
+                <td>@menuItem.Description</td>
+                </tr>
+                } *@
+            </tbody>
+        </table>
+        <span class="text-danger"></span> @* asp-validation-for="MenuItemIds" *@
+    </div>
+    <div>
+        <label for="Name">Description:</label> @*asp-for*@
+        <textarea name="Name" type="textarea"></textarea> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <button type="submit">Add Menu</button>
+</form>
+
+
+<style>
+    h1 {
+        color: #333;
+    }
+
+    .createForm {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .createForm div {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .createForm div input[type="text"],
+    .createForm div input[type="date"],
+    .createForm div input[type="email"],
+    .createForm div select,
+    .createForm div textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #4cae4c;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+    th:first-child, td:first-child {
+        width: 3px;
+        text-align: center;
+    }
+
+    #toggleSelectAll{
+        background-color: #f2f2f2;
+        color: #ccc;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#toggleSelectAll').on('click', function () {
+                var icon = $(this).find('i');
+                $('#menuItemsTable input[type="checkbox"]').prop('checked', function (i, val) {
+                    return !val;
+                });
+                if (icon.hasClass('fa-check-square')) {
+                    icon.removeClass('fa-check-square').addClass('fa-square');
+                } else {
+                    icon.removeClass('fa-square').addClass('fa-check-square');
+                }
+            });
+        });
+    </script>
+}

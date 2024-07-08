@@ -1,0 +1,200 @@
+﻿@{
+    ViewData["Title"] = "Create Venue Page";
+}
+
+<form asp-route="CreateVenueApi" method="post" class="createForm" enctype="multipart/form-data">
+    <div class="row custom-file">
+        <label for="LogoUrlPath" class="image-upload-label" id="file-name">Upload Logo</label> @*asp-for*@
+        <input name="LogoUrlPath" id="LogoUrlPath" class="custom-file-input" type="file"
+            onchange="updateFileName(this)"> @*asp-for*@
+    </div>
+    <div>
+        <label for="Name">Venue Name:</label> @*asp-for*@
+        <input name="Name" id="Name" type="text" /> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="OverallRating">Overall Rating:</label> @*asp-for*@
+        <div class="rating" data-rating="4.5"> @*asp-for*@
+            <span class="text-warning">
+                <i class="fas fa-star star" data-value="1"></i>
+                <i class="fas fa-star star" data-value="2"></i>
+                <i class="fas fa-star star" data-value="3"></i>
+                <i class="fas fa-star star" data-value="4"></i>
+                <i class="far fa-star star" data-value="5"></i>
+            </span>
+            <span class="badge bg-secondary ms-2">4.5</span>
+        </div>
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+
+    <div>
+        <label for="Owner">Owner:</label> @*asp-for*@
+        <select name="Owner"> @*asp-for*@
+            <option value="">Select Owner</option>
+            <option value="1">Owner name 1</option>
+            <option value="2">Owner name 2</option>
+
+            @* @foreach (Venue venue in Model.Venues)
+            {
+            <option value="@venue.Id">@venue.Name</option>
+            } *@
+        </select>
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="Email">Email:</label>
+        <input name="Email" id="Email" type="text" /> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="Address">Address:</label>
+        <input name="Address" id="Address" type="text" /> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="ContactNumber">ContactNumber:</label>
+        <input name="ContactNumber" id="ContactNumber" type="text" /> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="AveragePrice">AveragePrice:</label> @*asp-for*@
+        <input name="AveragePrice" id="AveragePrice" type="number" /> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <div>
+        <label for="Description">Description:</label>
+        <textarea name="Description" id="Description"></textarea>
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <button type="submit">Add Menu Item</button>
+</form>
+
+<style>
+    .createForm {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .createForm div {
+        margin-bottom: 15px;
+    }
+
+    .createForm .row {
+        height: 45px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .image-upload-label {
+        flex: 1;
+        color: #16a085;
+        text-align: center;
+        cursor: pointer;
+        padding: 10px 2px;
+        margin-left: 1rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .image-upload-label:hover {
+        background-color: #16a085;
+        color: white;
+    }
+
+    .custom-file-input {
+        display: none;
+    }
+
+    .createForm div label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .createForm div input[type="text"],
+    .createForm div input[type="number"],
+    .createForm div input[type="date"],
+    .createForm div input[type="email"],
+    .createForm div select,
+    .createForm div textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .createForm button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .createForm button:hover {
+        background-color: #4cae4c;
+    }
+
+    .rating .star {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .rating .star.fas {
+        color: #f2b600;
+    }
+
+    .rating .star.far {
+        color: #ccc;
+    }
+
+    .rating .badge {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+</style>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            var fileNameDisplay = document.getElementById('file-name');
+            fileNameDisplay.textContent = fileName;
+        }
+
+        $(document).ready(function () {
+            const stars = $('.rating .star');
+
+            stars.on('click', function () {
+                const value = parseInt($(this).data('value'));
+                const container = $(this).closest('.rating');
+                const restaurantRatingElement = container.find('.badge');
+                const restaurantRating = parseFloat(container.data('rating'));
+
+                stars.removeClass('fas fa-star fa-star-half-alt far');
+
+                for (let i = 0; i < value; i++) {
+                    stars.eq(i).addClass('fas fa-star');
+                }
+
+                if (value < 5) {
+                    for (let j = value; j < stars.length; j++) {
+                        stars.eq(j).addClass('far fa-star');
+                    }
+                }
+
+                restaurantRatingElement.text(value.toFixed(1));
+                container.data('rating', value.toFixed(1));
+            });
+
+        });
+    </script>
+}

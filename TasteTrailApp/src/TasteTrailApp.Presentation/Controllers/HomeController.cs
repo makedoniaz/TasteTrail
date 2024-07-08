@@ -4,11 +4,9 @@ namespace TasteTrailApp.Presentation.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController()
     {
-        _logger = logger;
     }
 
     public IActionResult Index()
@@ -21,12 +19,23 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult venueDetails()
+    public IActionResult VenueDetails()
     {
         return View();
     }
 
-
+    public IActionResult CreateMenu()
+    {
+        return View();
+    }
+    public IActionResult CreateMenuItem()
+    {
+        return View();
+    }
+    public IActionResult CreateVenue()
+    {
+        return View();
+    }
     public IActionResult Privacy()
     {
         return View();

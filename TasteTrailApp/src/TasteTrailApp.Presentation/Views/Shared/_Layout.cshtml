@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TasteTrailApp.Presentation.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+
 </head>
 
 <body>
@@ -42,12 +44,25 @@
                                 asp-action="VenueDetails">Venue Details</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="CreateMenu">Create menu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="CreateMenuItem">Create menu item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="CreateVenue">Create Venue</a>
+                        </li>
+                        <li class="nav-item">
                             <form class="form-inline d-flex my-2 my-lg-0">
                                 <input class="form-control mr-sm-1 m-1" type="search" placeholder="Search"
                                     aria-label="Search">
                                 <button class="btn btn-outline-success my-2 my-sm-1 m-1" type="submit">Search</button>
                             </form>
                         </li>
+
                     </ul>
 
                     <ul class="navbar-nav">
