@@ -23,7 +23,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<Feedback>> GetByCountAsync(int count)
+        public async Task<List<Feedback>?> GetByCountAsync(int count)
         {
             var query = $"Select TOP {count} From Table"; //Может понадобится ORDER BY
 
@@ -44,7 +44,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<int> DeleteByIdAsync(Feedback id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
             var query = "Delete * From Table Where Id = @Id";
 

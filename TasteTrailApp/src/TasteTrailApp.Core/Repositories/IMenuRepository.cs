@@ -4,7 +4,7 @@ using TasteTrailApp.Core.Repositories.Base;
 namespace TasteTrailApp.Core.Repositories;
 
 public interface IMenuRepository : IGetAllAsync<Menu>, IGetByIdAsync<Menu, int>,
-ICreateAsync<Menu>, IDeleteByIdAsync<Menu>, IPutAsync<Menu> 
+ICreateAsync<Menu>, IDeleteByIdAsync<int>, IPutAsync<Menu> 
 {
     
 }

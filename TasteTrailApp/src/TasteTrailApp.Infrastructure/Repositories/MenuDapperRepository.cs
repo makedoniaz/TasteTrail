@@ -23,7 +23,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<Menu>> GetAllAsync()
+        public async Task<List<Menu>?> GetAllAsync()
         {
             var query = "Select * From Menu";
 
@@ -44,7 +44,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<int> DeleteByIdAsync(Menu id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
             var query = "Delete * From Menu Where Id = @Id";
 

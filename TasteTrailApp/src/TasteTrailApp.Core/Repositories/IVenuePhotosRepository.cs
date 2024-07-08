@@ -4,7 +4,7 @@ using TasteTrailApp.Core.Repositories.Base;
 namespace TasteTrailApp.Core.Repositories;
 
 public interface IVenuePhotosRepository : IGetAllAsync<VenuePhotos>, ICreateAsync<VenuePhotos>,
-IDeleteByIdAsync<VenuePhotos>, IPutAsync<VenuePhotos>
+IDeleteByIdAsync<int>, IPutAsync<VenuePhotos>
 {
     
 }

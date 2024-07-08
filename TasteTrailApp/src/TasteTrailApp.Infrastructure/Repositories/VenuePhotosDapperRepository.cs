@@ -22,7 +22,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<VenuePhotos>> GetAllAsync()
+        public async Task<List<VenuePhotos>?> GetAllAsync()
         {
             var query = "Select * From Table";
 
@@ -32,7 +32,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return result.ToList();
         }
 
-        public async Task<int> DeleteByIdAsync(VenuePhotos id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
             var query = "Delete * From Table Where Id = @Id";
 
