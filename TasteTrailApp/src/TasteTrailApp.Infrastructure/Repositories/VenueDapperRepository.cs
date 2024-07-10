@@ -36,11 +36,11 @@ Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoUrlPath, @Av
 
         public async Task<Venue?> GetByIdAsync(int id)
         {
-            var query = "Select * From venue Where Id = @Id";
+            var query = $"Select * From venue Where Id = {id}";
 
             using var connection = this.context.CreateConnection();
 
-            var result = await connection.QueryFirstOrDefaultAsync<Venue>(sql: query, param: id);
+            var result = await connection.QueryFirstOrDefaultAsync<Venue>(sql: query);
 
             return result;
         }

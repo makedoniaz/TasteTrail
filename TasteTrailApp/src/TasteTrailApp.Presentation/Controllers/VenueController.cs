@@ -24,20 +24,20 @@ public class VenueController : Controller
         return base.View(model: venues);
     }
 
-    // [HttpGet]
-    // [Route("/[controller]/{venueId:Guid}")]
-    // public async Task<IActionResult> VenuetInfo(Guid venueId)
-    // {
-    //     try
-    //     {
-    //         var venue = await this._venueService.GetVenueAsync(id: venueId);
-    //         return base.View(model: venue);
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // }
+    [HttpGet]
+    [Route("[action]/{venueId:int}")]
+    public async Task<IActionResult> VenueDetails(int venueId)
+    {
+        try
+        {
+            var venue = await this._venueService.GetByIdAsync(id: venueId);
+            return base.View(model: venue);
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
 
     [HttpGet]
     [Route("[action]", Name = "CreateVenuePage")]
@@ -48,7 +48,7 @@ public class VenueController : Controller
 
     [HttpPost]
     [Route("/api/[controller]/[action]", Name = "CreateVenueApi")]
-    public async Task<IActionResult> Create(Venue newVenue)
+    public async Task<IActionResult> Create(Venue newVenue, IFormFile image)
     {
         try
         {
@@ -63,7 +63,7 @@ public class VenueController : Controller
             //     return base.View(viewName: "Create");
             // }
             
-            await this._venueService.CreateAsync(entity: newVenue); 
+            //await this._venueService.CreateAsync(entity: newVenue, image: image); 
             return base.RedirectToAction(actionName: "Index");
         }
         catch (System.Exception ex)
