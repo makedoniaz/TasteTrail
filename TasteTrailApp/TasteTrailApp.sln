@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasteTrailApp.Presentation"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasteTrailApp.Infrastructure", "src\TasteTrailApp.Infrastructure\TasteTrailApp.Infrastructure.csproj", "{696F3279-4823-4462-956E-75EE60B06652}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EC86E368-4DDA-4CA5-A77B-7C1FFD19B133}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "test\UnitTests\UnitTests.csproj", "{D81C0B76-5930-4867-B6CB-7411D5DF1130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{696F3279-4823-4462-956E-75EE60B06652}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696F3279-4823-4462-956E-75EE60B06652}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696F3279-4823-4462-956E-75EE60B06652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D81C0B76-5930-4867-B6CB-7411D5DF1130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D81C0B76-5930-4867-B6CB-7411D5DF1130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D81C0B76-5930-4867-B6CB-7411D5DF1130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D81C0B76-5930-4867-B6CB-7411D5DF1130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +45,6 @@ Global
 		{9DEE2EE1-0125-4CA5-9CBC-638B5ACE7BE6} = {38CDE69C-4F4F-4F0C-81D9-E257BB3ADF5B}
 		{BBE4EB58-58F2-46E0-880A-6C0839FF4759} = {38CDE69C-4F4F-4F0C-81D9-E257BB3ADF5B}
 		{696F3279-4823-4462-956E-75EE60B06652} = {38CDE69C-4F4F-4F0C-81D9-E257BB3ADF5B}
+		{D81C0B76-5930-4867-B6CB-7411D5DF1130} = {EC86E368-4DDA-4CA5-A77B-7C1FFD19B133}
 	EndGlobalSection
 EndGlobal

@@ -13,16 +13,20 @@ namespace TasteTrailApp.Infrastructure.Services
             this.venueRepository = venueRepository;
         }
 
-        public async Task<int> CreateAsync(Venue entity)
+        public async Task CreateAsync(Venue entity)
         {
-            var result = await this.venueRepository.CreateAsync(entity);
-            ArgumentNullException.ThrowIfNull(result);
-            return result;
+            var changesCount = await this.venueRepository.CreateAsync(entity);
+
+            if (changesCount == 0)
+                throw new InvalidOperationException("Venue creation didn't apply!");
         }
 
-        public async Task<int> DeleteByIdAsync(int id)
+        public async Task DeleteByIdAsync(int id)
         {
-            return await this.venueRepository.DeleteByIdAsync(id);
+            var changesCount = await this.venueRepository.DeleteByIdAsync(id);
+
+            if (changesCount == 0)
+                throw new InvalidOperationException("Venue delete didn't apply!");
         }
 
         public async Task<List<Venue>> GetByCountAsync(int count)
@@ -38,10 +42,12 @@ namespace TasteTrailApp.Infrastructure.Services
             return result;
         }
 
-        public async Task<int> PutAsync(Venue entity)
+        public async Task PutAsync(Venue entity)
         {
-            return await this.venueRepository.PutAsync(entity);
+            var changesCount = await this.venueRepository.PutAsync(entity);
 
+            if (changesCount == 0)
+                throw new InvalidOperationException("Venue put didn't apply!");
         }
     }
 }

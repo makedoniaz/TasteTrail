@@ -13,14 +13,20 @@ namespace TasteTrailApp.Infrastructure.Services
             this.menuItemRepository = menuItemRepository;
         }
 
-        public async Task<int> CreateAsync(MenuItem entity)
+        public async Task CreateAsync(MenuItem menuItem)
         {
-            return await this.menuItemRepository.CreateAsync(entity);
+            var changesCount = await this.menuItemRepository.CreateAsync(menuItem);
+
+            if (changesCount == 0)
+                throw new InvalidOperationException("MenuItem creation didn't apply!");
         }
 
-        public async Task<int> DeleteByIdAsync(int id)
+        public async Task DeleteByIdAsync(int id)
         {
-            return await this.menuItemRepository.DeleteByIdAsync(id);
+            var changesCount = await this.menuItemRepository.DeleteByIdAsync(id);
+
+            if (changesCount == 0)
+                throw new InvalidOperationException("MenuItem delete didn't apply!");
         }
 
         public async Task<List<MenuItem>> GetByCountAsync(int count)
@@ -33,12 +39,16 @@ namespace TasteTrailApp.Infrastructure.Services
         {
             var result = await this.menuItemRepository.GetByIdAsync(id);
             ArgumentNullException.ThrowIfNull(result);
+            
             return result;
         }
 
-        public async Task<int> PutAsync(MenuItem entity)
+        public async Task PutAsync(MenuItem menuItem)
         {
-            return await this.menuItemRepository.PutAsync(entity);
+            var changesCount = await this.menuItemRepository.PutAsync(menuItem);
+
+            if (changesCount == 0)
+                throw new InvalidOperationException("MenuItem put didn't apply!");
         }
     }
 }

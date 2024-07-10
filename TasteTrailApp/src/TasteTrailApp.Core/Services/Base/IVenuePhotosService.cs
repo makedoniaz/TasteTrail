@@ -4,9 +4,12 @@ namespace TasteTrailApp.Core.Services.Base
 {
     public interface IVenuePhotosService
     {
-        Task<int> CreateAsync(VenuePhotos entity);
+        Task CreateAsync(VenuePhotos entity);
+
         Task<List<VenuePhotos>> GetAllAsync();
-        Task<int> DeleteByIdAsync(int id);
-        Task<int> PutAsync(VenuePhotos entity);
+
+        Task DeleteByIdAsync(int id);
+        
+        Task PutAsync(VenuePhotos entity);
     }
 }
