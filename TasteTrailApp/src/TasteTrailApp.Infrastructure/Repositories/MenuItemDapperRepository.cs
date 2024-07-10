@@ -16,7 +16,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> CreateAsync(MenuItem entity)
         {
-            var query = "Insert into MenuItem(Name, Description, Price, PopularityRate, PhotoUrlPath) Values (@Name, @Description, @Price, @PopularityRate, @PhotoUrlPath)";
+            var query = "Insert into menuitem(Name, Description, Price, PopularityRate, PhotoUrlPath) Values (@Name, @Description, @Price, @PopularityRate, @PhotoUrlPath)";
 
             using var connection = this.context.CreateConnection();
 
@@ -25,7 +25,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<List<MenuItem>?> GetByCountAsync(int count)
         {
-            var query = $"Select TOP {count} From MenuItem";
+            var query = $"Select TOP {count} From menuitem";
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<MenuItem>(sql: query);
@@ -35,7 +35,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<MenuItem?> GetByIdAsync(int id)
         {
-            var query = "Select * From MenuItem Where Id = @Id";
+            var query = "Select * From menuitem Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
@@ -46,7 +46,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> DeleteByIdAsync(int id)
         {
-            var query = "Delete * From MenuItem Where Id = @Id";
+            var query = "Delete * From menuitem Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
@@ -55,7 +55,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> PutAsync(MenuItem entity)
         {
-            var query = "Update MenuItem Set Name = @Name, Description = @Description, Price = @Price, PopularityRate = @PopularityRate, PhotoUrlPath = @PhotoUrlPath Where Id = @Id";
+            var query = "Update menuitem Set Name = @Name, Description = @Description, Price = @Price, PopularityRate = @PopularityRate, PhotoUrlPath = @PhotoUrlPath Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 

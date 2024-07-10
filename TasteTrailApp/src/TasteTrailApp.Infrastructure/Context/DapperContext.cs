@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System.Data;
-using System.Data.SqlClient;
 using TasteTrailApp.Infrastructure.Extensions;
 
 namespace TasteTrailApp.Infrastructure.Context
@@ -18,7 +18,7 @@ namespace TasteTrailApp.Infrastructure.Context
 
         public IDbConnection CreateConnection()
         {
-            return new SqlConnection(this.connectionString);
+            return new NpgsqlConnection(this.connectionString);
         }
     }
 }
