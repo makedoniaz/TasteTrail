@@ -25,7 +25,6 @@ namespace TasteTrailApp.Infrastructure.Services
             if (image is null)
                 return;
 
-            
             var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             var uploadsFolder = Path.Combine(wwwrootPath, "images");
             var extension = new FileInfo(image.FileName).Extension[1..];
