@@ -1,7 +1,7 @@
 ﻿@model Menu
 @{
     ViewData["Title"] = "Create Menu Page";
-}
+ }
 
 <form asp-route="CreateMenuApi" method="post" class="createForm">
     <div>
@@ -9,7 +9,12 @@
         <input name="Name" type="text" /> @*asp-for*@
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
-
+    <div>
+        <label for="Description">Description:</label> @*asp-for*@
+        <textarea name="Description" type="textarea"></textarea> @*asp-for*@
+        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+    </div>
+    <button type="submit">Add Menu</button>
     @* <div>
     <label for="Venue">Venue:</label>
     <select name="Venue">
@@ -59,12 +64,7 @@
     </table>
     <span class="text-danger"></span> asp-validation-for="MenuItemIds"
     </div> *@
-    <div>
-        <label for="Name">Description:</label> @*asp-for*@
-        <textarea name="Name" type="textarea"></textarea> @*asp-for*@
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
-    </div>
-    <button type="submit">Add Menu</button>
+    
 </form>
 
 

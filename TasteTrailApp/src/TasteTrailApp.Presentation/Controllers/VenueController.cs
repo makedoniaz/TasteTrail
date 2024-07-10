@@ -28,7 +28,7 @@ public class VenueController : Controller
     }
 
     [HttpGet]
-    [Route("[action]/{venueId:int}")]
+    [Route("[action]/{venueId:int}", Name = "VenueDetails")]
     public async Task<IActionResult> VenueDetails(int venueId)
     {
         try

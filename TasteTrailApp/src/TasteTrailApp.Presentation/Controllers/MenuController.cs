@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Models;
 using TasteTrailApp.Core.Services.Base;
+using TasteTrailApp.Presentation.ViewModels;
 
 namespace TasteTrailApp.Presentation.Controllers;
 
@@ -9,11 +10,13 @@ public class MenuController : Controller
 {
     // private readonly IValidator<Venue> _validator;
     private readonly IMenuService _menuService;
+    private readonly IMenuItemService _menuItemService;
 
-    public MenuController(IMenuService menuService) //IValidator<Venue> validator, 
+    public MenuController(IMenuService menuService, IMenuItemService menuItemService) //IValidator<Venue> validator, 
     {
         // this._validator = validator;
         this._menuService = menuService;
+        this._menuItemService = menuItemService;
     }
 
     [HttpGet]
@@ -24,25 +27,31 @@ public class MenuController : Controller
     }
 
     [HttpGet]
-    [Route("/[controller]/{menuId:int}")]
-    public async Task<IActionResult> MenuInfo(int menuId)
+    [Route("[action]/{menuId:int}")]
+    public async Task<IActionResult> MenuDetails(int menuId)
     {
-        try
+         try
         {
-            var menu = await this._menuService.GetByIdAsync(id: menuId);
-            return base.View(model: menu);
+            var viewmodel = new MenuViewModel()
+            {
+                Menu = await this._menuService.GetByIdAsync(id: menuId),
+                MenuItems = await this._menuItemService.GetAllMenuItemsByMenuId(menuId)
+            };
+
+            return base.View(model: viewmodel);
         }
         catch (System.Exception ex)
         {
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-        }
+        } 
     }
 
     [HttpGet]
     [Route("[action]/{venueId}", Name = "CreateMenuPage")]
     public IActionResult Create(int venueId)
     {
-        return base.View(new Menu(){ VenueId = venueId});
+        TempData["VenueId"] = venueId;
+        return base.View();
     }
 
     [HttpPost(Name = "CreateMenuApi")]
@@ -61,15 +70,15 @@ public class MenuController : Controller
 
             //     return base.View(viewName: "Create");
             // }
-
+            newMenu.VenueId = (int)TempData["VenueId"]!;
             await this._menuService.CreateAsync(entity: newMenu);
-            return base.RedirectToAction(actionName: "Index");
+            return base.RedirectToRoute(routeName: "VenueDetails", new { venueId = (int)TempData["VenueId"]! });
         }
         catch (System.Exception ex)
         {
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
-    } 
+    }
 
     [HttpPut]
     public async Task<IActionResult> UpdateDepartment([FromBody] Menu newMenu)
@@ -98,4 +107,4 @@ public class MenuController : Controller
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
     }
-} 
+}

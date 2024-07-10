@@ -39,11 +39,12 @@ public class MenuItemController : Controller
     }
 
     [HttpGet]
-    [Route("[action]", Name = "CreateMenuItemPage")]
-    public IActionResult Create()
+    [Route("[action]/{menuId}", Name = "CreateMenuItemPage")]
+    public IActionResult Create(int menuId)
     {
+        TempData["MenuId"] = menuId;
         return base.View();
-    }
+    }  
 
     [HttpPost(Name = "CreateMenuItemApi")]
     public async Task<IActionResult> Create(MenuItem newMenuItem)
@@ -60,7 +61,7 @@ public class MenuItemController : Controller
 
             //     return base.View(viewName: "Create");
             // }
-
+            newMenuItem.MenuId = (int)TempData["MenuId"]!;
             await this._menuItemService.CreateAsync(entity: newMenuItem);
             return base.RedirectToAction(actionName: "Index");
         }
@@ -68,7 +69,7 @@ public class MenuItemController : Controller
         {
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
-    } 
+    }
 
     [HttpPut]
     public async Task<IActionResult> UpdateDepartment([FromBody] MenuItem newMenuItem)
@@ -97,4 +98,4 @@ public class MenuItemController : Controller
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
     }
-} 
+}

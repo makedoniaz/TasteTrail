@@ -62,8 +62,9 @@
             <!-- Description -->
             <p class="mt-3"><strong>Description: </strong>@Model.Venue.Description</p>
             <p class="mt-3"><strong>Email: </strong>@Model.Venue.Email</p>
-            <p class="mt-3"><strong>ContactNumber: </strong>@Model.Venue.ContactNumber</p>
-            <p class="mt-3"><strong>Average Price: </strong>@Model.Venue.AveragePrice</p>
+            <p class="mt-3"><strong>Address: </strong>@Model.Venue.Address</p>
+            <p class="mt-3"><strong>Contact Number: </strong>@Model.Venue.ContactNumber</p>
+            <p class="mt-3"><strong>Average Price: </strong>@Model.Venue.AveragePrice</p> 
 
         </div>
     </div>
@@ -79,7 +80,7 @@
                         <h5 class="card-title m-2">@menu.Name</h5>
                         <p class="card-text m-2  h-25 ">@menu.Description</p>
                         <div class="venue-actions m-1">
-                            <a asp-controller="Menu" asp-action="MenuDetails" asp-route-menueId="@menu?.Id"
+                            <a asp-controller="Menu" asp-action="MenuDetails" asp-route-menuId="@menu?.Id"
                                 class="btn btn-primary m-1">Menu Details</a>
                             <br>
                             @* <button class="update-btn btn-close-white m-1"

@@ -5,29 +5,18 @@
 
 <h1 style="font-size: 2rem; font-family: 'Alice', serif; margin-bottom: 3px;">Search Smth</h1>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
+    <div class="column justify-content-center">
+        <div class="row-12 row-md-8">
             <div class="input-group mb-3">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search The smth..."
                     autocomplete="off" autofocus="autofocus" required>
                 <button id="searchButton" class="btn btn-primary">
                     <span id="searchText">Search</span>
-                    <div id="loadingSpinner" class="spinner-border spinner-border-sm btn-search-spinner" role="status">
-                    </div>
                 </button>
             </div>
-            <div class="input-group mb-1">
-                <select class="form-select ml-2 m-1">
-                    <option value="title">Sort by Title</option>
-                    <option value="date">Sort by Date</option>
-                </select>
-                <div class="btn-group ml-2 m-1" role="group" aria-label="View toggle">
-                    <button type="button" class="btn btn-outline-secondary" id="rowViewButton">Row</button>
-                    <button type="button" class="btn btn-outline-secondary active" id="columnViewButton">Column</button>
-                </div>
-            </div>
         </div>
-    </div>
+    </div> 
+
 </div>
 
 <div class="content mt-3 mt-md-5">
@@ -36,13 +25,12 @@
 
             @foreach (var venue in Model)
             {
-
                 <!-- Restourant Item -->
                 <div class="col-md-3 restaurantItem mb-4" data-title="Restourant Title 1" data-date="2023-01-02">
-                    <div class="card mb-4 restorantCard h-100 w-100">
+                    <div class="card mb-4 restorantCard h-100 w-100 venue-item">
                         <img src="@(venue.LogoUrlPath ?? "images/not-available.jpg" )" class="card-img-top fixed-size"
                             alt="Restourant Title 1">
-                        <div class="card-body">
+                        <div class="card-body venue-details">
                             <h5 class="card-title m-2">@venue.Name</h5>
                             <p class="card-text m-2  h-25 ">@venue.Description</p>
                             <!-- Rating -->
@@ -297,7 +285,7 @@
             document.getElementById('newEmail').value = data.email;
             document.getElementById('newAveragePrice').value = data.averagePrice;
             document.getElementById('newOverallRating').value = data.overallRating;
-            document.getElementById('updateForm').style.display = 'block'; 
+            document.getElementById('updateForm').style.display = 'block';
         }
 
         function hideUpdateForm() {
@@ -367,6 +355,32 @@
                         }
                     });
             }
+        }
+    </script>
+    <script>
+        document.getElementById('searchButton').addEventListener('click', function () {
+            filterVenues();
+        });
+
+        document.getElementById('searchInput').addEventListener('keyup', function (event) {
+            if (event.key === 'Enter') {
+                filterVenues();
+            }
+        });
+
+        function filterVenues() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var items = document.querySelectorAll('.venue-item'); 
+
+            items.forEach(function (item) {
+                console.log(item.querySelector('.venue-details h5').textContent)
+                var venueNames = item.querySelector('.venue-details h5').textContent.toLowerCase() || '';
+                if (venueNames.includes(input)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         }
     </script>
 
