@@ -25,7 +25,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<List<Feedback>> GetByCountAsync(int count)
         {
-            var query = $"Select TOP {count} From Table"; //Может понадобится ORDER BY
+            var query = $"Select * From Table LIMIT {count}"; //Может понадобится ORDER BY
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<Feedback>(sql: query);

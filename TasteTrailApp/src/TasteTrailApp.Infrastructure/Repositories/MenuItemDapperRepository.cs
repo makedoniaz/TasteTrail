@@ -25,7 +25,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<List<MenuItem>> GetByCountAsync(int count)
         {
-            var query = $"Select TOP {count} * From menuitem";
+            var query = $"Select * From menuitem LIMIT {count}";
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<MenuItem>(sql: query);

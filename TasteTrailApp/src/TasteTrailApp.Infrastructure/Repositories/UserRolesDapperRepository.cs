@@ -25,7 +25,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<List<UserRoles>> GetByCountAsync(int count)
         {
-            var query = $"Select TOP {count} From Table";
+            var query = $"Select * From Table LIMIT {count}";
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<UserRoles>(sql: query);
