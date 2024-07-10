@@ -13,26 +13,25 @@ namespace TasteTrailApp.Infrastructure.Services
             this.menuItemMenusRepository = menuItemMenusRepository;
         }
 
-        public Task<int> CreateAsync(MenuItemMenus entity)
+        public async Task<int> CreateAsync(MenuItemMenus entity)
         {
-            return this.menuItemMenusRepository.CreateAsync(entity);
+            return await this.menuItemMenusRepository.CreateAsync(entity);
         }
 
-        public Task<int> DeleteByIdAsync(int id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
-            return this.menuItemMenusRepository.DeleteByIdAsync(id);
+            return await this.menuItemMenusRepository.DeleteByIdAsync(id);
         }
 
-        public Task<List<MenuItemMenus>> GetByCountAsync(int count)
+        public async Task<List<MenuItemMenus>> GetByCountAsync(int count)
         {
-            var result = this.menuItemMenusRepository.GetByCountAsync(count);
-            ArgumentNullException.ThrowIfNull(result);
+            var result = await this.menuItemMenusRepository.GetByCountAsync(count);
             return result;
         }
 
-        public Task<int> PutAsync(MenuItemMenus entity)
+        public async Task<int> PutAsync(MenuItemMenus entity)
         {
-            return this.menuItemMenusRepository.PutAsync(entity);
+            return await this.menuItemMenusRepository.PutAsync(entity);
         }
     }
 }

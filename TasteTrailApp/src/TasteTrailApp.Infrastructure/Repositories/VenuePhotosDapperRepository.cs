@@ -22,7 +22,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<VenuePhotos>?> GetAllAsync()
+        public async Task<List<VenuePhotos>> GetAllAsync()
         {
             var query = "Select * From venue_photos";
 

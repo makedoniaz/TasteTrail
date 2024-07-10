@@ -24,7 +24,7 @@ Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoUrlPath, @Av
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<Venue>?> GetByCountAsync(int count)
+        public async Task<List<Venue>> GetByCountAsync(int count)
         {
             var query = $"Select TOP {count} * From venue";
 

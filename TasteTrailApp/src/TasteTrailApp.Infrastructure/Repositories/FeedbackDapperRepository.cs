@@ -23,7 +23,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<Feedback>?> GetByCountAsync(int count)
+        public async Task<List<Feedback>> GetByCountAsync(int count)
         {
             var query = $"Select TOP {count} From Table"; //Может понадобится ORDER BY
 
@@ -38,7 +38,6 @@ namespace TasteTrailApp.Infrastructure.Repositories
             var query = "Select * From Table Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
-
             var result = await connection.QueryFirstOrDefaultAsync<Feedback>(sql: query, param: id);
 
             return result;

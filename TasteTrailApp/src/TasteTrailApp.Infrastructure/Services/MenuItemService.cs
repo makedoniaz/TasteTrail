@@ -13,33 +13,32 @@ namespace TasteTrailApp.Infrastructure.Services
             this.menuItemRepository = menuItemRepository;
         }
 
-        public Task<int> CreateAsync(MenuItem entity)
+        public async Task<int> CreateAsync(MenuItem entity)
         {
-            return this.menuItemRepository.CreateAsync(entity);
+            return await this.menuItemRepository.CreateAsync(entity);
         }
 
-        public Task<int> DeleteByIdAsync(int id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
-            return this.menuItemRepository.DeleteByIdAsync(id);
+            return await this.menuItemRepository.DeleteByIdAsync(id);
         }
 
-        public Task<List<MenuItem>> GetByCountAsync(int count)
+        public async Task<List<MenuItem>> GetByCountAsync(int count)
         {
-            var result = this.menuItemRepository.GetByCountAsync(count);
+            var result = await this.menuItemRepository.GetByCountAsync(count);
+            return result;
+        }
+
+        public async Task<MenuItem> GetByIdAsync(int id)
+        {
+            var result = await this.menuItemRepository.GetByIdAsync(id);
             ArgumentNullException.ThrowIfNull(result);
             return result;
         }
 
-        public Task<MenuItem> GetByIdAsync(int id)
+        public async Task<int> PutAsync(MenuItem entity)
         {
-            var result = this.menuItemRepository.GetByIdAsync(id);
-            ArgumentNullException.ThrowIfNull(result);
-            return result;
-        }
-
-        public Task<int> PutAsync(MenuItem entity)
-        {
-            return this.menuItemRepository.PutAsync(entity);
+            return await this.menuItemRepository.PutAsync(entity);
         }
     }
 }
