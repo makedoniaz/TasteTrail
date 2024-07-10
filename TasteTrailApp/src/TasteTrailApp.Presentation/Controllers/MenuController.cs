@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Services.Base;
-using TasteTrailApp.Core.Models;
 
 namespace TasteTrailApp.Presentation.Controllers;
 
 [Route("[controller]")]
-public class VenueController : Controller
+public class MenuController : Controller
 {
     // private readonly IValidator<Venue> _validator;
     private readonly IVenueService _venueService;
 
-    public VenueController(IVenueService venueService) //IValidator<Venue> validator, 
+    public MenuController(IVenueService venueService) //IValidator<Venue> validator, 
     {
         // this._validator = validator;
         this._venueService = venueService;
     }
 
-    [HttpGet] 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var venues = await this._venueService.GetByCountAsync(10);
+        var venues = await this._venueService.GetByCountAsync(1);
         return base.View(model: venues);
     }
 
@@ -40,37 +38,36 @@ public class VenueController : Controller
     // }
 
     [HttpGet]
-    [Route("[action]", Name = "CreateVenuePage")]
+    [Route("[action]", Name = "CreateMenuPage")]
     public IActionResult Create()
     {
         return base.View();
     }
 
-    [HttpPost]
-    [Route("/api/[controller]/[action]", Name = "CreateVenueApi")]
-    public async Task<IActionResult> Create(Venue newVenue)
-    {
-        try
-        {
-            // var validatorResult = this._validator.Validate(instance: newVenue);
-            // if (!validatorResult.IsValid)
-            // {
-            //     foreach (var error in validatorResult.Errors)
-            //     {
-            //         base.ModelState.AddModelError(key: error.PropertyName, errorMessage: error.ErrorMessage);
-            //     }
+    // [HttpPost(Name = "CreateVenueApi")]
+    // public async Task<IActionResult> Create(Venue newVenue)
+    // {
+    //     try
+    //     {
+    //         var validatorResult = this._validator.Validate(instance: newVenue);
+    //         if (!validatorResult.IsValid)
+    //         {
+    //             foreach (var error in validatorResult.Errors)
+    //             {
+    //                 base.ModelState.AddModelError(key: error.PropertyName, errorMessage: error.ErrorMessage);
+    //             }
 
-            //     return base.View(viewName: "Create");
-            // }
-            
-            await this._venueService.CreateAsync(entity: newVenue); 
-            return base.RedirectToAction(actionName: "Index");
-        }
-        catch (System.Exception ex)
-        {
-            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-        }
-    } 
+    //             return base.View(viewName: "Create");
+    //         }
+
+    //         await this._venueService.CreateVenueAsync(newDepartment: newVenue);
+    //         return base.RedirectToAction(actionName: "Index");
+    //     }
+    //     catch (System.Exception ex)
+    //     {
+    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+    //     }
+    // } 
 
     // [HttpPut]
     // public async Task<IActionResult> UpdateDepartment([FromBody] Venue venue)
@@ -85,7 +82,7 @@ public class VenueController : Controller
     //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
     //     }
     // }
- 
+
     // [HttpDelete("{venueId:Guid}")]
     // public async Task<IActionResult> DeleteDepartment(Guid venueId)
     // {

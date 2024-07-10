@@ -26,7 +26,7 @@ Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoUrlPath, @Av
 
         public async Task<List<Venue>> GetByCountAsync(int count)
         {
-            var query = $"Select * From venue LIMIT {count}";
+            var query = $"SELECT * FROM venue LIMIT {count} ";
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<Venue>(sql: query);
