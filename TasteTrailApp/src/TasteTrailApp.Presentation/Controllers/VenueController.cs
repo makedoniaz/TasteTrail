@@ -64,6 +64,7 @@ public class VenueController : Controller
             // }
             
             //await this._venueService.CreateAsync(entity: newVenue, image: image); 
+            // await this._venueService.CreateAsync(entity: newVenue); 
             return base.RedirectToAction(actionName: "Index");
         }
         catch (System.Exception ex)

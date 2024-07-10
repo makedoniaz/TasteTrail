@@ -1,4 +1,5 @@
-﻿using TasteTrailApp.Core.Models;
+﻿using Microsoft.AspNetCore.Http;
+using TasteTrailApp.Core.Models;
 using TasteTrailApp.Core.Repositories;
 using TasteTrailApp.Core.Services.Base;
 
@@ -13,12 +14,30 @@ namespace TasteTrailApp.Infrastructure.Services
             this.venueRepository = venueRepository;
         }
 
-        public async Task CreateAsync(Venue entity)
+        public async Task CreateAsync(Venue entity, IFormFile? image)
         {
             var changesCount = await this.venueRepository.CreateAsync(entity);
 
-            if (changesCount == 0)
-                throw new InvalidOperationException("Venue creation didn't apply!");
+            if (changesCount == 0) {
+                throw new InvalidOperationException("Venue delete didn't apply!");
+            }
+
+            var defaultLogoFilename = "not-available.jpg";
+
+            if (image is null) {
+                entity.LogoUrlPath = defaultLogoFilename;
+                return;
+            }
+            
+            var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var uploadsFolder = Path.Combine(wwwrootPath, "images");
+            var extension = new FileInfo(image.FileName).Extension[1..];
+
+            entity.LogoUrlPath = $"images/{entity.Id}.{extension}";
+            var filePath = Path.Combine(uploadsFolder, $"{entity.Id}.{extension}");
+
+            using var newFileStream = File.Create(filePath);
+            await image.CopyToAsync(newFileStream);
         }
 
         public async Task DeleteByIdAsync(int id)
