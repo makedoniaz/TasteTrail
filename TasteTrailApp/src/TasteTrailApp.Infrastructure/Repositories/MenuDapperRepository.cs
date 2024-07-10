@@ -61,5 +61,13 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
+
+        public async Task<IEnumerable<Menu>> GetAllByVenueId(int venueId)
+        {
+            var query = "Select * From menu Where menu.VenueId = @venueId";
+            using var connection = this.context.CreateConnection();
+
+            return await connection.QueryAsync<Menu>(sql: query, param: venueId);
+        }
     }
 }

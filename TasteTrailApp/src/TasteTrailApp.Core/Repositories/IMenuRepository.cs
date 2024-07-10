@@ -6,5 +6,5 @@ namespace TasteTrailApp.Core.Repositories;
 public interface IMenuRepository : IGetAllAsync<Menu>, IGetByIdAsync<Menu, int>,
 ICreateAsync<Menu>, IDeleteByIdAsync<int>, IPutAsync<Menu> 
 {
-    
+    Task<IEnumerable<Menu>> GetAllByVenueId(int venueId);
 }
