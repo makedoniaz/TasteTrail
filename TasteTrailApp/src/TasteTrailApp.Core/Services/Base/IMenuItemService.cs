@@ -13,5 +13,7 @@ namespace TasteTrailApp.Core.Services.Base
         Task DeleteByIdAsync(int id);
         
         Task PutAsync(MenuItem entity);
+
+        Task<IEnumerable<MenuItem>> GetAllMenuItemsByMenuId(int menuId);
     }
 }
