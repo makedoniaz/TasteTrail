@@ -16,53 +16,61 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> CreateAsync(Venue entity)
         {
-            var query = @"Insert into venue (Name, Address, Description, ContactNumber, Email, LogoUrlPath, AveragePrice, OverallRating) 
-Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoUrlPath, @AveragePrice, @OverallRating)";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: entity);
+            return await connection.ExecuteAsync(sql: 
+                @"Insert into venue (Name, Address, Description, ContactNumber, Email, LogoUrlPath, AveragePrice, OverallRating) 
+                Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoUrlPath, @AveragePrice, @OverallRating)", 
+                param: entity
+            );
         }
 
         public async Task<List<Venue>> GetByCountAsync(int count)
         {
-            var query = $"SELECT * FROM venue LIMIT {count} ";
-
             using var connection = this.context.CreateConnection();
-            var result = await connection.QueryAsync<Venue>(sql: query);
+            
+            var result = await connection.QueryAsync<Venue>(
+                sql: $"SELECT * FROM venue LIMIT @Count", 
+                param: new { Count = count }
+            );
 
             return result.ToList();
         }
 
         public async Task<Venue?> GetByIdAsync(int id)
         {
-            var query = $"Select * From venue Where Id = {id}";
+            var query = "Select * From venue Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
-            var result = await connection.QueryFirstOrDefaultAsync<Venue>(sql: query);
+            var result = await connection.QueryFirstOrDefaultAsync<Venue>(
+                sql: $"Select * From venue Where Id = @Id",
+                param: new { Id = id }
+            );
 
             return result;
         }
 
         public async Task<int> DeleteByIdAsync(int id)
         {
-            var query = "Delete From venue Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: id);
+            return await connection.ExecuteAsync(
+                sql: $"Delete From venue Where Id = @Id",
+                param: new { Id = id }
+            );
         }
 
         public async Task<int> PutAsync(Venue entity)
         {
-            var query = @"Update venue Set Name = @Name, Address = @Address, Description = @Description, 
-ContactNumber = ContactNumber, Email = @Email, LogoUrlPath = @LogoUrlPath, AveragePrice = @AveragePrice, 
-OverallRating = @OverallRating Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: entity);
+            return await connection.ExecuteAsync(
+                sql: $@"Update venue Set Name = @Name, Address = @Address, Description = @Description, 
+                        ContactNumber = @ContactNumber, Email = @Email, LogoUrlPath = @LogoUrlPath, AveragePrice = @AveragePrice, 
+                        OverallRating = @OverallRating Where Id = @Id",
+                param: entity
+            );
         }
     }
 }

@@ -22,13 +22,9 @@ namespace TasteTrailApp.Infrastructure.Services
                 throw new InvalidOperationException("Venue delete didn't apply!");
             }
 
-            var defaultLogoFilename = "not-available.jpg";
-
-            if (image is null) {
-                entity.LogoUrlPath = defaultLogoFilename;
+            if (image is null)
                 return;
-            }
-            
+
             var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             var uploadsFolder = Path.Combine(wwwrootPath, "images");
             var extension = new FileInfo(image.FileName).Extension[1..];

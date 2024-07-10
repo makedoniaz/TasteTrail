@@ -16,58 +16,64 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> CreateAsync(Menu entity)
         {
-            var query = "Insert into menu (Name, Description, CompanyId) Values (@Name, @Description, @CompanyId)";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: entity);
+            return await connection.ExecuteAsync(
+                sql: "Insert into menu (Name, Description, CompanyId) Values (@Name, @Description, @CompanyId)",
+                param: entity
+            );
         }
 
         public async Task<List<Menu>> GetAllAsync()
         {
-            var query = "Select * From menu";
-
             using var connection = this.context.CreateConnection();
-            var result = await connection.QueryAsync<Menu>(sql: query);
+            var result = await connection.QueryAsync<Menu>(
+                sql: "Select * From menu"
+            );
 
             return result.ToList();
         }
 
         public async Task<Menu?> GetByIdAsync(int id)
         {
-            var query = "Select * From menu Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
-            var result = await connection.QueryFirstOrDefaultAsync<Menu>(sql: query, param: id);
+            var result = await connection.QueryFirstOrDefaultAsync<Menu>(
+                sql: "Select * From menu Where Id = @Id",
+                param: new { Id = id }
+            );
 
             return result;
         }
 
         public async Task<int> DeleteByIdAsync(int id)
         {
-            var query = "Delete From menu Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: id);
+            return await connection.ExecuteAsync(
+                sql: "Delete From menu Where Id = @Id",
+                param: new { Id = id }
+            );
         }
 
         public async Task<int> PutAsync(Menu entity)
         {
-            var query = "Update menu Set Name = @Name, Description = @Description, CompanyId = @CompanyId";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: entity);
+            return await connection.ExecuteAsync(
+                sql: "Update menu Set Name = @Name, Description = @Description, CompanyId = @CompanyId",
+                param: entity
+            );
         }
 
         public async Task<IEnumerable<Menu>> GetAllByVenueId(int venueId)
         {
-            var query = "Select * From menu Where menu.VenueId = @venueId";
             using var connection = this.context.CreateConnection();
 
-            return await connection.QueryAsync<Menu>(sql: query, param: venueId);
+            return await connection.QueryAsync<Menu>(
+                sql: "Select * From menu Where menu.VenueId = @venueId",
+                param: venueId
+            );
         }
     }
 }
