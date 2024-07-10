@@ -32,33 +32,34 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"  asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="SearchPage">SearchPage</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="Index">Venue  Page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="VenueDetails">Venue Details</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="VenueDetails">Venue Details</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="CreateMenu">Create menu</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="CreateVenue">Create Venue by zina</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="CreateMenuItem">Create menu item</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="Index">Menu Page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="CreateVenue">Create Venue</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="MenuDetails">Menu Details</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue"
-                               asp-action="Index">Get Venue</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="CreateMenu">Create Menu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="Index">Menu Item Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="MenuItemDetails">MenuItem Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="CreateMenuItem">Create Menu Item</a>
                         </li>
 
                         <li class="nav-item">
@@ -92,15 +93,12 @@
         </main>
     </div>
 
-<<<<<<< HEAD
-=======
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - TasteTrailApp.Presentation - <a asp-area="" asp-controller="Home"
                 asp-action="Privacy">Privacy</a>
         </div>
     </footer>
->>>>>>> TasteTrailAppPresentation
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

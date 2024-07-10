@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Services.Base;
 
 namespace TasteTrailApp.Presentation.Controllers;
 
 [Route("[controller]")]
-public class VenueController : Controller
+public class MenuItemController : Controller
 {
     // private readonly IValidator<Venue> _validator;
     private readonly IVenueService _venueService;
 
-    public VenueController(IVenueService venueService) //IValidator<Venue> validator, 
+    public MenuItemController(IVenueService venueService) //IValidator<Venue> validator, 
     {
         // this._validator = validator;
         this._venueService = venueService;
     }
 
-    [HttpGet] 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var venues = await this._venueService.GetByCountAsync(10);
+        var venues = await this._venueService.GetByCountAsync(1);
         return base.View(model: venues);
     }
 
@@ -60,7 +59,7 @@ public class VenueController : Controller
 
     //             return base.View(viewName: "Create");
     //         }
-            
+
     //         await this._venueService.CreateVenueAsync(newDepartment: newVenue);
     //         return base.RedirectToAction(actionName: "Index");
     //     }
@@ -83,7 +82,7 @@ public class VenueController : Controller
     //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
     //     }
     // }
- 
+
     // [HttpDelete("{venueId:Guid}")]
     // public async Task<IActionResult> DeleteDepartment(Guid venueId)
     // {
