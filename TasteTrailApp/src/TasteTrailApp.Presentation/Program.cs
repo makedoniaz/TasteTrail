@@ -17,12 +17,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<DapperContext>();
 
 //builder.Services.AddTransient<IFeedbackRepository, FeedbackDapperRepository>();
-//builder.Services.AddTransient<IMenuItemMenusRepository, MenuItemMenusDapperRepository>();
-builder.Services.AddTransient<IMenuItemRepository, MenuItemDapperRepository>();
 //builder.Services.AddTransient<IRoleRepository, RoleDapperRepository>();
 //builder.Services.AddTransient<IUserRepository, UserDapperRepository>();
 //builder.Services.AddTransient<IUserRolesRepository, UserRolesDapperRepository>();
-//builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosDapperRepository>();
+builder.Services.AddTransient<IMenuItemMenusRepository, MenuItemMenusDapperRepository>();
+builder.Services.AddTransient<IMenuItemRepository, MenuItemDapperRepository>();
+builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosDapperRepository>();
 builder.Services.AddTransient<IVenueRepository, VenueDapperRepository>();
 builder.Services.AddTransient<IMenuRepository, MenuDapperRepository>();
 
@@ -33,6 +33,8 @@ builder.Services.AddTransient<IMenuRepository, MenuDapperRepository>();
 builder.Services.AddTransient<IVenueService, VenueService>();
 builder.Services.AddTransient<IMenuItemService, MenuItemService>();
 builder.Services.AddTransient<IMenuService, MenuSerivce>();
+builder.Services.AddTransient<IMenuItemMenusService, MenuItemMenusService>();
+builder.Services.AddTransient<IVenuePhotosService, VenuePhotosService>();
 
 #endregion
 

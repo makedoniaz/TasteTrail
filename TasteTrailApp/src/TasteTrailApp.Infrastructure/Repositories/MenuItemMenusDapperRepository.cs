@@ -16,7 +16,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> CreateAsync(MenuItemMenus entity)
         {
-            var query = "Insert into Table(MenuId, MenuItemId) Values (@MenuId, @MenuItemId)";
+            var query = "Insert into menuitems_menu (MenuId, MenuItemId) Values (@MenuId, @MenuItemId)";
 
             using var connection = this.context.CreateConnection();
 
@@ -25,7 +25,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<List<MenuItemMenus>?> GetByCountAsync(int count)
         {
-            var query = $"Select TOP {count} From Table";
+            var query = $"Select TOP {count} * From menuitems_menu";
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<MenuItemMenus>(sql: query);
@@ -35,7 +35,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> DeleteByIdAsync(int id)
         {
-            var query = "Delete * From Table Where Id = @Id";
+            var query = "Delete From menuitems_menu Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
@@ -44,7 +44,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> PutAsync(MenuItemMenus entity)
         {
-            var query = "Update Table Set MenuId = @MenuId, MenuItemId = @MenuItemId Where Id = @Id";
+            var query = "Update menuitems_menu Set MenuId = @MenuId, MenuItemId = @MenuItemId Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 

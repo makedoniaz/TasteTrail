@@ -15,7 +15,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
         }
         public async Task<int> CreateAsync(VenuePhotos entity)
         {
-            var query = "Insert into Table(VenueId, PhotoUrlPath) Values (@VenueId, @PhotoUrlPath)";
+            var query = "Insert into venue_photos (VenueId, PhotoUrlPath) Values (@VenueId, @PhotoUrlPath)";
 
             using var connection = this.context.CreateConnection();
 
@@ -24,7 +24,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<List<VenuePhotos>?> GetAllAsync()
         {
-            var query = "Select * From Table";
+            var query = "Select * From venue_photos";
 
             using var connection = this.context.CreateConnection();
             var result = await connection.QueryAsync<VenuePhotos>(sql: query);
@@ -34,7 +34,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> DeleteByIdAsync(int id)
         {
-            var query = "Delete * From Table Where Id = @Id";
+            var query = "Delete From venue_photos Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
@@ -43,7 +43,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> PutAsync(VenuePhotos entity)
         {
-            var query = "Update Table Set VenueId = @VenueId, PhotoUrlPath = @PhotoUrlPath Where Id = @Id";
+            var query = "Update venue_photos Set VenueId = @VenueId, PhotoUrlPath = @PhotoUrlPath Where Id = @Id";
 
             using var connection = this.context.CreateConnection();
 
