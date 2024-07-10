@@ -28,7 +28,6 @@ namespace TasteTrailApp.Infrastructure.Services
         public async Task<List<Venue>> GetByCountAsync(int count)
         {
             var result = await this.venueRepository.GetByCountAsync(count);
-            ArgumentNullException.ThrowIfNull(result);
             return result;
         }
 

@@ -23,7 +23,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             return await connection.ExecuteAsync(sql: query, param: entity);
         }
 
-        public async Task<List<MenuItemMenus>?> GetByCountAsync(int count)
+        public async Task<List<MenuItemMenus>> GetByCountAsync(int count)
         {
             var query = $"Select TOP {count} * From menuitems_menu";
 

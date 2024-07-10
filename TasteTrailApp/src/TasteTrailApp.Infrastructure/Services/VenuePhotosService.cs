@@ -7,31 +7,31 @@ namespace TasteTrailApp.Infrastructure.Services
     public class VenuePhotosService : IVenuePhotosService
     {
         private readonly IVenuePhotosRepository venuePhotosRepository;
+
         public VenuePhotosService(IVenuePhotosRepository venuePhotosRepository)
         {
             this.venuePhotosRepository = venuePhotosRepository;
         }
 
-        public Task<int> CreateAsync(VenuePhotos entity)
+        public async Task<int> CreateAsync(VenuePhotos entity)
         {
-            return this.venuePhotosRepository.CreateAsync(entity);
+            return await this.venuePhotosRepository.CreateAsync(entity);
         }
 
-        public Task<int> DeleteByIdAsync(int id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
-            return this.venuePhotosRepository.DeleteByIdAsync(id);
+            return await this.venuePhotosRepository.DeleteByIdAsync(id);
         }
 
-        public Task<List<VenuePhotos>> GetAllAsync()
+        public async Task<List<VenuePhotos>> GetAllAsync()
         {
-            var result = this.venuePhotosRepository.GetAllAsync();
-            ArgumentNullException.ThrowIfNull(result);
+            var result = await this.venuePhotosRepository.GetAllAsync();
             return result;
         }
 
-        public Task<int> PutAsync(VenuePhotos entity)
+        public async Task<int> PutAsync(VenuePhotos entity)
         {
-            return this.venuePhotosRepository.PutAsync(entity);
+            return await this.venuePhotosRepository.PutAsync(entity);
         }
     }
 }
