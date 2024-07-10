@@ -19,7 +19,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(
-                sql: "Insert into menuitem (Name, Description, Price, PopularityRate, PhotoUrlPath) Values (@Name, @Description, @Price, @PopularityRate, @PhotoUrlPath)", 
+                sql: "Insert into menuitem (Name, Description, Price, PopularityRate, MenuId) Values (@Name, @Description, @Price, @PopularityRate, @MenuId)", 
                 param: entity
             );
         }
@@ -63,8 +63,18 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(
-                sql: "Update menuitem Set Name = @Name, Description = @Description, Price = @Price, PopularityRate = @PopularityRate, PhotoUrlPath = @PhotoUrlPath Where Id = @Id",
+                sql: "Update menuitem Set Name = @Name, Description = @Description, Price = @Price, PopularityRate = @PopularityRate Where Id = @Id",
                 param: entity
+            );
+        }
+
+        public async Task<IEnumerable<MenuItem>> GetAllByMenuId(int menuId)
+        {
+            using var connection = this.context.CreateConnection();
+
+            return await connection.QueryAsync<MenuItem>(
+                sql: "Select * From menuitem Where menuitem.menuId = @menuId",
+                param: menuId
             );
         }
     }

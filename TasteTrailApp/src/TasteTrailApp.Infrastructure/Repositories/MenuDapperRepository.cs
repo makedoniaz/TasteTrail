@@ -19,7 +19,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(
-                sql: "Insert into menu (Name, Description, CompanyId) Values (@Name, @Description, @CompanyId)",
+                sql: "Insert into menu (Name, Description, VenueId) Values (@Name, @Description, @VenueId)",
                 param: entity
             );
         }
@@ -61,7 +61,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(
-                sql: "Update menu Set Name = @Name, Description = @Description, CompanyId = @CompanyId",
+                sql: "Update menu Set Name = @Name, Description = @Description",
                 param: entity
             );
         }

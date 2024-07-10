@@ -21,19 +21,6 @@ namespace TasteTrailApp.Infrastructure.Services
             if (changesCount == 0) {
                 throw new InvalidOperationException("Venue delete didn't apply!");
             }
-
-            if (image is null)
-                return;
-
-            var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            var uploadsFolder = Path.Combine(wwwrootPath, "images");
-            var extension = new FileInfo(image.FileName).Extension[1..];
-
-            entity.LogoUrlPath = $"images/{entity.Id}.{extension}";
-            var filePath = Path.Combine(uploadsFolder, $"{entity.Id}.{extension}");
-
-            using var newFileStream = File.Create(filePath);
-            await image.CopyToAsync(newFileStream);
         }
 
         public async Task DeleteByIdAsync(int id)
@@ -63,6 +50,21 @@ namespace TasteTrailApp.Infrastructure.Services
 
             if (changesCount == 0)
                 throw new InvalidOperationException("Venue put didn't apply!");
+        }
+
+        public async Task SetVenueLogo(Venue entity, IFormFile? image) {
+            if (image is null)
+                return;
+
+            var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var uploadsFolder = Path.Combine(wwwrootPath, "images");
+            var extension = new FileInfo(image.FileName).Extension[1..];
+
+            entity.LogoUrlPath = $"images/{entity.Id}.{extension}";
+            var filePath = Path.Combine(uploadsFolder, $"{entity.Id}.{extension}");
+
+            using var newFileStream = File.Create(filePath);
+            await image.CopyToAsync(newFileStream);
         }
     }
 }

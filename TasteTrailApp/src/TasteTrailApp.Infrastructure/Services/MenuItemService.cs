@@ -1,4 +1,5 @@
-﻿using TasteTrailApp.Core.Models;
+﻿using System.Runtime.InteropServices;
+using TasteTrailApp.Core.Models;
 using TasteTrailApp.Core.Repositories;
 using TasteTrailApp.Core.Services.Base;
 
@@ -27,6 +28,12 @@ namespace TasteTrailApp.Infrastructure.Services
 
             if (changesCount == 0)
                 throw new InvalidOperationException("MenuItem delete didn't apply!");
+        }
+
+        public async Task<IEnumerable<MenuItem>> GetAllMenuItemsByMenuId(int menuId)
+        {
+            var result = await this.GetAllMenuItemsByMenuId(menuId);
+            return result;
         }
 
         public async Task<List<MenuItem>> GetByCountAsync(int count)
