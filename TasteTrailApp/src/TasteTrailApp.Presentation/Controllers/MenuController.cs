@@ -38,7 +38,7 @@ public class MenuController : Controller
     // }
 
     [HttpGet]
-    [Route("[action]", Name = "CreateVenuePage")]
+    [Route("[action]", Name = "CreateMenuPage")]
     public IActionResult Create()
     {
         return base.View();

@@ -1,21 +1,22 @@
-﻿@{
+﻿@model Venue
+@{
     ViewData["Title"] = "Create Venue Page";
 }
 
 <form asp-route="CreateVenueApi" method="post" class="createForm" enctype="multipart/form-data">
     <div class="row custom-file">
-        <label for="LogoUrlPath" class="image-upload-label" id="file-name">Upload Logo</label> @*asp-for*@
-        <input name="LogoUrlPath" id="LogoUrlPath" class="custom-file-input" type="file"
-            onchange="updateFileName(this)"> @*asp-for*@
+        <label asp-for="LogoUrlPath" class="image-upload-label" id="file-name">Upload Logo</label>
+        <input asp-for="LogoUrlPath" class="custom-file-input" type="file" onchange="updateFileName(this)">
     </div>
     <div>
-        <label for="Name">Venue Name:</label> @*asp-for*@
-        <input name="Name" id="Name" type="text" /> @*asp-for*@
+        <label asp-for="Name">Venue Name:</label>
+        <input asp-for="Name" type="text" />
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <div>
-        <label for="OverallRating">Overall Rating:</label> @*asp-for*@
-        <div class="rating" data-rating="4.5"> @*asp-for*@
+        <label asp-for="OverallRating">Overall Rating:</label>
+        <input asp-for="OverallRating" type="number" hidden/> 
+        <div class="rating" data-rating="4">
             <span class="text-warning">
                 <i class="fas fa-star star" data-value="1"></i>
                 <i class="fas fa-star star" data-value="2"></i>
@@ -23,48 +24,49 @@
                 <i class="fas fa-star star" data-value="4"></i>
                 <i class="far fa-star star" data-value="5"></i>
             </span>
-            <span class="badge bg-secondary ms-2">4.5</span>
+            <span class="badge bg-secondary ms-2">4</span>
         </div>
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="OverallRating"></span>
     </div>
 
-    <div>
-        <label for="Owner">Owner:</label> @*asp-for*@
-        <select name="Owner"> @*asp-for*@
-            <option value="">Select Owner</option>
-            <option value="1">Owner name 1</option>
-            <option value="2">Owner name 2</option>
+    @* <div>
+    <label asp-for="Owner">Owner:</label>
+    <select asp-for="Owner">
+    <option value="">Select Owner</option>
+    <option value="1">Owner name 1</option>
+    <option value="2">Owner name 2</option>
 
-            @* @foreach (Venue venue in Model.Venues)
-            {
-            <option value="@venue.Id">@venue.Name</option>
-            } *@
-        </select>
+    @foreach (Venue venue in Model.Venues)
+    {
+    <option value="@venue.Id">@venue.Name</option>
+    }
+    </select>
+    <span class="text-danger"></span> //asp-validation-for="Name"
+    </div> *@
+
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" type="text" />
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <div>
-        <label for="Email">Email:</label>
-        <input name="Email" id="Email" type="text" /> @*asp-for*@
+        <label asp-for="Address">Address:</label>
+        <input asp-for="Address" type="text" />
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <div>
-        <label for="Address">Address:</label>
-        <input name="Address" id="Address" type="text" /> @*asp-for*@
+        <label asp-for="ContactNumber">ContactNumber:</label>
+        <input asp-for="ContactNumber" type="text" />
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <div>
-        <label for="ContactNumber">ContactNumber:</label>
-        <input name="ContactNumber" id="ContactNumber" type="text" /> @*asp-for*@
+        <label asp-for="AveragePrice">AveragePrice:</label>
+        <input asp-for="AveragePrice" type="number" />
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <div>
-        <label for="AveragePrice">AveragePrice:</label> @*asp-for*@
-        <input name="AveragePrice" id="AveragePrice" type="number" /> @*asp-for*@
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
-    </div>
-    <div>
-        <label for="Description">Description:</label>
-        <textarea name="Description" id="Description"></textarea>
+        <label asp-for="Description">Description:</label>
+        <textarea asp-for="Description"></textarea>
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
     <button type="submit">Add Menu Item</button>
@@ -177,7 +179,7 @@
                 const value = parseInt($(this).data('value'));
                 const container = $(this).closest('.rating');
                 const restaurantRatingElement = container.find('.badge');
-                const restaurantRating = parseFloat(container.data('rating'));
+                const hiddenInput = $('input[name="OverallRating"]');
 
                 stars.removeClass('fas fa-star fa-star-half-alt far');
 
@@ -193,6 +195,7 @@
 
                 restaurantRatingElement.text(value.toFixed(1));
                 container.data('rating', value.toFixed(1));
+                hiddenInput.val(value);
             });
 
         });
