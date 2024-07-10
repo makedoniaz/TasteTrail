@@ -1,4 +1,4 @@
-﻿@* @model Menu *@
+﻿@model Menu
 @{
     ViewData["Title"] = "Create Menu Page";
 }
@@ -10,55 +10,55 @@
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
 
-    <div>
-        <label for="Venue">Venue:</label> @*asp-for*@
-        <select name="Venue"> @*asp-for*@
-            <option value="">Select Venue</option>
-            <option value="1">Venue name 1</option>
-            <option value="2">Venue name 2</option>
+    @* <div>
+    <label for="Venue">Venue:</label>
+    <select name="Venue">
+    <option value="">Select Venue</option>
+    <option value="1">Venue name 1</option>
+    <option value="2">Venue name 2</option>
 
-            @* @foreach (Venue venue in Model.Venues)
-            {
-            <option value="@venue.Id">@venue.Name</option>
-            } *@
-        </select>
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
-    </div>
+    @foreach (Venue venue in Model.Venues)
+    {
+    <option value="@venue.Id">@venue.Name</option>
+    }
+    </select>
+    <span class="text-danger"></span>
+    </div> *@
+    @* <div>
+    <label for="MenuItems">Select Menu Items:</label>
     <div>
-        <label for="MenuItems">Select Menu Items:</label>
-        <div>
-        </div>
-        <table id="menuItemsTable">
-            <thead>
-                <tr>
-                    <th> <button type="button" id="toggleSelectAll"><i class="fas fa-check-square"></i></button> </th>
-                    <th>Item Name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" name="MenuItemIds" /></td>
-                    <td>Name1</td>
-                    <td>Description1</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" name="MenuItemIds" /></td>
-                    <td>Name1</td>
-                    <td>Description1</td>
-                </tr>
-                @* @foreach (var menuItem in Model.MenuItems)
-                {
-                <tr>
-                <td><input type="checkbox" name="MenuItemIds" value="@menuItem.Id" /></td>
-                <td>@menuItem.Name</td>
-                <td>@menuItem.Description</td>
-                </tr>
-                } *@
-            </tbody>
-        </table>
-        <span class="text-danger"></span> @* asp-validation-for="MenuItemIds" *@
     </div>
+    <table id="menuItemsTable">
+    <thead>
+    <tr>
+    <th> <button type="button" id="toggleSelectAll"><i class="fas fa-check-square"></i></button> </th>
+    <th>Item Name</th>
+    <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td><input type="checkbox" name="MenuItemIds" /></td>
+    <td>Name1</td>
+    <td>Description1</td>
+    </tr>
+    <tr>
+    <td><input type="checkbox" name="MenuItemIds" /></td>
+    <td>Name1</td>
+    <td>Description1</td>
+    </tr>
+    @foreach (var menuItem in Model.MenuItems)
+    {
+    <tr>
+    <td><input type="checkbox" name="MenuItemIds" value="@menuItem.Id" /></td>
+    <td>@menuItem.Name</td>
+    <td>@menuItem.Description</td>
+    </tr>
+    }
+    </tbody>
+    </table>
+    <span class="text-danger"></span> asp-validation-for="MenuItemIds"
+    </div> *@
     <div>
         <label for="Name">Description:</label> @*asp-for*@
         <textarea name="Name" type="textarea"></textarea> @*asp-for*@
@@ -132,12 +132,14 @@
     th {
         background-color: #f2f2f2;
     }
-    th:first-child, td:first-child {
+
+    th:first-child,
+    td:first-child {
         width: 3px;
         text-align: center;
     }
 
-    #toggleSelectAll{
+    #toggleSelectAll {
         background-color: #f2f2f2;
         color: #ccc;
         border: none;

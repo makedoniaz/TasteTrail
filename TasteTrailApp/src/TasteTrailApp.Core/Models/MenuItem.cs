@@ -12,5 +12,5 @@ public class MenuItem
 
     public int PopularityRate { get; set; }
 
-    public string PhotoUrlPath { get; set; }
+    //public string PhotoUrlPath { get; set; }
 }

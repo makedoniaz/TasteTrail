@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Services.Base;
 using TasteTrailApp.Core.Models;
+using TasteTrailApp.Presentation.ViewModels;
 
 namespace TasteTrailApp.Presentation.Controllers;
 
@@ -10,14 +11,16 @@ public class VenueController : Controller
 {
     // private readonly IValidator<Venue> _validator;
     private readonly IVenueService _venueService;
+    private readonly IMenuService _menuService;
 
-    public VenueController(IVenueService venueService) //IValidator<Venue> validator, 
+    public VenueController(IVenueService venueService, IMenuService menuService) //IValidator<Venue> validator, 
     {
         // this._validator = validator;
         this._venueService = venueService;
+        this._menuService = menuService;
     }
 
-    [HttpGet] 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var venues = await this._venueService.GetByCountAsync(10);
@@ -30,8 +33,28 @@ public class VenueController : Controller
     {
         try
         {
-            var venue = await this._venueService.GetByIdAsync(id: venueId);
-            return base.View(model: venue);
+            var viewmodel = new VenueViewModel()
+            {
+                Venue = await this._venueService.GetByIdAsync(id: venueId),
+                Menus = await this._menuService.GetAllMenusByVenueId(venueId)
+            };
+
+            return base.View(model: viewmodel);
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
+
+    [HttpGet]
+    [Route("Json/{venueId:int}")]
+    public async Task<IActionResult> GetDoctorJson(int venueId)
+    {
+        try
+        {
+            var doctor = await this._venueService.GetByIdAsync(id: venueId);
+            return base.Json(data: doctor);
         }
         catch (System.Exception ex)
         {
@@ -62,8 +85,8 @@ public class VenueController : Controller
 
             //     return base.View(viewName: "Create");
             // }
-            
-            //await this._venueService.CreateAsync(entity: newVenue, image: image); 
+
+            await this._venueService.CreateAsync(entity: newVenue, image: image); 
             // await this._venueService.CreateAsync(entity: newVenue); 
             return base.RedirectToAction(actionName: "Index");
         }
@@ -71,35 +94,37 @@ public class VenueController : Controller
         {
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
-    } 
+    }
 
-    // [HttpPut]
-    // public async Task<IActionResult> UpdateDepartment([FromBody] Venue venue)
-    // {
-    //     try
-    //     {
-    //         await this._venueService.UpdateVenueAsync(id: venue.Id, newVenue: venue);
-    //         return base.Ok();
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // }
- 
-    // [HttpDelete("{venueId:Guid}")]
-    // public async Task<IActionResult> DeleteDepartment(Guid venueId)
-    // {
-    //     try
-    //     {
-    //         await this._venueService.DeleteVenueByIdAsync(id: venueId);
-    //         return base.Ok();
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // }
+    [HttpPut]
+    public async Task<IActionResult> UpdateVenue([FromBody] Venue venue)
+    {
+        try
+        {
+            await this._venueService.PutAsync(entity: venue);
+            return base.Ok();
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
+
+    [HttpDelete("{venueId:int}")]
+    public async Task<IActionResult> DeleteVenue(int venueId)
+    {
+        try
+        {
+            await this._venueService.DeleteByIdAsync(id: venueId);
+            return base.Ok();
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
+
+      
 }
 
 //  [HttpGet]

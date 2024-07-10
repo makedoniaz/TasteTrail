@@ -14,6 +14,6 @@ namespace TasteTrailApp.Core.Services.Base
         
         Task PutAsync(Menu entity);
 
-        Task<IEnumerable<Menu>> GetAllByMenusVenueId(int venueId);
+        Task<IEnumerable<Menu>> GetAllMenusByVenueId(int venueId);
     }
 }
