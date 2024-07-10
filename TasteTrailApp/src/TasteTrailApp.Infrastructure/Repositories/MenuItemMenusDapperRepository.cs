@@ -42,7 +42,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             return await connection.ExecuteAsync(
                 sql: "Delete From menuitems_menu Where Id = @Id",
-                param: id
+                param: new { Id = id }
             );
         }
 

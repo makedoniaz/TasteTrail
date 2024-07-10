@@ -42,8 +42,8 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             var result = await connection.QueryFirstOrDefaultAsync<Venue>(
-                sql: $"Select * From venue Where Id = {id}",
-                param: id
+                sql: $"Select * From venue Where Id = @Id",
+                param: new { Id = id }
             );
 
             return result;
@@ -54,8 +54,8 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(
-                sql: $"Delete From venue Where Id = {id}",
-                param: id
+                sql: $"Delete From venue Where Id = @Id",
+                param: new { Id = id }
             );
         }
 

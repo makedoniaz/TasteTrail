@@ -42,7 +42,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             var result = await connection.QueryFirstOrDefaultAsync<MenuItem>(
                 sql: "Select * From menuitem Where Id = @Id",
-                param: id
+                param: new { Id = id }
             );
 
             return result;
@@ -54,7 +54,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             return await connection.ExecuteAsync(
                 sql: "Delete From menuitem Where Id = @Id",
-                param: id
+                param: new { Id = id }
             );
         }
 
