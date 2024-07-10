@@ -16,39 +16,44 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<int> CreateAsync(MenuItemMenus entity)
         {
-            var query = "Insert into menuitems_menu (MenuId, MenuItemId) Values (@MenuId, @MenuItemId)";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: entity);
+            return await connection.ExecuteAsync(
+                sql: "Insert into menuitems_menu (MenuId, MenuItemId) Values (@MenuId, @MenuItemId)",
+                param: entity
+            );
         }
 
         public async Task<List<MenuItemMenus>> GetByCountAsync(int count)
         {
-            var query = $"Select * From menuitems_menu LIMIT {count}";
-
             using var connection = this.context.CreateConnection();
-            var result = await connection.QueryAsync<MenuItemMenus>(sql: query);
+
+            var result = await connection.QueryAsync<MenuItemMenus>(
+                sql: "Select * From menuitems_menu LIMIT @Count",
+                param: new { Count = count }
+            );
 
             return result.ToList();
         }
 
         public async Task<int> DeleteByIdAsync(int id)
         {
-            var query = "Delete From menuitems_menu Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: id);
+            return await connection.ExecuteAsync(
+                sql: "Delete From menuitems_menu Where Id = @Id",
+                param: id
+            );
         }
 
         public async Task<int> PutAsync(MenuItemMenus entity)
         {
-            var query = "Update menuitems_menu Set MenuId = @MenuId, MenuItemId = @MenuItemId Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
-            return await connection.ExecuteAsync(sql: query, param: entity);
+            return await connection.ExecuteAsync(
+                sql: "Update menuitems_menu Set MenuId = @MenuId, MenuItemId = @MenuItemId Where Id = @Id",
+                param: entity
+            );
         }
     }
 }
