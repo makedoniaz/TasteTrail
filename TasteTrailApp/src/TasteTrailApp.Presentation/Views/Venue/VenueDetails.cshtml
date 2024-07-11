@@ -68,7 +68,7 @@
 
         </div>
     </div>
-        <a asp-route="CreateMenuPage" asp-route-venueId="@Model.Venue.Id" class="btn btn-primary w-25 mb-3">Create new Menu</a>
+        <a asp-route="CreateMenuPage" asp-route-venueId="@Model.Venue.Id" class="btn btn-primary w-25 mt-5 mb-3">Create new Menu</a>
     <div class="row">
 
 
@@ -78,7 +78,7 @@
                 <div class="card mb-4 restorantCard h-100 w-100">
                     <div class="card-body">
                         <h5 class="card-title m-2">@menu.Name</h5>
-                        <p class="card-text m-2  h-25 ">@menu.Description</p>
+                        <p class="card-text m-2  ">@menu.Description</p>
                         <div class="venue-actions m-1">
                             <a asp-controller="Menu" asp-action="MenuDetails" asp-route-menuId="@menu?.Id" class="btn btn-primary m-1">Menu Details</a>
                             <br>
@@ -87,8 +87,7 @@
                             <button class="delete-btn btn-danger  m-1" onclick="deleteMenu('@menu!.Id')">Delete</button>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div></div>
         }
     </div>
 </div>

@@ -26,8 +26,8 @@
             @foreach (var venue in Model)
             {
                 <!-- Restourant Item -->
-                <div class="col-md-3 restaurantItem mb-4" data-title="Restourant Title 1" data-date="2023-01-02">
-                    <div class="card mb-4 restorantCard h-100 w-100 venue-item">
+                <div class="col-md-3 restaurantItem mb-4 venue-item" data-title="Restourant Title 1" data-date="2023-01-02">
+                    <div class="card mb-4 restorantCard h-100 ">
                         <img src="@(venue.LogoUrlPath ?? "images/not-available.jpg" )" class="card-img-top fixed-size"
                             alt="Restourant Title 1">
                         <div class="card-body venue-details">
@@ -116,7 +116,7 @@
     <div>
         <label for="newOverallRating">Overall Rating:</label>
         <input id="newOverallRating" type="number" hidden />
-        <div class="rating" data-rating="4">
+        <div class="newrating" data-rating="4">
             <span class="text-warning">
                 <i class="fas fa-star star" data-value="1"></i>
                 <i class="fas fa-star star" data-value="2"></i>
@@ -124,7 +124,7 @@
                 <i class="fas fa-star star" data-value="4"></i>
                 <i class="far fa-star star" data-value="5"></i>
             </span>
-            <span class="badge bg-secondary ms-2">4</span>
+            <span class="newbadge bg-secondary ms-2">4</span>
         </div>
     </div>
     <div>
@@ -286,6 +286,22 @@
             document.getElementById('newAveragePrice').value = data.averagePrice;
             document.getElementById('newOverallRating').value = data.overallRating;
             document.getElementById('updateForm').style.display = 'block';
+            updateStars(data.overallRating);
+        }
+        function updateStars(rating) {
+            const stars = document.querySelectorAll('.newrating .star');
+            stars.forEach((star, index) => {
+                if (index < rating) { 
+                
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+            document.querySelector('.newbadge').textContent = rating;
+            document.getElementById('newOverallRating').value = rating;
         }
 
         function hideUpdateForm() {
@@ -382,6 +398,23 @@
                 }
             });
         }
+    </script>
+
+    <script>
+         $(document).ready(function () {
+            $(".newrating i").click(function () {
+                var rating = $(this).data('value');
+                $(".newrating i").each(function (index) {
+                    $(this).removeClass('fas fa-star').addClass('far fa-star');
+                    if (index < rating) {
+                        $(this).removeClass('far fa-star').addClass('fas fa-star');
+                    }
+                });
+                $(".newbadge").text(rating);
+                $('#newOverallRating').val(rating);
+            });
+        });
+            
     </script>
 
 }
