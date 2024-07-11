@@ -42,14 +42,14 @@ else
                 <br>
                 <div class="menu-actions">
                     @* <button class="update-btn btn-close-white" onclick="showUpdateForm('@menu!.Id')">Update</button> *@
-                    <button class="delete-btn btn-danger" onclick="deleteMenu('@menu!.Id')">Delete</button>
+                    <button class="delete-btn btn-danger  m-1" onclick="deleteMenu('@menu!.Id')">Delete</button>
                 </div>
             </li>
         }
     </ol>
 }
 
-
+@section Scripts {
 <script>
 
     document.getElementById('searchButton').addEventListener('click', function () {
@@ -149,6 +149,7 @@ else
         }
     }
 </script>
+}
 
 <style>
     h1 {

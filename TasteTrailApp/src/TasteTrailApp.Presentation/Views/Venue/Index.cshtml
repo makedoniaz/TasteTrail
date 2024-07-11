@@ -34,7 +34,6 @@
                             alt="Restourant Title 1">
                         <div class="card-body venue-details">
                             <h5 class="card-title m-2">@venue.Name</h5>
-                            <p class="card-text m-2 ">@venue.Description</p>
                             <!-- Rating -->
                             <div class="rating m-2">
                                 <span class="text-warning">
@@ -52,6 +51,7 @@
                                 </span>
                                 <span class="badge bg-secondary ms-2">@venue.OverallRating</span>
                             </div>
+                            <p class="card-text">@venue.Description</p>
                             <!-- Tags -->
                             @* <div class="mt-3 m-1">
                         <span class="badge bg-primary">Family-friendly</span>
@@ -161,13 +161,13 @@
 <style>
     .fixed-size {
         height: 350px;
-    }
+        width: 100%;
 
+    }
+    
     .venue-actions {
         flex-shrink: 0;
     }
-
-
 
     button {
         background-color: #5cb85c;

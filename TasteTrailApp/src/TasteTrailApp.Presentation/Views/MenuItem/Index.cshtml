@@ -31,11 +31,10 @@ else
         @foreach (var menuItem in Model)
     {
 
-            <li class="menu-item-item">
-                <a class="nav-link" asp-controller="MenuItem" asp-action="MenuItemDetails"
-                    asp-route-menu-itemId="@menuItem?.Id">
+            <li class="menuItemContainer">
+                <a class="nav-link" asp-controller="MenuItem" asp-action="MenuItemDetails" asp-route-menuItemId="@menuItem?.Id">
 
-                    <div class="menu-item-details">
+                    <div class="menuItemContainer-details">
                         <p><strong>Menu Item Name:</strong> @(menuItem?.Name ?? "UNKNOWN")</p>
                         <p><strong>Menu Item Description:</strong> @(menuItem?.Description ?? "UNKNOWN")</p>
                         <p><strong>Menu Item Price:</strong> @menuItem?.Price </p>
@@ -67,7 +66,7 @@ else
     </ol>
 }
 
-
+@section Scripts {
 <script>
 
     document.getElementById('searchButton').addEventListener('click', function () {
@@ -82,10 +81,10 @@ else
 
     function filterMenuItems() {
         var input = document.getElementById('searchInput').value.toLowerCase();
-        var items = document.querySelectorAll('.menu-item-item');
+        var items = document.querySelectorAll('.menuItemContainer');
 
         items.forEach(function (item) {
-            var menuitemName = item.querySelector('.menu-item-details p').textContent.split(':')[1]?.trim().toLowerCase() || '';
+            var menuitemName = item.querySelector('menuItemContainer-details p').textContent.split(':')[1]?.trim().toLowerCase() || '';
             if (menuitemName.includes(input)) {
                 item.style.display = '';
             } else {
@@ -149,6 +148,7 @@ else
             .catch(error => console.error('Error updating menu-item:', error));
     }
     function deleteMenuItem(id) {
+        alert(1)
         if (confirm('Are you sure you want to delete this menu-item?')) {
             fetch(`/MenuItem/${id}`, {
                 method: 'DELETE',
@@ -167,7 +167,7 @@ else
         }
     }
 </script>
-
+}
 <style>
     h1 {
         color: #333;
@@ -239,7 +239,7 @@ else
         color: #888;
     }
 
-    .menu-item-item {
+    .menuItemContainer {
         background-color: #cfe2f3;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -249,11 +249,11 @@ else
         position: relative;
     }
 
-    .menu-item-item:hover {
+    .menuItemContainer:hover {
         transform: translateY(-5px);
     }
 
-    .menu-item-details p {
+    .menuItemContainer-details p {
         margin: 0;
         font-size: 16px;
         line-height: 1.6;
@@ -261,7 +261,7 @@ else
         color: #333;
     }
 
-    .menu-item-details p strong {
+    .menuItemContainer-details p strong {
         font-weight: bold;
         color: #666;
     }
@@ -270,7 +270,7 @@ else
         flex-shrink: 0;
     }
 
-    .menu-item-item hr {
+    .menuItemContainer hr {
         margin: 10px 0;
         border: none;
         border-top: 1px solid #e0e0e0;

@@ -18,8 +18,8 @@ public class VenueValidator : AbstractValidator<Venue>
 
         RuleFor(venue => venue.ContactNumber)
             .NotEmpty().WithMessage("Contact Number is required.")
-            .Matches(new Regex(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$"))
             .WithMessage("Invalid Contact Number format.");
+            //.Matches(new Regex(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$"))
 
         RuleFor(venue => venue.Email)
             .NotEmpty().WithMessage("Email is required.")
