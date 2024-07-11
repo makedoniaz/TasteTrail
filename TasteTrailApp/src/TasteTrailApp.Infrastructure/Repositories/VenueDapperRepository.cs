@@ -20,7 +20,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             return await connection.ExecuteAsync(sql: 
                 @"Insert into venue (Name, Address, Description, ContactNumber, Email, LogoUrlPath, AveragePrice, OverallRating) 
-                Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoUrlPath, @AveragePrice, @OverallRating)", 
+                Values (@Name, @Address, @Description, @ContactNumber, @Email, @AveragePrice, @OverallRating)", 
                 param: entity
             );
         }
