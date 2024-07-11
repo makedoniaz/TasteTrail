@@ -163,7 +163,8 @@ else
                     } else {
                         alert('Failed to delete menu-item.');
                     }
-                });
+                })
+                .catch(ex => console.log(ex))
         }
     }
 </script>
