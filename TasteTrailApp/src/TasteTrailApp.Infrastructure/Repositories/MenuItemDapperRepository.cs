@@ -73,8 +73,8 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.QueryAsync<MenuItem>(
-                sql: "Select * From menuitem Where menuitem.menuId = @menuId",
-                param: menuId
+                sql: "Select * From menuitem Where menuitem.menuId = @MenuId",
+                param: new { MenuId = menuId }
             );
         }
     }
