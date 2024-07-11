@@ -27,7 +27,7 @@ public class MenuController : Controller
     }
 
     [HttpGet]
-    [Route("[action]/{menuId:int}")]
+    [Route("[action]/{menuId:int}", Name="MenuDetails")]
     public async Task<IActionResult> MenuDetails(int menuId)
     {
          try

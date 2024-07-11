@@ -15,7 +15,7 @@
     <div>
         <label asp-for="Name">Venue Name:</label>
         <input asp-for="Name" type="text" />
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="Name"></span> 
     </div>
     <div>
         <label asp-for="OverallRating">Overall Rating:</label>
@@ -51,27 +51,27 @@
     <div>
         <label asp-for="Email">Email:</label>
         <input asp-for="Email" type="text" />
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="Email"></span> 
     </div>
     <div>
         <label asp-for="Address">Address:</label>
         <input asp-for="Address" type="text" />
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="Address"></span> 
     </div>
     <div>
         <label asp-for="ContactNumber">ContactNumber:</label>
         <input asp-for="ContactNumber" type="text" />
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="ContactNumber"></span> 
     </div>
     <div>
         <label asp-for="AveragePrice">AveragePrice:</label>
         <input asp-for="AveragePrice" type="number" />
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="AveragePrice"></span> 
     </div>
     <div>
         <label asp-for="Description">Description:</label>
         <textarea asp-for="Description"></textarea>
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <span class="text-danger" asp-validation-for="Description"></span> 
     </div>
     <button type="submit">Add Menu Item</button>
 </form>
