@@ -1,3 +1,5 @@
+using System.Reflection;
+using FluentValidation;
 using TasteTrailApp.Core.Repositories;
 using TasteTrailApp.Core.Services.Base;
 using TasteTrailApp.Infrastructure.Context;
@@ -29,6 +31,12 @@ builder.Services.AddTransient<IVenueService, VenueService>();
 builder.Services.AddTransient<IMenuItemService, MenuItemService>();
 builder.Services.AddTransient<IMenuService, MenuSerivce>();
 builder.Services.AddTransient<IVenuePhotosService, VenuePhotosService>();
+
+#endregion
+
+#region [ Fluent Validation ]
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 #endregion
 
