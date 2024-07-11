@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using TasteTrailApp.Core.Models;
 using TasteTrailApp.Core.Services.Base;
+using TasteTrailApp.Presentation.ViewModels;
 
 namespace TasteTrailApp.Presentation.Controllers;
 
@@ -7,105 +9,102 @@ namespace TasteTrailApp.Presentation.Controllers;
 public class MenuController : Controller
 {
     // private readonly IValidator<Venue> _validator;
-    private readonly IVenueService _venueService;
+    private readonly IMenuService _menuService;
+    private readonly IMenuItemService _menuItemService;
 
-    public MenuController(IVenueService venueService) //IValidator<Venue> validator, 
+    public MenuController(IMenuService menuService, IMenuItemService menuItemService) //IValidator<Venue> validator, 
     {
         // this._validator = validator;
-        this._venueService = venueService;
+        this._menuService = menuService;
+        this._menuItemService = menuItemService;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var venues = await this._venueService.GetByCountAsync(1);
-        return base.View(model: venues);
+        var menus = await this._menuService.GetAllAsync();
+        return base.View(model: menus);
     }
 
-    // [HttpGet]
-    // [Route("/[controller]/{venueId:Guid}")]
-    // public async Task<IActionResult> VenuetInfo(Guid venueId)
-    // {
-    //     try
-    //     {
-    //         var venue = await this._venueService.GetVenueAsync(id: venueId);
-    //         return base.View(model: venue);
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // }
+    [HttpGet]
+    [Route("[action]/{menuId:int}")]
+    public async Task<IActionResult> MenuDetails(int menuId)
+    {
+         try
+        {
+            var viewmodel = new MenuViewModel()
+            {
+                Menu = await this._menuService.GetByIdAsync(id: menuId),
+                MenuItems = await this._menuItemService.GetAllMenuItemsByMenuId(menuId)
+            };
+
+            return base.View(model: viewmodel);
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        } 
+    }
 
     [HttpGet]
-    [Route("[action]", Name = "CreateMenuPage")]
-    public IActionResult Create()
+    [Route("[action]/{venueId}", Name = "CreateMenuPage")]
+    public IActionResult Create(int venueId)
     {
+        TempData["VenueId"] = venueId;
         return base.View();
     }
 
-    // [HttpPost(Name = "CreateVenueApi")]
-    // public async Task<IActionResult> Create(Venue newVenue)
-    // {
-    //     try
-    //     {
-    //         var validatorResult = this._validator.Validate(instance: newVenue);
-    //         if (!validatorResult.IsValid)
-    //         {
-    //             foreach (var error in validatorResult.Errors)
-    //             {
-    //                 base.ModelState.AddModelError(key: error.PropertyName, errorMessage: error.ErrorMessage);
-    //             }
+    [HttpPost(Name = "CreateMenuApi")]
+    [Route("[action]")]
+    public async Task<IActionResult> Create(Menu newMenu)
+    {
+        try
+        {
+            // var validatorResult = this._validator.Validate(instance: newVenue);
+            // if (!validatorResult.IsValid)
+            // {
+            //     foreach (var error in validatorResult.Errors)
+            //     {
+            //         base.ModelState.AddModelError(key: error.PropertyName, errorMessage: error.ErrorMessage);
+            //     }
 
-    //             return base.View(viewName: "Create");
-    //         }
+            //     return base.View(viewName: "Create");
+            // }
+            newMenu.VenueId = (int)TempData["VenueId"]!;
+            await this._menuService.CreateAsync(entity: newMenu);
+            return base.RedirectToRoute(routeName: "VenueDetails", new { venueId = (int)TempData["VenueId"]! });
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
 
-    //         await this._venueService.CreateVenueAsync(newDepartment: newVenue);
-    //         return base.RedirectToAction(actionName: "Index");
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // } 
+    [HttpPut]
+    public async Task<IActionResult> UpdateDepartment([FromBody] Menu newMenu)
+    {
+        try
+        {
+            await this._menuService.PutAsync(entity: newMenu);
+            return base.Ok();
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
 
-    // [HttpPut]
-    // public async Task<IActionResult> UpdateDepartment([FromBody] Venue venue)
-    // {
-    //     try
-    //     {
-    //         await this._venueService.UpdateVenueAsync(id: venue.Id, newVenue: venue);
-    //         return base.Ok();
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // }
-
-    // [HttpDelete("{venueId:Guid}")]
-    // public async Task<IActionResult> DeleteDepartment(Guid venueId)
-    // {
-    //     try
-    //     {
-    //         await this._venueService.DeleteVenueByIdAsync(id: venueId);
-    //         return base.Ok();
-    //     }
-    //     catch (System.Exception ex)
-    //     {
-    //         return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-    //     }
-    // }
+    [HttpDelete("{menuId:int}")]
+    public async Task<IActionResult> DeleteDepartment(int menuId)
+    {
+        try
+        {
+            await this._menuService.DeleteByIdAsync(id: menuId);
+            return base.Ok();
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
 }
-
-//  [HttpGet]
-//     [Route("/[controller]")]
-//     public async Task<IActionResult> Index()
-//     {
-//         var model = new MenuViewModel
-//         { 
-//             MenusItem = await this._menuItemService.GetAllMenuItemsAsync()
-//             Menus = await this._menuService.GetAllMenusAsync()
-//         };
-//         return base.View(model);
-//     }

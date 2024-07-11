@@ -3,11 +3,11 @@
 }
 
 <form asp-route="CreateMenuItemApi" method="post" class="createForm" enctype="multipart/form-data">
-    <div class="row custom-file">
-        <label for="PhotoUrlPath" class="image-upload-label" id="file-name">Upload Photo</label> @*asp-for*@
+    @* <div class="row custom-file">
+        <label for="PhotoUrlPath" class="image-upload-label" id="file-name">Upload Photo</label>
         <input name="PhotoUrlPath" id="PhotoUrlPath" class="custom-file-input" type="file"
-            onchange="updateFileName(this)"> @*asp-for*@
-    </div>
+            onchange="updateFileName(this)">
+    </div> *@
     <div>
         <label for="Name">Menu Item Name:</label> @*asp-for*@
         <input name="Name" id="Name" type="text" /> @*asp-for*@
@@ -32,7 +32,7 @@
         <input name="Price" id="Price" type="number" /> @*asp-for*@
         <span class="text-danger"></span> @* asp-validation-for="Name" *@
     </div>
-    <div>
+    @* <div>
         <label for="Menus">Select Menus:</label>
         <div>
         </div>
@@ -55,17 +55,17 @@
                     <td>Name1</td>
                     <td>Description1</td>
                 </tr>
-                @* @foreach (var menuItem in Model.MenuItems)
+                 @foreach (var menuItem in Model.MenuItems)
                 {
                 <tr>
                 <td><input type="checkbox" name="MenuItemIds" value="@menuItem.Id" /></td>
                 <td>@menuItem.Name</td>
                 <td>@menuItem.Description</td>
                 </tr>
-                } *@
+                } 
             </tbody>
         </table>
-        <span class="text-danger"></span> @* asp-validation-for="MenuItemIds" *@
+        <span class="text-danger"></span> asp-validation-for="MenuItemIds" 
     </div>
     <div>
         <label for="Description">Description:</label>

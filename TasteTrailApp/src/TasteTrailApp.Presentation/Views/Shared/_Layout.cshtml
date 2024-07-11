@@ -32,43 +32,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"  asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="Index">Venue  Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="VenueDetails">Venue Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-route="CreateVenuePage">Create Venue by zina</a>
-                        </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="Index">Venue Page</a>
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="Index">Menu Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="MenuDetails">Menu Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="CreateMenu">Create Menu</a>
-                        </li>
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="Index">Menu Item Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="MenuItemDetails">MenuItem Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="CreateMenuItem">Create Menu Item</a>
-                        </li>
+                        </li> 
 
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <form class="form-inline d-flex my-2 my-lg-0">
                                 <input class="form-control mr-sm-1 m-1" type="search" placeholder="Search"
                                     aria-label="Search">
                                 <button class="btn btn-outline-success my-2 my-sm-1 m-1" type="submit">Search</button>
                             </form>
-                        </li>
+                        </li> *@
 
                     </ul>
 
@@ -88,12 +67,12 @@
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 m-1"></main>
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top border-dark footer text-muted m-1">
         <div class="container">
             &copy; 2024 - TasteTrailApp.Presentation - <a asp-area="" asp-controller="Home"
                 asp-action="Privacy">Privacy</a>

@@ -1,5 +1,7 @@
-﻿@{
+﻿@model VenueViewModel
+@{
     ViewData["Title"] = "Venue Details";
+
 }
 
 <div class="container mt-4">
@@ -9,153 +11,189 @@
             <div id="photoSlideshow" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="/images/animeCard.jpg" class="d-block w-100" alt="Restourant Photo 1">
+                        <img src="@(Model.Venue.LogoUrlPath ?? "/images/not-available.jpg")" class="d-block w-100"
+                            alt="Restourant Photo">
+                    </div>
+                    @* <div class="carousel-item">
+                    <img src="/images/animeCard.jpg" class="d-block w-100" alt="Restourant Photo 2">
                     </div>
                     <div class="carousel-item">
-                        <img src="/images/animeCard.jpg" class="d-block w-100" alt="Restourant Photo 2">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/images/animeCard.jpg" class="d-block w-100" alt="Restourant Photo 3">
-                    </div>
+                    <img src="/images/animeCard.jpg" class="d-block w-100" alt="Restourant Photo 3">
+                    </div> *@
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#photoSlideshow"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                @* <button class="carousel-control-prev" type="button" data-bs-target="#photoSlideshow"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#photoSlideshow"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button> *@
             </div>
         </div>
         <div class="col-md-8">
-            <h1 class="mb-3">Restourant Title</h1>
+            <h1 class="mb-3">@Model.Venue.Name</h1>
             <!-- Rating -->
-            <div class="rating" data-rating="4.5">
+            <div class="rating" data-rating="@Model.Venue.OverallRating">
                 <span class="text-warning">
-                    <i class="fas fa-star star" data-value="1"></i>
-                    <i class="fas fa-star star" data-value="2"></i>
-                    <i class="fas fa-star star" data-value="3"></i>
-                    <i class="fas fa-star star" data-value="4"></i>
-                    <i class="far fa-star star" data-value="5"></i>
+                    @for (var i = 0; i < Model.Venue.OverallRating; i++)
+                    {
+                        <i class="fas fa-star star"></i>
+                    }
+                    @if (Model.Venue.OverallRating < 5)
+                    {
+                        for (var j = Model.Venue.OverallRating; j < 5; j++)
+                        {
+                            <i class="far fa-star star"></i>
+                        }
+                    }
                 </span>
-                <span class="badge bg-secondary ms-2">4.5</span>
+                <span class="badge bg-secondary ms-2">@Model.Venue.OverallRating</span>
             </div>
             <!-- Tags -->
-            <div class="mt-3">
-                <span class="badge bg-primary">Family-friendly</span>
-                <span class="badge bg-secondary">Outdoor Seating</span>
-                <span class="badge bg-success">Vegetarian Options</span>
-                <span class="badge bg-danger">Pet-friendly</span>
-            </div>
+            @* <div class="mt-3">
+            <span class="badge bg-primary">Family-friendly</span>
+            <span class="badge bg-secondary">Outdoor Seating</span>
+            <span class="badge bg-success">Vegetarian Options</span>
+            <span class="badge bg-danger">Pet-friendly</span>
+            </div> *@
             <!-- Description -->
-            <p class="mt-3"><strong>Description: </strong>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempore rerum aspernatur labore porro. Unde nisi nesciunt totam fugiat exercitationem, asperiores
-                accusantium facere. Illum, libero beatae dolores obcaecati temporibus quod atque.</p>
-            <!-- Menu -->
-            <div class="mt-5">
-                <h2>Menu</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul>
-                            <li>Item 1 - $10</li>
-                            <li>Item 2 - $12</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <p class="mt-3"><strong>Description: </strong>@Model.Venue.Description</p>
+            <p class="mt-3"><strong>Email: </strong>@Model.Venue.Email</p>
+            <p class="mt-3"><strong>Address: </strong>@Model.Venue.Address</p>
+            <p class="mt-3"><strong>Contact Number: </strong>@Model.Venue.ContactNumber</p>
+            <p class="mt-3"><strong>Average Price: </strong>@Model.Venue.AveragePrice</p> 
+
         </div>
     </div>
+        <a asp-route="CreateMenuPage" asp-route-venueId="@Model.Venue.Id" class="btn btn-primary w-25 mt-5 mb-3">Create new Menu</a>
+    <div class="row">
 
-    <!-- Location Section -->
-    <div class="mt-5">
-        <h2>Location</h2>
-        <div id="map" style="height: 300px;"></div>
-    </div>
 
-    <!-- Feedback Section -->
-    <div class="mt-5">
-        <h2>Reviews</h2>
-        <div class="list-group">
-            <div class="list-group-item d-flex align-items-start">
-                <img src="/images/user.png" class="rounded-circle me-3" alt="Alice's logo" style="width: 50px;">
-                <div>
-                    <h5 class="mb-1">Alice</h5>
-                    <div class="rating" data-rating="5">
-                        <span class="text-warning">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </span>
-                        <span class="badge bg-secondary ms-2">5.0</span>
+        @foreach (var menu in Model.Menus)
+        {
+            <div class="col-md-3 restaurantItem mb-4" data-title="Restourant Title 1" data-date="2023-01-02">
+                <div class="card mb-4 restorantCard h-100 w-100">
+                    <div class="card-body">
+                        <h5 class="card-title m-2">@menu.Name</h5>
+                        <p class="card-text m-2  ">@menu.Description</p>
+                        <div class="venue-actions m-1">
+                            <a asp-controller="Menu" asp-action="MenuDetails" asp-route-menuId="@menu?.Id" class="btn btn-primary m-1">Menu Details</a>
+                            <br>
+                            @* <button class="update-btn btn-close-white m-1"
+                        onclick="showUpdateForm('@menu!.Id')">Update</button> *@
+                            <button class="delete-btn btn-danger  m-1" onclick="deleteMenu('@menu!.Id')">Delete</button>
+                        </div>
                     </div>
-                    <p class="mb-1">The ambiance is fantastic and the food is even better. Highly recommend the
-                        appetizers!</p>
-                    <small class="text-muted">Posted on 2023-01-01</small>
-                    <!-- Edit Button in Footer -->
-                    <div class="mt-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
-                                class="fas fa-pencil-alt"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="list-group-item d-flex align-items-start">
-                <img src="/images/user.png" class="rounded-circle me-3" alt="Bob's logo" style="width: 50px;">
-                <div>
-                    <h5 class="mb-1">Bob</h5>
-                    <div class="rating" data-rating="4">
-                        <span class="text-warning">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </span>
-                        <span class="badge bg-secondary ms-2">4.0</span>
-                    </div>
-                    <p class="mb-1">Great place for a family outing. The outdoor seating is perfect for sunny days.</p>
-                    <small class="text-muted">Posted on 2023-01-02</small>
-                    <!-- Edit Button in Footer -->
-                    <div class="mt-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
-                                class="fas fa-pencil-alt"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Comment Form Section -->
-    <div class="mt-5" id="commentFormSection" style="display: none;">
-        <h2>Add/Edit Comment</h2>
-        <form id="commentForm">
-            <div class="mb-3">
-                <label for="commentName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="commentName" required>
-            </div>
-            <div class="mb-3">
-                <label for="commentRating" class="form-label">Rating</label>
-                <select class="form-select" id="commentRating" required>
-                    <option value="">Select Rating</option>
-                    <option value="5">5 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="2">2 Stars</option>
-                    <option value="1">1 Star</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="commentMessage" class="form-label">Comment</label>
-                <textarea class="form-control" id="commentMessage" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit Comment</button>
-        </form>
+                </div></div>
+        }
     </div>
 </div>
+
+<!-- Location Section -->
+<div class="mt-5">
+    <h2>Location</h2>
+    <div id="map" style="height: 300px;"></div>
+</div>
+
+<!-- Feedback Section -->
+@* <div class="mt-5">
+<h2>Reviews</h2>
+<div class="list-group">
+<div class="list-group-item d-flex align-items-start">
+<img src="/images/user.png" class="rounded-circle me-3" alt="Alice's logo" style="width: 50px;">
+<div>
+<h5 class="mb-1">Alice</h5>
+<div class="rating" data-rating="5">
+<span class="text-warning">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+</span>
+<span class="badge bg-secondary ms-2">5.0</span>
+</div>
+<p class="mb-1">The ambiance is fantastic and the food is even better. Highly recommend the
+appetizers!</p>
+<small class="text-muted">Posted on 2023-01-01</small>
+<!-- Edit Button in Footer -->
+<div class="mt-2">
+<button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
+class="fas fa-pencil-alt"></i></button>
+</div>
+</div>
+</div>
+<div class="list-group-item d-flex align-items-start">
+<img src="/images/user.png" class="rounded-circle me-3" alt="Bob's logo" style="width: 50px;">
+<div>
+<h5 class="mb-1">Bob</h5>
+<div class="rating" data-rating="4">
+<span class="text-warning">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="far fa-star"></i>
+</span>
+<span class="badge bg-secondary ms-2">4.0</span>
+</div>
+<p class="mb-1">Great place for a family outing. The outdoor seating is perfect for sunny days.</p>
+<small class="text-muted">Posted on 2023-01-02</small>
+<!-- Edit Button in Footer -->
+<div class="mt-2">
+<button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
+class="fas fa-pencil-alt"></i></button>
+</div>
+</div>
+</div>
+</div>
+</div> *@
+
+<!-- Comment Form Section -->
+<div class="mt-5" id="commentFormSection" style="display: none;">
+    <h2>Add/Edit Comment</h2>
+    <form id="commentForm">
+        <div class="mb-3">
+            <label for="commentName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="commentName" required>
+        </div>
+        <div class="mb-3">
+            <label for="commentRating" class="form-label">Rating</label>
+            <select class="form-select" id="commentRating" required>
+                <option value="">Select Rating</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="commentMessage" class="form-label">Comment</label>
+            <textarea class="form-control" id="commentMessage" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</div>
+</div>
+
+<style>
+    button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #4cae4c;
+    }
+</style>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -166,36 +204,36 @@
 
     <script>
         $(document).ready(function () {
-            const stars = $('.rating .star');
+        @* const stars = $('.rating .star');
 
             stars.on('click', function () {
-                const value = parseInt($(this).data('value'));
-                const container = $(this).closest('.rating');
-                const restaurantRatingElement = container.find('.badge');
-                const restaurantRating = parseFloat(container.data('rating'));
+            const value = parseInt($(this).data('value'));
+            const container = $(this).closest('.rating');
+            const restaurantRatingElement = container.find('.badge');
+            const restaurantRating = parseFloat(container.data('rating'));
 
-                stars.removeClass('fas fa-star fa-star-half-alt far');
+            stars.removeClass('fas fa-star fa-star-half-alt far');
 
-                for (let i = 0; i < value; i++) {
-                    stars.eq(i).addClass('fas fa-star');
-                }
+            for (let i = 0; i < value; i++) {
+            stars.eq(i).addClass('fas fa-star');
+            }
 
-                if (value < 5) {
-                    for (let j = value; j < stars.length; j++) {
-                        stars.eq(j).addClass('far fa-star');
-                    }
-                }
+            if (value < 5) {
+            for (let j = value; j < stars.length; j++) {
+            stars.eq(j).addClass('far fa-star');
+            }
+            }
 
-                restaurantRatingElement.text(value.toFixed(1));
-                container.data('rating', value.toFixed(1));
-            });
+            restaurantRatingElement.text(value.toFixed(1));
+            container.data('rating', value.toFixed(1));
+            }); *@
 
-            // Edit Feedback Button Click Handler
-            $('.edit-feedback').click(function () {
-                $('#commentFormSection').slideDown();
-                // Add logic to populate form with existing feedback data based on your backend implementation
-                // Example: Fetch data and populate the form fields based on the selected feedback.
-            });
+                // Edit Feedback Button Click Handler
+                $('.edit-feedback').click(function () {
+                    $('#commentFormSection').slideDown();
+                    // Add logic to populate form with existing feedback data based on your backend implementation
+                    // Example: Fetch data and populate the form fields based on the selected feedback.
+                });
 
             // Initialize the map with Leaflet
             var map = L.map('map').setView([40.3820624, 49.877007], 15);
@@ -208,5 +246,25 @@
             L.marker([40.3820624, 49.877007]).addTo(map)
                 .bindPopup("<b>Хатай</b><br>Баку, Азербайджан").openPopup();
         });
+    </script>
+    <script>
+        function deleteMenu(id) {
+            if (confirm('Are you sure you want to delete this menu?')) {
+                fetch(`/Menu/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+
+                            window.location.reload();
+                        } else {
+                            alert('Failed to delete venue.');
+                        }
+                    });
+            }
+        }
     </script>
 }

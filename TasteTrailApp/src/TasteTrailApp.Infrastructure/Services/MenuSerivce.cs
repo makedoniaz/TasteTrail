@@ -35,7 +35,7 @@ namespace TasteTrailApp.Infrastructure.Services
             return result;
         }
 
-        public async Task<IEnumerable<Menu>> GetAllByMenusVenueId(int venueId)
+        public async Task<IEnumerable<Menu>> GetAllMenusByVenueId(int venueId)
         {
             var menus = await menuRepository.GetAllByVenueId(venueId);
             return menus;

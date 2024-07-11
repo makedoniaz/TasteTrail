@@ -39,6 +39,8 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<Venue?> GetByIdAsync(int id)
         {
+            var query = "Select * From venue Where Id = @Id";
+
             using var connection = this.context.CreateConnection();
 
             var result = await connection.QueryFirstOrDefaultAsync<Venue>(
