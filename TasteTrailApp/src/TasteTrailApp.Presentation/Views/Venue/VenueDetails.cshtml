@@ -1,7 +1,7 @@
 ﻿@model VenueViewModel
 @{
     ViewData["Title"] = "Venue Details";
-
+    var path = Model.Venue.LogoUrlPath == null ? "/images/not-available.jpg" : "/" + Model.Venue.LogoUrlPath;
 }
 
 <div class="container mt-4">
@@ -11,7 +11,7 @@
             <div id="photoSlideshow" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="@(Model.Venue.LogoUrlPath ?? "/images/not-available.jpg")" class="d-block w-100"
+                        <img src="@path" class="d-block w-100"
                             alt="Restourant Photo">
                     </div>
                     @* <div class="carousel-item">

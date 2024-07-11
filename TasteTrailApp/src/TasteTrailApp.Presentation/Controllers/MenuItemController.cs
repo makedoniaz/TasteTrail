@@ -24,8 +24,8 @@ public class MenuItemController : Controller
     }
 
     [HttpGet]
-    [Route("/[controller]/{menuItemId:int}")]
-    public async Task<IActionResult> MenuItemInfo(int menuItemId)
+    [Route("[action]/{menuItemId}")]
+    public async Task<IActionResult> MenuItemDetails(int menuItemId)
     {
         try
         {
@@ -63,7 +63,7 @@ public class MenuItemController : Controller
             // }
             newMenuItem.MenuId = (int)TempData["MenuId"]!;
             await this._menuItemService.CreateAsync(entity: newMenuItem);
-            return base.RedirectToAction(actionName: "Index");
+            return base.RedirectToRoute(routeName: "MenuDetails", new { menuId = (int)TempData["MenuId"]! });
         }
         catch (System.Exception ex)
         {
@@ -72,7 +72,7 @@ public class MenuItemController : Controller
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateDepartment([FromBody] MenuItem newMenuItem)
+    public async Task<IActionResult> Update([FromBody] MenuItem newMenuItem)
     {
         try
         {
@@ -86,7 +86,7 @@ public class MenuItemController : Controller
     }
 
     [HttpDelete("{menuItemId:int}")]
-    public async Task<IActionResult> DeleteDepartment(int menuItemId)
+    public async Task<IActionResult> Delete(int menuItemId)
     {
         try
         {

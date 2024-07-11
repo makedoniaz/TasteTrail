@@ -81,7 +81,7 @@ public class MenuController : Controller
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateDepartment([FromBody] Menu newMenu)
+    public async Task<IActionResult> Update([FromBody] Menu newMenu)
     {
         try
         {
@@ -95,7 +95,7 @@ public class MenuController : Controller
     }
 
     [HttpDelete("{menuId:int}")]
-    public async Task<IActionResult> DeleteDepartment(int menuId)
+    public async Task<IActionResult> Delete(int menuId)
     {
         try
         {

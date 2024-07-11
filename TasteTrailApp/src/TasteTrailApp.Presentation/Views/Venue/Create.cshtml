@@ -5,11 +5,12 @@
 
 <form asp-route="CreateVenueApi" method="post" class="createForm" enctype="multipart/form-data">
     <div class="row custom-file">
-        @* <label asp-for="LogoUrlPath" class="image-upload-label" id="file-name">Upload Logo</label>
-        <input asp-for="LogoUrlPath" class="custom-file-input" type="file" onchange="updateFileName(this)"> *@
-
-        <label for="logo" class="d-block h5 mb-2 text-dark">Venue logo:</label>
-        <input class="form-control" type="file" name="logo">
+        @* <label class="image-upload-label"  for="logo"  id="file-name">Upload Logo</label>
+        <input class= "custom-file-input"  name="logo" type="file" onchange="updateFileName(this)">
+       <hr>  *@
+        <label for="logo" class="custom-file-label">Venue logo:</label>
+        <input class="custom-file-input"   type="file" name="logo"> 
+       
     </div>
     <div>
         <label asp-for="Name">Venue Name:</label>
@@ -19,15 +20,15 @@
     <div>
         <label asp-for="OverallRating">Overall Rating:</label>
         <input asp-for="OverallRating" type="number" hidden/> 
-        <div class="rating" data-rating="4">
+        <div class="rating" data-rating="0">
             <span class="text-warning">
-                <i class="fas fa-star star" data-value="1"></i>
-                <i class="fas fa-star star" data-value="2"></i>
-                <i class="fas fa-star star" data-value="3"></i>
-                <i class="fas fa-star star" data-value="4"></i>
+                <i class="far fa-star star" data-value="1"></i>
+                <i class="far fa-star star" data-value="2"></i>
+                <i class="far fa-star star" data-value="3"></i>
+                <i class="far fa-star star" data-value="4"></i>
                 <i class="far fa-star star" data-value="5"></i>
             </span>
-            <span class="badge bg-secondary ms-2">4</span>
+            <span class="badge bg-secondary ms-2">0</span>
         </div>
         <span class="text-danger" asp-validation-for="OverallRating"></span>
     </div>
@@ -108,10 +109,7 @@
         background-color: #16a085;
         color: white;
     }
-
-    .custom-file-input {
-        display: none;
-    }
+ 
 
     .createForm div label {
         display: block;

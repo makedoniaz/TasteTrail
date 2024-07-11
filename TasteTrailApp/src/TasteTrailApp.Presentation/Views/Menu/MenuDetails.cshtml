@@ -36,6 +36,37 @@
             </div>
         </div>
     </div>
+</div> *@
+
+ 
+
+
+<div class="container mt-4">
+    <div class="row"> 
+        <div class="col-md-8">
+            <h1 class="mb-3">@Model.Menu.Name</h1>
+            <p class="mt-3"><strong>Description: </strong>@Model.Menu.Description</p> 
+        </div>
+    </div>
+        <a asp-route="CreateMenuItemPage" asp-route-menuId="@Model.Menu.Id" class="btn btn-primary w-25 mt-2 mb-3">Create new MenuItem</a>
+    <div class="row">
+        @foreach (var menuItem in Model.MenuItems)
+        {
+            <div class="col-md-3 restaurantItem mb-4" data-title="Restourant Title 1" data-date="2023-01-02">
+                <div class="card mb-4 restorantCard h-100 w-100">
+                    <div class="card-body">
+                        <h5 class="card-title m-2">@menuItem.Name</h5>
+                        <p class="card-text m-2  ">@menuItem.Description</p>
+                        <div class="venue-actions m-1">
+                            <a asp-controller="MenuItem" asp-action="MenuItemDetails" asp-route-menuItemId="@menuItem?.Id" class="btn btn-primary m-1">Menu Item Details</a>
+                            <br>
+                            @* <button class="update-btn btn-close-white m-1" onclick="showUpdateForm('@menu!.Id')">Update</button> *@
+                            <button class="delete-btn btn-danger  m-1" onclick="deleteMenuItem('@menuItem!.Id')">Delete</button>
+                        </div>
+                    </div>
+                </div></div>
+        }
+    </div>
 </div>
 
 <style>
@@ -57,10 +88,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-     <script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    
+    <script>
         function deleteMenuItem(id) {
-            if (confirm('Are you sure you want to delete this menu item?')) {
-                fetch(`/MenuItem/${id}`, {
+            if (confirm('Are you sure you want to delete this menu?')) {
+                fetch(`/Menu/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -78,4 +113,5 @@
         }
     </script>
 }
-} *@
+
+

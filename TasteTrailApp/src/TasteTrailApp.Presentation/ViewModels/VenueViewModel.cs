@@ -8,7 +8,7 @@ namespace TasteTrailApp.Presentation.ViewModels;
 
 public class VenueViewModel
 {
-    public Venue Venue { get; set; }
-    public IEnumerable<Menu> Menus { get; set; }
+    public Venue? Venue { get; set; }
+    public IEnumerable<Menu>? Menus { get; set; }
     
 }

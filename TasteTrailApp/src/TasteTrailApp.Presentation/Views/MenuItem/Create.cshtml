@@ -1,78 +1,42 @@
-﻿@{
+﻿@model MenuItem
+@{
     ViewData["Title"] = "Create Menu Item Page";
 }
 
-<form asp-route="CreateMenuItemApi" method="post" class="createForm" enctype="multipart/form-data">
-    @* <div class="row custom-file">
-        <label for="PhotoUrlPath" class="image-upload-label" id="file-name">Upload Photo</label>
-        <input name="PhotoUrlPath" id="PhotoUrlPath" class="custom-file-input" type="file"
-            onchange="updateFileName(this)">
-    </div> *@
+<form asp-route="CreateMenuItemApi" method="post" class="createForm" enctype="multipart/form-data"> 
     <div>
-        <label for="Name">Menu Item Name:</label> @*asp-for*@
-        <input name="Name" id="Name" type="text" /> @*asp-for*@
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <label asp-for="Name">Menu Item Name:</label> 
+        <input asp-for="Name" type="text" /> 
+        <span class="text-danger"  asp-validation-for="Name"></span> 
     </div>
     <div>
-        <label for="PopularityRate">Popularity Rate:</label> @*asp-for*@
-        <div class="rating" data-rating="4.5"> @*asp-for*@
+       <label asp-for="PopularityRate">Overall Rating:</label>
+        <input asp-for="PopularityRate" type="number" hidden/> 
+        <div class="rating" data-rating="0">
             <span class="text-warning">
-                <i class="fas fa-star star" data-value="1"></i>
-                <i class="fas fa-star star" data-value="2"></i>
-                <i class="fas fa-star star" data-value="3"></i>
-                <i class="fas fa-star star" data-value="4"></i>
+                <i class="far fa-star star" data-value="1"></i>
+                <i class="far fa-star star" data-value="2"></i>
+                <i class="far fa-star star" data-value="3"></i>
+                <i class="far fa-star star" data-value="4"></i>
                 <i class="far fa-star star" data-value="5"></i>
             </span>
-            <span class="badge bg-secondary ms-2">4.5</span>
+            <span class="badge bg-secondary ms-2">0</span>
         </div>
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
-    </div>
+        <span class="text-danger" asp-validation-for="PopularityRate"></span>
+    </div> 
     <div>
-        <label for="Price">Price:</label> @*asp-for*@
-        <input name="Price" id="Price" type="number" /> @*asp-for*@
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
+        <label asp-for="Price">Price:</label> 
+        <input asp-for="Price" type="number" /> 
+        <span class="text-danger" asp-validation-for="Price" ></span>
+    </div> 
+     <div>
+        <label asp-for="Description">Description:</label> 
+        <textarea asp-for="Description"></textarea> 
+        <span class="text-danger"asp-validation-for="Description" ></span> 
     </div>
-    @* <div>
-        <label for="Menus">Select Menus:</label>
-        <div>
-        </div>
-        <table id="menusTable">
-            <thead>
-                <tr>
-                    <th> <button type="button" id="toggleSelectAll"><i class="fas fa-check-square"></i></button> </th>
-                    <th>Item Name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" name="MenusIds" /></td>
-                    <td>Name1</td>
-                    <td>Description1</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" name="MenusIds" /></td>
-                    <td>Name1</td>
-                    <td>Description1</td>
-                </tr>
-                 @foreach (var menuItem in Model.MenuItems)
-                {
-                <tr>
-                <td><input type="checkbox" name="MenuItemIds" value="@menuItem.Id" /></td>
-                <td>@menuItem.Name</td>
-                <td>@menuItem.Description</td>
-                </tr>
-                } 
-            </tbody>
-        </table>
-        <span class="text-danger"></span> asp-validation-for="MenuItemIds" 
-    </div>
-    <div>
-        <label for="Description">Description:</label>
-        <textarea name="Description" id="Description"></textarea>
-        <span class="text-danger"></span> @* asp-validation-for="Name" *@
-    </div>
+    
     <button type="submit">Add Menu Item</button>
+    </div>
 </form>
 
 <style>
@@ -188,6 +152,18 @@
         padding: 10px 15px;
         border-radius: 4px;
         cursor: pointer;
+    } 
+    button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #4cae4c;
     }
 </style>
 
@@ -202,15 +178,14 @@
             var fileNameDisplay = document.getElementById('file-name');
             fileNameDisplay.textContent = fileName;
         }
-
-        $(document).ready(function () {
+            $(document).ready(function () {
             const stars = $('.rating .star');
 
             stars.on('click', function () {
                 const value = parseInt($(this).data('value'));
                 const container = $(this).closest('.rating');
                 const restaurantRatingElement = container.find('.badge');
-                const restaurantRating = parseFloat(container.data('rating'));
+                const hiddenInput = $('input[name="OverallRating"]');
 
                 stars.removeClass('fas fa-star fa-star-half-alt far');
 
@@ -226,7 +201,9 @@
 
                 restaurantRatingElement.text(value.toFixed(1));
                 container.data('rating', value.toFixed(1));
-            }); 
+                hiddenInput.val(value);
+            });
+
 
             $('#toggleSelectAll').on('click', function () {
                 var icon = $(this).find('i');

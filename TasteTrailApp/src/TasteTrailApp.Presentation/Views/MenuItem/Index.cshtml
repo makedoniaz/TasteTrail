@@ -85,8 +85,8 @@ else
         var items = document.querySelectorAll('.menu-item-item');
 
         items.forEach(function (item) {
-            var menu-itemName = item.querySelector('.menu-item-details p').textContent.split(':')[1]?.trim().toLowerCase() || '';
-            if (menu - itemName.includes(input)) {
+            var menuitemName = item.querySelector('.menu-item-details p').textContent.split(':')[1]?.trim().toLowerCase() || '';
+            if (menuitemName.includes(input)) {
                 item.style.display = '';
             } else {
                 item.style.display = 'none';
