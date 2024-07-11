@@ -80,8 +80,7 @@
                         <h5 class="card-title m-2">@menu.Name</h5>
                         <p class="card-text m-2  h-25 ">@menu.Description</p>
                         <div class="venue-actions m-1">
-                            <a asp-controller="Menu" asp-action="MenuDetails" asp-route-menuId="@menu?.Id"
-                                class="btn btn-primary m-1">Menu Details</a>
+                            <a asp-controller="Menu" asp-action="MenuDetails" asp-route-menuId="@menu?.Id" class="btn btn-primary m-1">Menu Details</a>
                             <br>
                             @* <button class="update-btn btn-close-white m-1"
                         onclick="showUpdateForm('@menu!.Id')">Update</button> *@

@@ -12,10 +12,3 @@ public class VenueViewModel
     public IEnumerable<Menu> Menus { get; set; }
     
 }
-
-public class MenuViewModel
-{
-    public Menu Menu { get; set; }
-    public IEnumerable<MenuItem> MenuItems { get; set; }
-    
-}
