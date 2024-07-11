@@ -66,8 +66,8 @@ namespace TasteTrailApp.Infrastructure.Services
             var uploadsFolder = Path.Combine(wwwrootPath, "images");
             var extension = new FileInfo(logo.FileName).Extension[1..];
 
-            venue.LogoUrlPath = $"images/{venue.Id}.{extension}";
-            await venueRepository.PutAsync(venue);
+            string logoPath = $"images/{venue.Id}.{extension}";
+            await venueRepository.PatchLogoUrlPathAsync(venue, logoPath);
 
             var filePath = Path.Combine(uploadsFolder, $"{venue.Id}.{extension}");
 

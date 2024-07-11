@@ -7,4 +7,6 @@ public interface IVenueRepository : IGetByCountAsync<Venue>, IGetByIdAsync<Venue
 ICreateAsync<Venue>, IDeleteByIdAsync<int>, IPutAsync<Venue>
 {
     Task<int> CreateAsyncRerturningId(Venue venue);
+
+    Task PatchLogoUrlPathAsync(Venue venue, string logoUrlPath);
 }

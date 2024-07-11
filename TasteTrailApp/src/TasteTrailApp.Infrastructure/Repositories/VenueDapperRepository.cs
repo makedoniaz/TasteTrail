@@ -84,5 +84,15 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             return createdId;
         }
+
+        public async Task PatchLogoUrlPathAsync(Venue venue, string logoUrlPath)
+        {
+            using var connection = this.context.CreateConnection();
+
+            await connection.ExecuteAsync(
+                sql: $@"Update venue Set LogoUrlPath = @LogoUrlPath Where Id = @Id",
+                param: new { LogoUrlPath = logoUrlPath, Id = venue.Id }
+            );
+        }
     }
 }
