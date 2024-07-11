@@ -19,8 +19,16 @@
 
 </div>
 
-<a asp-route="CreateVenuePage" class="btn btn-primary w-25 mt-5 mb-3">Create new Venue</a>
-
+<a asp-route="CreateVenuePage" class="btn btn-primary w-25 mt-2 mb-3">Create new Venue</a>
+@if (!Model.Any())
+{
+    <div class="no-menu-items">
+        <img src="/images/sad-star.png" alt="No venue" class="sad-face" />
+        <p>No venue available at the moment.</p>
+    </div>
+}
+else
+{
 <div class="content mt-3 mt-md-5">
     <div class="container">
         <div class="row restorantsContainers column" id="restorantsContainers">
@@ -105,7 +113,7 @@
         </div>
     </div>
 </div>
-
+}
 
 
 <div id="updateForm" class="update-form" style="display:none;">

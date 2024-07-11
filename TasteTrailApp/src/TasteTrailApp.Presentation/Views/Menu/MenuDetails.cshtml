@@ -52,7 +52,7 @@
     <div class="row">
         @foreach (var menuItem in Model.MenuItems)
         {
-            <div class="col-md-3 restaurantItem mb-4" data-title="Restourant Title 1" data-date="2023-01-02">
+            <div class="col-md-3 restaurantItem mb-4">
                 <div class="card mb-4 restorantCard h-100 w-100">
                     <div class="card-body">
                         <h5 class="card-title m-2">@menuItem.Name</h5>
@@ -93,24 +93,25 @@
 
     
     <script>
-        function deleteMenuItem(id) {
-            if (confirm('Are you sure you want to delete this menu?')) {
-                fetch(`/Menu/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
+       function deleteMenuItem(id) {
+        if (confirm('Are you sure you want to delete this menu-item?')) {
+            fetch(`/MenuItem/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('MenuItem deleted successfully!');
+                        window.location.reload();
+                    } else {
+                        alert('Failed to delete menu-item.');
                     }
                 })
-                    .then(response => {
-                        if (response.ok) {
-
-                            window.location.reload();
-                        } else {
-                            alert('Failed to delete venue.');
-                        }
-                    });
-            }
+                .catch(ex => console.log(ex))
         }
+    }
     </script>
 }
 

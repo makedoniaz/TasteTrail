@@ -32,7 +32,7 @@
      <div>
         <label asp-for="Description">Description:</label> 
         <textarea asp-for="Description"></textarea> 
-        <span class="text-danger"asp-validation-for="Description" ></span> 
+        <span class="text-danger" asp-validation-for="Description" ></span> 
     </div>
     
     <button type="submit">Add Menu Item</button>
@@ -185,7 +185,7 @@
                 const value = parseInt($(this).data('value'));
                 const container = $(this).closest('.rating');
                 const restaurantRatingElement = container.find('.badge');
-                const hiddenInput = $('input[name="OverallRating"]');
+                const hiddenInput = $('input[name="PopularityRate"]');
 
                 stars.removeClass('fas fa-star fa-star-half-alt far');
 
