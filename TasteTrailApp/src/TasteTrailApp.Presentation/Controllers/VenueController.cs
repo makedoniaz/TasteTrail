@@ -3,20 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Services.Base;
 using TasteTrailApp.Core.Models;
 using TasteTrailApp.Presentation.ViewModels;
-// using FluentValidation;
+using FluentValidation;
 
 namespace TasteTrailApp.Presentation.Controllers;
 
 [Route("[controller]")]
 public class VenueController : Controller
 {
-    // private readonly IValidator<Venue> _validator;
+    private readonly IValidator<Venue> _validator;
+
     private readonly IVenueService _venueService;
+
     private readonly IMenuService _menuService;
 
-    public VenueController(IVenueService venueService, IMenuService menuService) //, IValidator<Venue> validator)
+    public VenueController(IVenueService venueService, IMenuService menuService, IValidator<Venue> validator)
     {
-        //this._validator = validator;
+        this._validator = validator;
         this._venueService = venueService;
         this._menuService = menuService;
     }

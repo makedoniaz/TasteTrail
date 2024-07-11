@@ -65,7 +65,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
             return await connection.ExecuteAsync(
                 sql: $@"Update venue Set Name = @Name, Address = @Address, Description = @Description, 
-                        ContactNumber = @ContactNumber, Email = @Email, LogoUrlPath = @LogoUrlPath, AveragePrice = @AveragePrice, 
+                        ContactNumber = @ContactNumber, Email = @Email, AveragePrice = @AveragePrice, 
                         OverallRating = @OverallRating Where Id = @Id",
                 param: entity
             );
