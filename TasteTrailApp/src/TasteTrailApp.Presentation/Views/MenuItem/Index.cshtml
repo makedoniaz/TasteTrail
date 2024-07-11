@@ -92,6 +92,11 @@ else
             }
         });
     }
+
+    </script>
+<script>
+
+
     function showUpdateForm(id) {
         fetchMenuItemAndUpdateForm(id);
     }
@@ -147,8 +152,11 @@ else
             })
             .catch(error => console.error('Error updating menu-item:', error));
     }
+    
+    </script>
+<script>
+
     function deleteMenuItem(id) {
-        alert(1)
         if (confirm('Are you sure you want to delete this menu-item?')) {
             fetch(`/MenuItem/${id}`, {
                 method: 'DELETE',

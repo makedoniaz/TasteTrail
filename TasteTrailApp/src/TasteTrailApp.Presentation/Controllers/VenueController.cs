@@ -49,6 +49,20 @@ public class VenueController : Controller
     }
 
     [HttpGet]
+    [Route("Json/{venueId:int}")]
+    public async Task<IActionResult> GetVenueJson(int venueId)
+    {
+        try
+        { 
+            return base.Json(data: await this._venueService.GetByIdAsync(id: venueId));
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
+
+    [HttpGet]
     [Route("[action]", Name = "CreateVenuePage")]
     public IActionResult Create()
     {

@@ -27,10 +27,10 @@ public class MenuController : Controller
     }
 
     [HttpGet]
-    [Route("[action]/{menuId:int}", Name="MenuDetails")]
+    [Route("[action]/{menuId:int}", Name = "MenuDetails")]
     public async Task<IActionResult> MenuDetails(int menuId)
     {
-         try
+        try
         {
             var viewmodel = new MenuViewModel()
             {
@@ -43,7 +43,21 @@ public class MenuController : Controller
         catch (System.Exception ex)
         {
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-        } 
+        }
+    }
+
+    [HttpGet]
+    [Route("Json/{menuId:int}")]
+    public async Task<IActionResult> GetMenuJson(int menuId)
+    {
+        try
+        {
+            return base.Json(data: await this._menuService.GetByIdAsync(id: menuId));
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
     }
 
     [HttpGet]

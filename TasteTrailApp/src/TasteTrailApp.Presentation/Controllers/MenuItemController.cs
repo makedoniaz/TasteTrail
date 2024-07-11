@@ -39,6 +39,20 @@ public class MenuItemController : Controller
     }
 
     [HttpGet]
+    [Route("Json/{menuItemId:int}")]
+    public async Task<IActionResult> GetMenuItemJson(int menuItemId)
+    {
+        try
+        {
+            return base.Json(data: await this._menuItemService.GetByIdAsync(id: menuItemId));
+        }
+        catch (System.Exception ex)
+        {
+            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
+        }
+    }
+
+    [HttpGet]
     [Route("[action]/{menuId}", Name = "CreateMenuItemPage")]
     public IActionResult Create(int menuId)
     {

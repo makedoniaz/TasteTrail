@@ -61,7 +61,7 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(
-                sql: "Update menu Set Name = @Name, Description = @Description",
+                sql: "Update menu Set Name = @Name, Description = @Description Where Id = @Id",
                 param: entity
             );
         }
