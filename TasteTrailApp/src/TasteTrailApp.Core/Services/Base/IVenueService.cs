@@ -5,7 +5,7 @@ namespace TasteTrailApp.Core.Services.Base
 {
     public interface IVenueService
     {
-        Task CreateAsync(Venue entity, IFormFile? image);
+        Task CreateAsync(Venue venue, IFormFile? logo);
 
         Task<List<Venue>> GetByCountAsync(int count);
 
@@ -14,5 +14,11 @@ namespace TasteTrailApp.Core.Services.Base
         Task DeleteByIdAsync(int id);
         
         Task PutAsync(Venue entity);
+
+        Task SetVenueLogo(Venue venue, IFormFile? logo);
+
+        Task DeleteVenueLogoAsync(int venueId);
+
+        Task<int> CreateAsyncRerturningId(Venue venue);
     }
 }

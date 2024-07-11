@@ -32,7 +32,7 @@ namespace TasteTrailApp.Infrastructure.Services
 
         public async Task<IEnumerable<MenuItem>> GetAllMenuItemsByMenuId(int menuId)
         {
-            var result = await this.GetAllMenuItemsByMenuId(menuId);
+            var result = await this.menuItemRepository.GetAllByMenuId(menuId);
             return result;
         }
 

@@ -19,8 +19,8 @@ namespace TasteTrailApp.Infrastructure.Repositories
             using var connection = this.context.CreateConnection();
 
             return await connection.ExecuteAsync(sql: 
-                @"Insert into venue (Name, Address, Description, ContactNumber, Email, LogoUrlPath, AveragePrice, OverallRating) 
-                Values (@Name, @Address, @Description, @ContactNumber, @Email, @AveragePrice, @OverallRating)", 
+                @"Insert into venue (Name, Address, Description, ContactNumber, Email, LogoPathUrl, AveragePrice, OverallRating) 
+                Values (@Name, @Address, @Description, @ContactNumber, @Email, @LogoPathUrl, @AveragePrice, @OverallRating)", 
                 param: entity
             );
         }
@@ -39,8 +39,6 @@ namespace TasteTrailApp.Infrastructure.Repositories
 
         public async Task<Venue?> GetByIdAsync(int id)
         {
-            var query = "Select * From venue Where Id = @Id";
-
             using var connection = this.context.CreateConnection();
 
             var result = await connection.QueryFirstOrDefaultAsync<Venue>(
@@ -71,6 +69,20 @@ namespace TasteTrailApp.Infrastructure.Repositories
                         OverallRating = @OverallRating Where Id = @Id",
                 param: entity
             );
+        }
+
+        public async Task<int> CreateAsyncRerturningId(Venue venue)
+        {
+            using var connection = this.context.CreateConnection();
+
+            var createdId = await connection.ExecuteScalarAsync<int>(
+                sql: @"Insert into venue (Name, Address, Description, ContactNumber, Email, AveragePrice, OverallRating) 
+                Values (@Name, @Address, @Description, @ContactNumber, @Email, @AveragePrice, @OverallRating)
+                RETURNING Id;", 
+                param: venue
+            );
+
+            return createdId;
         }
     }
 }

@@ -48,21 +48,6 @@ public class VenueController : Controller
     }
 
     [HttpGet]
-    [Route("Json/{venueId:int}")]
-    public async Task<IActionResult> GetDoctorJson(int venueId)
-    {
-        try
-        {
-            var doctor = await this._venueService.GetByIdAsync(id: venueId);
-            return base.Json(data: doctor);
-        }
-        catch (System.Exception ex)
-        {
-            return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
-        }
-    }
-
-    [HttpGet]
     [Route("[action]", Name = "CreateVenuePage")]
     public IActionResult Create()
     {
@@ -71,7 +56,7 @@ public class VenueController : Controller
 
     [HttpPost]
     [Route("/api/[controller]/[action]", Name = "CreateVenueApi")]
-    public async Task<IActionResult> Create(Venue newVenue, IFormFile image)
+    public async Task<IActionResult> Create([FromForm] Venue newVenue, IFormFile? logo)
     {
         try
         {
@@ -86,8 +71,10 @@ public class VenueController : Controller
             //     return base.View(viewName: "Create");
             // }
 
-            await this._venueService.CreateAsync(entity: newVenue, image: image); 
-            // await this._venueService.CreateAsync(entity: newVenue); 
+            var createdId = await this._venueService.CreateAsyncRerturningId(venue: newVenue);
+            var createdVenue = await this._venueService.GetByIdAsync(createdId);
+            await this._venueService.SetVenueLogo(createdVenue, logo);
+
             return base.RedirectToAction(actionName: "Index");
         }
         catch (System.Exception ex)
@@ -115,7 +102,9 @@ public class VenueController : Controller
     {
         try
         {
+            await this._venueService.DeleteVenueLogoAsync(venueId);
             await this._venueService.DeleteByIdAsync(id: venueId);
+            
             return base.Ok();
         }
         catch (System.Exception ex)

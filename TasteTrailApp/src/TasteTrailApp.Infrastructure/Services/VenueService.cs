@@ -14,13 +14,19 @@ namespace TasteTrailApp.Infrastructure.Services
             this.venueRepository = venueRepository;
         }
 
-        public async Task CreateAsync(Venue entity, IFormFile? image)
+        public async Task CreateAsync(Venue entity, IFormFile? logo)
         {
             var changesCount = await this.venueRepository.CreateAsync(entity);
 
             if (changesCount == 0) {
                 throw new InvalidOperationException("Venue delete didn't apply!");
             }
+        }
+
+        public async Task<int> CreateAsyncRerturningId(Venue venue)
+        {
+            var createdId = await this.venueRepository.CreateAsyncRerturningId(venue);
+            return createdId;
         }
 
         public async Task DeleteByIdAsync(int id)
@@ -52,19 +58,31 @@ namespace TasteTrailApp.Infrastructure.Services
                 throw new InvalidOperationException("Venue put didn't apply!");
         }
 
-        public async Task SetVenueLogo(Venue entity, IFormFile? image) {
-            if (image is null)
+        public async Task SetVenueLogo(Venue venue, IFormFile? logo) {
+            if (logo is null)
                 return;
 
             var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             var uploadsFolder = Path.Combine(wwwrootPath, "images");
-            var extension = new FileInfo(image.FileName).Extension[1..];
+            var extension = new FileInfo(logo.FileName).Extension[1..];
 
-            entity.LogoUrlPath = $"images/{entity.Id}.{extension}";
-            var filePath = Path.Combine(uploadsFolder, $"{entity.Id}.{extension}");
+            venue.LogoUrlPath = $"images/{venue.Id}.{extension}";
+            await venueRepository.PutAsync(venue);
+
+            var filePath = Path.Combine(uploadsFolder, $"{venue.Id}.{extension}");
 
             using var newFileStream = File.Create(filePath);
-            await image.CopyToAsync(newFileStream);
+            await logo.CopyToAsync(newFileStream);
+        }
+
+        public async Task DeleteVenueLogoAsync(int venueId)
+        {
+            var venue = await venueRepository.GetByIdAsync(venueId);
+
+            if (venue is null || venue.LogoUrlPath is null)
+                return;
+
+            File.Delete("wwwroot/" +venue.LogoUrlPath);
         }
     }
 }

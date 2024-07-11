@@ -5,8 +5,11 @@
 
 <form asp-route="CreateVenueApi" method="post" class="createForm" enctype="multipart/form-data">
     <div class="row custom-file">
-        <label asp-for="LogoUrlPath" class="image-upload-label" id="file-name">Upload Logo</label>
-        <input asp-for="LogoUrlPath" class="custom-file-input" type="file" onchange="updateFileName(this)">
+        @* <label asp-for="LogoUrlPath" class="image-upload-label" id="file-name">Upload Logo</label>
+        <input asp-for="LogoUrlPath" class="custom-file-input" type="file" onchange="updateFileName(this)"> *@
+
+        <label for="logo" class="d-block h5 mb-2 text-dark">Venue logo:</label>
+        <input class="form-control" type="file" name="logo">
     </div>
     <div>
         <label asp-for="Name">Venue Name:</label>
