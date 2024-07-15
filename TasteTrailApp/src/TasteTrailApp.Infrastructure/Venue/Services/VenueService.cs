@@ -26,7 +26,7 @@ namespace TasteTrailApp.Infrastructure.Venue.Services
 
         public async Task<int> CreateAsyncRerturningId(VenueModel venue)
         {
-            var createdId = await this.venueRepository.CreateAsyncRerturningId(venue);
+            var createdId = await this.venueRepository.CreateAsyncReturningId(venue);
             return createdId;
         }
 

@@ -1,5 +1,7 @@
 using System.Reflection;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using TasteTrailApp.Core.Common.Data;
 
 using TasteTrailApp.Core.Menu.Repositories;
 using TasteTrailApp.Core.Menu.Services;
@@ -35,14 +37,21 @@ builder.Services.AddControllersWithViews();
 //One more
 builder.Services.AddSwaggerGen();
 
+#region [ DI DbContext ]
+
+builder.Services.AddDbContext<TasteTrailDbContext>(
+    (optionsBuilder) => optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"))
+);
+#endregion
+
 #region [ DI Repositories ]
 
-builder.Services.AddSingleton<DapperContext>();
+// builder.Services.AddSingleton<TasteTrailDbContext>();
 
-builder.Services.AddTransient<IMenuItemRepository, MenuItemDapperRepository>();
-builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosDapperRepository>();
-builder.Services.AddTransient<IVenueRepository, VenueDapperRepository>();
-builder.Services.AddTransient<IMenuRepository, MenuDapperRepository>();
+builder.Services.AddTransient<IMenuItemRepository, MenuItemEFCoreRepository>();
+builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosEFCoreRepository>();
+builder.Services.AddTransient<IVenueRepository, VenueEFCoreRepository>();
+builder.Services.AddTransient<IMenuRepository, MenuEFCoreRepository>();
 
 #endregion
 

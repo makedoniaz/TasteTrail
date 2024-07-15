@@ -72,7 +72,7 @@ namespace TasteTrailApp.Infrastructure.Venue.Repositories
             );
         }
 
-        public async Task<int> CreateAsyncRerturningId(VenueModel venue)
+        public async Task<int> CreateAsyncReturningId(VenueModel venue)
         {
             using var connection = this.context.CreateConnection();
 
