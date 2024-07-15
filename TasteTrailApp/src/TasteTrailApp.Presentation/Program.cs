@@ -1,10 +1,31 @@
 using System.Reflection;
 using FluentValidation;
-using TasteTrailApp.Core.Repositories;
-using TasteTrailApp.Core.Services.Base;
+
+using TasteTrailApp.Core.Menu.Repositories;
+using TasteTrailApp.Core.Menu.Services;
+
+using TasteTrailApp.Core.MenuItem.Repositories;
+using TasteTrailApp.Core.MenuItem.Services;
+
+using TasteTrailApp.Core.Venue.Repositories;
+using TasteTrailApp.Core.Venue.Services;
+
+using TasteTrailApp.Core.VenuePhotos.Repositories;
+using TasteTrailApp.Core.VenuePhotos.Services;
+
 using TasteTrailApp.Infrastructure.Context;
-using TasteTrailApp.Infrastructure.Repositories;
-using TasteTrailApp.Infrastructure.Services;
+
+using TasteTrailApp.Infrastructure.Menu.Repositories;
+using TasteTrailApp.Infrastructure.Menu.Services;
+
+using TasteTrailApp.Infrastructure.MenuItem.Repositories;
+using TasteTrailApp.Infrastructure.MenuItem.Services;
+
+using TasteTrailApp.Infrastructure.Venue.Repositories;
+using TasteTrailApp.Infrastructure.Venue.Services;
+
+using TasteTrailApp.Infrastructure.VenuePhotos.Repositories;
+using TasteTrailApp.Infrastructure.VenuePhotos.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System.Data;
-using TasteTrailApp.Infrastructure.Extensions;
+using TasteTrailApp.Infrastructure.Common.Extensions;
 
 namespace TasteTrailApp.Infrastructure.Context
 {
