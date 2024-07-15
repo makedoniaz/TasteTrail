@@ -1,6 +1,7 @@
 using System.Reflection;
 using FluentValidation;
-
+using TasteTrailApp.Core.Feedback.Repositories;
+using TasteTrailApp.Core.Feedback.Services;
 using TasteTrailApp.Core.Menu.Repositories;
 using TasteTrailApp.Core.Menu.Services;
 
@@ -14,7 +15,8 @@ using TasteTrailApp.Core.VenuePhotos.Repositories;
 using TasteTrailApp.Core.VenuePhotos.Services;
 
 using TasteTrailApp.Infrastructure.Context;
-
+using TasteTrailApp.Infrastructure.Feedback.Repositories;
+using TasteTrailApp.Infrastructure.Feedback.Services;
 using TasteTrailApp.Infrastructure.Menu.Repositories;
 using TasteTrailApp.Infrastructure.Menu.Services;
 
@@ -41,8 +43,12 @@ builder.Services.AddSingleton<DapperContext>();
 
 builder.Services.AddTransient<IMenuItemRepository, MenuItemDapperRepository>();
 builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosDapperRepository>();
+
 builder.Services.AddTransient<IVenueRepository, VenueDapperRepository>();
 builder.Services.AddTransient<IMenuRepository, MenuDapperRepository>();
+
+builder.Services.AddTransient<IFeedbackRepository, FeedbackDapperRepository>();
+builder.Services.AddTransient<IFeedbackService, FeedbackService>();
 
 #endregion
 
