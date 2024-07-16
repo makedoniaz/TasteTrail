@@ -1,7 +1,7 @@
 ﻿using MenuItemModel = TasteTrailApp.Core.MenuItem.Models.MenuItem;
 using TasteTrailApp.Core.MenuItem.Repositories;
 using TasteTrailApp.Infrastructure.Context;
-using TasteTrailApp.Core.Common.Data;
+using TasteTrailApp.Infrastructure.Common.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace TasteTrailApp.Infrastructure.MenuItem.Repositories

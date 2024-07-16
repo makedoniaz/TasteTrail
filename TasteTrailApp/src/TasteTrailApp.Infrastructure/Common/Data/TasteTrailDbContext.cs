@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TasteTrailApp.Core.Common.Data.Configuration;
+using TasteTrailApp.Infrastructure.Common.Data.Configuration;
 
 // using Microsoft.AspNetCore.Identity;
 // using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using MenuItemModel = TasteTrailApp.Core.MenuItem.Models.MenuItem;
 using VenueModel = TasteTrailApp.Core.Venue.Models.Venue;
 using VenuePhotosModel = TasteTrailApp.Core.VenuePhotos.Models.VenuePhotos;
 
-namespace TasteTrailApp.Core.Common.Data;
+namespace TasteTrailApp.Infrastructure.Common.Data;
 public class TasteTrailDbContext : DbContext //: IdentityDbContext<User, IdentityRole, string>
 {
     public DbSet<MenuModel> Menus { get; set; }

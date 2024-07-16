@@ -2,7 +2,7 @@ using VenueModel = TasteTrailApp.Core.Venue.Models.Venue;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TasteTrailApp.Core.Common.Data.Configuration;
+namespace TasteTrailApp.Infrastructure.Common.Data.Configuration;
 public class VenueConfiguration : IEntityTypeConfiguration<VenueModel>
 {
     public void Configure(EntityTypeBuilder<VenueModel> builder)

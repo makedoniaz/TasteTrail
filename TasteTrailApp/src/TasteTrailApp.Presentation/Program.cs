@@ -1,7 +1,6 @@
 using System.Reflection;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using TasteTrailApp.Core.Common.Data;
 
 using TasteTrailApp.Core.Menu.Repositories;
 using TasteTrailApp.Core.Menu.Services;
@@ -16,6 +15,7 @@ using TasteTrailApp.Core.VenuePhotos.Repositories;
 using TasteTrailApp.Core.VenuePhotos.Services;
 
 using TasteTrailApp.Infrastructure.Context;
+using TasteTrailApp.Infrastructure.Common.Data;
 
 using TasteTrailApp.Infrastructure.Menu.Repositories;
 using TasteTrailApp.Infrastructure.Menu.Services;

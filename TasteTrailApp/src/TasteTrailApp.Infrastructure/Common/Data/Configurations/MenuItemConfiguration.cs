@@ -2,7 +2,7 @@ using MenuItemModel = TasteTrailApp.Core.MenuItem.Models.MenuItem;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TasteTrailApp.Core.Common.Data.Configuration;
+namespace TasteTrailApp.Infrastructure.Common.Data.Configuration;
 
 public class MenuItemConfiguration : IEntityTypeConfiguration<MenuItemModel>
 {

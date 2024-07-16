@@ -1,7 +1,7 @@
 ﻿using FeedbackModel = TasteTrailApp.Core.Feedback.Models.Feedback;
 using TasteTrailApp.Core.Feedback.Repositories;
 using TasteTrailApp.Infrastructure.Context;
-using TasteTrailApp.Core.Common.Data;
+using TasteTrailApp.Infrastructure.Common.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace TasteTrailApp.Infrastructure.Feedback.Repositories

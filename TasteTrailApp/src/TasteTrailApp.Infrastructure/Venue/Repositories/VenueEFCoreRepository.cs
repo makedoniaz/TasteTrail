@@ -1,7 +1,7 @@
 ﻿using VenueModel = TasteTrailApp.Core.Venue.Models.Venue;
 using TasteTrailApp.Core.Venue.Repositories;
 using TasteTrailApp.Infrastructure.Context;
-using TasteTrailApp.Core.Common.Data;
+using TasteTrailApp.Infrastructure.Common.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace TasteTrailApp.Infrastructure.Venue.Repositories

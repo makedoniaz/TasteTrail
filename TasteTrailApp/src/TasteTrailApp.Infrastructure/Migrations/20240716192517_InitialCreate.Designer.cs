@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TasteTrailApp.Core.Common.Data;
+using TasteTrailApp.Infrastructure.Common.Data;
 
 #nullable disable
 
-namespace TasteTrailApp.Core.Migrations
+namespace TasteTrailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(TasteTrailDbContext))]
-    [Migration("20240715203221_InitialCreate")]
+    [Migration("20240716192517_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
