@@ -2,32 +2,30 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-using TasteTrailApp.Core.Menu.Repositories;
-using TasteTrailApp.Core.Menu.Services;
+using TasteTrailApp.Core.Menus.Repositories;
+using TasteTrailApp.Core.Menus.Services;
 
-using TasteTrailApp.Core.MenuItem.Repositories;
-using TasteTrailApp.Core.MenuItem.Services;
+using TasteTrailApp.Core.MenuItems.Repositories;
+using TasteTrailApp.Core.MenuItems.Services;
 
-using TasteTrailApp.Core.Venue.Repositories;
-using TasteTrailApp.Core.Venue.Services;
+using TasteTrailApp.Core.Venues.Repositories;
+using TasteTrailApp.Core.Venues.Services;
 
-using TasteTrailApp.Core.VenuePhotos.Repositories;
-using TasteTrailApp.Core.VenuePhotos.Services;
-
-using TasteTrailApp.Infrastructure.Context;
+using TasteTrailApp.Core.VenuesPhotos.Repositories;
+using TasteTrailApp.Core.VenuesPhotos.Services;
 using TasteTrailApp.Infrastructure.Common.Data;
 
-using TasteTrailApp.Infrastructure.Menu.Repositories;
-using TasteTrailApp.Infrastructure.Menu.Services;
+using TasteTrailApp.Infrastructure.Menus.Repositories;
+using TasteTrailApp.Infrastructure.Menus.Services;
 
-using TasteTrailApp.Infrastructure.MenuItem.Repositories;
-using TasteTrailApp.Infrastructure.MenuItem.Services;
+using TasteTrailApp.Infrastructure.MenuItems.Repositories;
+using TasteTrailApp.Infrastructure.MenuItems.Services;
 
-using TasteTrailApp.Infrastructure.Venue.Repositories;
-using TasteTrailApp.Infrastructure.Venue.Services;
+using TasteTrailApp.Infrastructure.Venues.Repositories;
+using TasteTrailApp.Infrastructure.Venues.Services;
 
-using TasteTrailApp.Infrastructure.VenuePhotos.Repositories;
-using TasteTrailApp.Infrastructure.VenuePhotos.Services;
+using TasteTrailApp.Infrastructure.VenuesPhotos.Repositories;
+using TasteTrailApp.Infrastructure.VenuesPhotos.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +38,9 @@ builder.Services.AddSwaggerGen();
 #region [ DI DbContext ]
 
 builder.Services.AddDbContext<TasteTrailDbContext>(
-    (optionsBuilder) => optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"))
+    (optionsBuilder) => optionsBuilder.UseNpgsql(
+        connectionString: builder.Configuration.GetConnectionString("SqlConnection")
+    )
 );
 #endregion
 

@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TasteTrailApp.Infrastructure.Common.Data;
 
 #nullable disable
@@ -18,33 +18,33 @@ namespace TasteTrailApp.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TasteTrailApp.Core.Feedback.Models.Feedback", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.Feedbacks.Models.Feedback", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("VenueId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -53,56 +53,29 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.ToTable("Feedbacks");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.Menu.Models.Menu", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.MenuItems.Models.MenuItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("VenueId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Menus");
-                });
-
-            modelBuilder.Entity("TasteTrailApp.Core.MenuItem.Models.MenuItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int?>("MenuId")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("PopularityRate")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -114,18 +87,45 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.ToTable("MenuItems");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.Venue.Models.Venue", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.Menus.Models.Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("VenueId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Menus");
+                });
+
+            modelBuilder.Entity("TasteTrailApp.Core.Venues.Models.Venue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<float>("AveragePrice")
                         .HasColumnType("real");
@@ -133,26 +133,26 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("character varying(15)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("LogoUrlPath")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<float>("OverallRating")
                         .HasColumnType("real");
@@ -162,21 +162,21 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.ToTable("Venues");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.VenuePhotos.Models.VenuePhotos", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.VenuesPhotos.Models.VenuePhotos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PhotoUrlPath")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("VenueId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -185,9 +185,9 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.ToTable("VenuePhotos");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.Feedback.Models.Feedback", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.Feedbacks.Models.Feedback", b =>
                 {
-                    b.HasOne("TasteTrailApp.Core.Venue.Models.Venue", "Venue")
+                    b.HasOne("TasteTrailApp.Core.Venues.Models.Venue", "Venue")
                         .WithMany("Feedbacks")
                         .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -196,20 +196,9 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.Navigation("Venue");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.Menu.Models.Menu", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.MenuItems.Models.MenuItem", b =>
                 {
-                    b.HasOne("TasteTrailApp.Core.Venue.Models.Venue", "Venue")
-                        .WithMany("Menus")
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Venue");
-                });
-
-            modelBuilder.Entity("TasteTrailApp.Core.MenuItem.Models.MenuItem", b =>
-                {
-                    b.HasOne("TasteTrailApp.Core.Menu.Models.Menu", "Menu")
+                    b.HasOne("TasteTrailApp.Core.Menus.Models.Menu", "Menu")
                         .WithMany("MenuItems")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -218,23 +207,34 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.Navigation("Menu");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.VenuePhotos.Models.VenuePhotos", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.Menus.Models.Menu", b =>
                 {
-                    b.HasOne("TasteTrailApp.Core.Venue.Models.Venue", "Venue")
-                        .WithMany("Photos")
+                    b.HasOne("TasteTrailApp.Core.Venues.Models.Venue", "Venue")
+                        .WithMany("Menus")
                         .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Venue");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.Menu.Models.Menu", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.VenuesPhotos.Models.VenuePhotos", b =>
+                {
+                    b.HasOne("TasteTrailApp.Core.Venues.Models.Venue", "Venue")
+                        .WithMany("Photos")
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("TasteTrailApp.Core.Menus.Models.Menu", b =>
                 {
                     b.Navigation("MenuItems");
                 });
 
-            modelBuilder.Entity("TasteTrailApp.Core.Venue.Models.Venue", b =>
+            modelBuilder.Entity("TasteTrailApp.Core.Venues.Models.Venue", b =>
                 {
                     b.Navigation("Feedbacks");
 

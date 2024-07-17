@@ -1,11 +1,12 @@
-using MenuModel = TasteTrailApp.Core.Menu.Models.Menu;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TasteTrailApp.Core.Menus.Models;
 
-namespace TasteTrailApp.Infrastructure.Common.Data.Configuration;
-public class MenuConfiguration : IEntityTypeConfiguration<MenuModel>
+namespace TasteTrailApp.Infrastructure.Common.Data.Configurations;
+
+public class MenuConfiguration : IEntityTypeConfiguration<Menu>
 {
-    public void Configure(EntityTypeBuilder<MenuModel> builder)
+    public void Configure(EntityTypeBuilder<Menu> builder)
     {
         builder.HasKey(m => m.Id);
 

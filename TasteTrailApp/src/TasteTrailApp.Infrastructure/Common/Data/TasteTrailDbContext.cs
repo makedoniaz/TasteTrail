@@ -1,23 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using TasteTrailApp.Infrastructure.Common.Data.Configuration;
+using TasteTrailApp.Infrastructure.Common.Data.Configurations;
 
 // using Microsoft.AspNetCore.Identity;
 // using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-using FeedbackModel = TasteTrailApp.Core.Feedback.Models.Feedback;
-using MenuModel = TasteTrailApp.Core.Menu.Models.Menu;
-using MenuItemModel = TasteTrailApp.Core.MenuItem.Models.MenuItem;
-using VenueModel = TasteTrailApp.Core.Venue.Models.Venue;
-using VenuePhotosModel = TasteTrailApp.Core.VenuePhotos.Models.VenuePhotos;
+using MenuItemModel = TasteTrailApp.Core.MenuItems.Models.MenuItem;
+using TasteTrailApp.Core.Venues.Models;
+using TasteTrailApp.Core.VenuesPhotos.Models;
+using TasteTrailApp.Core.Feedbacks.Models;
+using TasteTrailApp.Core.Menus.Models;
 
 namespace TasteTrailApp.Infrastructure.Common.Data;
 public class TasteTrailDbContext : DbContext //: IdentityDbContext<User, IdentityRole, string>
 {
-    public DbSet<MenuModel> Menus { get; set; }
-    public DbSet<VenueModel> Venues { get; set; }
+    public DbSet<Menu> Menus { get; set; }
+    public DbSet<Venue> Venues { get; set; }
     public DbSet<MenuItemModel> MenuItems { get; set; }
-    public DbSet<VenuePhotosModel> VenuePhotos { get; set; }
-    public DbSet<FeedbackModel> Feedbacks { get; set; }
+    public DbSet<VenuePhotos> VenuePhotos { get; set; }
+    public DbSet<Feedback> Feedbacks { get; set; }
 
     public TasteTrailDbContext(DbContextOptions<TasteTrailDbContext> options) : base(options)
     {

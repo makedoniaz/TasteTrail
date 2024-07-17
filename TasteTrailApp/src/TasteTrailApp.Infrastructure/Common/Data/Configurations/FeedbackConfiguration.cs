@@ -1,12 +1,12 @@
-using FeedbackModel = TasteTrailApp.Core.Feedback.Models.Feedback;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TasteTrailApp.Core.Feedbacks.Models;
 
-namespace TasteTrailApp.Infrastructure.Common.Data.Configuration;
+namespace TasteTrailApp.Infrastructure.Common.Data.Configurations;
 
-public class FeedbackConfiguration : IEntityTypeConfiguration<FeedbackModel>
+public class FeedbackConfiguration : IEntityTypeConfiguration<Feedback>
 {
-    public void Configure(EntityTypeBuilder<FeedbackModel> builder)
+    public void Configure(EntityTypeBuilder<Feedback> builder)
     {
         builder.HasKey(f => f.Id); 
 

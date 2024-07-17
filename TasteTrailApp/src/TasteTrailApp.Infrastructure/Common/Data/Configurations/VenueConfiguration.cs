@@ -1,11 +1,11 @@
-using VenueModel = TasteTrailApp.Core.Venue.Models.Venue;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TasteTrailApp.Core.Venues.Models;
 
-namespace TasteTrailApp.Infrastructure.Common.Data.Configuration;
-public class VenueConfiguration : IEntityTypeConfiguration<VenueModel>
+namespace TasteTrailApp.Infrastructure.Common.Data.Configurations;
+public class VenueConfiguration : IEntityTypeConfiguration<Venue>
 {
-    public void Configure(EntityTypeBuilder<VenueModel> builder)
+    public void Configure(EntityTypeBuilder<Venue> builder)
     {
         builder.HasKey(v => v.Id);
 
