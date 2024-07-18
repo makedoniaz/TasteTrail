@@ -1,0 +1,195 @@
+@model RegistrationDto
+
+@{
+    Layout = "~/Views/Shared/_LayoutMinimal.cshtml";
+    ViewData["Title"] = "Registration Page";
+}
+
+<div class="container">
+    <a href="/" class="mt-5 mb-4 p-lg-5 back-link"><i class="fas fa-arrow-left"></i></a>
+    <div class="wrapper">
+        <div class="title"><span>Registration Form</span></div>
+
+        <form asp-route="RegistrationEndpoint" method="post" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label class="image-upload-label">
+                    <i class="fas fa-image"></i> 
+                    Photo
+                    <input class="custom-file-input" type="file" name="file-name" onchange="updateFileName(this)">
+                </label>
+                <span id="file-name">No file chosen</span>
+                <span class="text-danger" asp-validation-for="FirstName"></span>
+            </div>
+            <div class="mb-3">
+                <span class="text-danger" asp-validation-for="FirstName"></span>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input asp-for="FirstName" type="text" class="form-control" placeholder="First Name" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <span class="text-danger" asp-validation-for="LastName"></span>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input asp-for="LastName" type="text" class="form-control" placeholder="Last Name" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <span class="text-danger" asp-validation-for="Email"></span>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input asp-for="Email" type="text" class="form-control" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <span class="text-danger" asp-validation-for="Password"></span>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="d-grid">
+                <input type="submit" class="btn btn-primary" value="Sign up">
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #194f7ce5;
+        overflow: hidden;
+    }
+
+    .back-link {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 35px;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    ::selection {
+        background: rgba(26, 188, 156, 0.3);
+    }
+
+    .container {
+        max-width: 540px;
+        padding: 40px;
+        margin: 90px auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper .title {
+        height: 90px;
+        background: #1662a0;
+        border-radius: 5px 5px 0 0;
+        color: #fff;
+        font-size: 30px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .wrapper form {
+        padding: 30px 25px 25px 25px;
+    }
+
+    .wrapper form .input-group {
+        margin-bottom: 15px;
+    }
+
+    .wrapper form .input-group .form-control:focus {
+        border-color: #16a085;
+        box-shadow: inset 0px 0px 2px 2px rgba(26, 188, 156, 0.25);
+    }
+
+    .wrapper form .input-group .input-group-text {
+        background: #1662a0;
+        color: #fff;
+        border: 1px solid #1662a0;
+    }
+
+    .wrapper form .input-group .input-group-text i {
+        font-size: 18px;
+    }
+
+    .wrapper form .btn-primary {
+        background: #1662a0;
+        border: 1px solid #1662a0;
+    }
+
+    .wrapper form .btn-primary:hover {
+        background: #0f6bb6e5;
+    }
+
+    .text-center a {
+        color: #1662a0;
+        text-decoration: none;
+    }
+
+    .text-center a:hover {
+        text-decoration: underline;
+    }
+
+    .text-danger {
+        font-size: 14px;
+    }
+
+    .image-upload-label {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 2px dashed #1662a0;
+        border-radius: 5px;
+        margin: 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .image-upload-label i {
+        color: #1662a0;
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    .image-upload-label:hover {
+        background-color: #1662a0;
+        color: white;
+    }
+
+    .custom-file-input {
+        display: none;
+    }
+</style>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            var fileNameDisplay = document.getElementById('file-name');
+            fileNameDisplay.textContent = fileName;
+        }
+    </script>
+}

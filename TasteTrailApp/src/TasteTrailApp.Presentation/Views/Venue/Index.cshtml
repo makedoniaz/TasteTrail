@@ -80,36 +80,6 @@ else
                     </div>
                 </div>
             }
-
-            @* <!-- Restourant Item -->
-            <div class="col-md-3 restaurantItem" data-title="Restourant Title 2" data-date="2023-01-02">
-            <div class="card mb-4 restorantCard">
-            <img src="/images/animeCard.jpg" class="card-img-top" alt="Restourant Title 2">
-            <div class="card-body">
-            <h5 class="card-title m-2">Restourant Title 2</h5>
-            <p class="card-text m-2">Short description of the restourant...</p>
-            <!-- Rating -->
-            <div class="rating m-2">
-            <span class="text-warning">
-            <i class="fas fa-star star" data-rating="1"></i>
-            <i class="fas fa-star star" data-rating="2"></i>
-            <i class="far fa-star star" data-rating="3"></i>
-            <i class="far fa-star star" data-rating="4"></i>
-            <i class="far fa-star star" data-rating="5"></i>
-            </span>
-            <span class="badge bg-secondary ms-2">2</span>
-            </div>
-            <!-- Tags -->
-            <div class="mt-3 m-1">
-            <span class="badge bg-primary">Family-friendly</span>
-            <span class="badge bg-secondary">Outdoor Seating</span>
-            <span class="badge bg-success">Vegetarian Options</span>
-            <span class="badge bg-danger">Pet-friendly</span>
-            </div>
-            <a href="#" class="btn btn-primary m-1">View Details</a>
-            </div>
-            </div>
-            </div> *@
         </div>
     </div>
 </div>
@@ -134,7 +104,7 @@ else
                 <i class="fas fa-star star" data-value="4"></i>
                 <i class="far fa-star star" data-value="5"></i>
             </span>
-            <span class="newbadge bg-secondary ms-2">4</span>
+            <span class="badge bg-secondary ms-2 badgeValue">4</span>
         </div>
     </div>
     <div>
@@ -310,7 +280,7 @@ else
                     star.classList.add('far');
                 }
             });
-            document.querySelector('.newbadge').textContent = rating;
+            document.querySelector('.badgeValue').textContent = rating;
             document.getElementById('newOverallRating').value = rating;
         }
 
@@ -420,7 +390,7 @@ else
                         $(this).removeClass('far fa-star').addClass('fas fa-star');
                     }
                 });
-                $(".newbadge").text(rating);
+                $(".badgeValue").text(rating);
                 $('#newOverallRating').val(rating);
             });
         });
