@@ -1,6 +1,7 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TasteTrailApp.Core.MenuItems.Models;
-using TasteTrailApp.Core.MenuItems.Services;
+using TasteTrailApp.Core.MenuItems.Commands;
+using TasteTrailApp.Core.MenuItems.Queries;
 
 namespace TasteTrailApp.Presentation.MenuItems.Controllers;
 
@@ -8,18 +9,24 @@ namespace TasteTrailApp.Presentation.MenuItems.Controllers;
 public class MenuItemController : Controller
 {
     // private readonly IValidator<Venue> _validator;
-    private readonly IMenuItemService _menuItemService;
 
-    public MenuItemController(IMenuItemService menuItemService) //IValidator<Venue> validator, 
+    private readonly ISender sender;
+
+    public MenuItemController (ISender sender) //IValidator<Venue> validator, 
     {
         // this._validator = validator;
-        this._menuItemService = menuItemService;
+        this.sender = sender;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var menuItems = await this._menuItemService.GetByCountAsync(10);
+        var query = new GetMenuItemsByCountQuery() {
+            Count = 10
+        };
+
+        var menuItems = await this.sender.Send(query);
+
         return base.View(model: menuItems);
     }
 
@@ -29,7 +36,11 @@ public class MenuItemController : Controller
     {
         try
         {
-            var menuItem = await this._menuItemService.GetByIdAsync(id: menuItemId);
+            var query = new GetMenuItemByIdQuery() {
+                Id = menuItemId
+            };
+
+            var menuItem = await this.sender.Send(query);
             return base.View(model: menuItem);
         }
         catch (System.Exception ex)
@@ -44,7 +55,11 @@ public class MenuItemController : Controller
     {
         try
         {
-            return base.Json(data: await this._menuItemService.GetByIdAsync(id: menuItemId));
+            var query = new GetMenuItemByIdQuery() {
+                Id = menuItemId
+            };
+
+            return base.Json(data: await this.sender.Send(query));
         }
         catch (System.Exception ex)
         {
@@ -61,7 +76,7 @@ public class MenuItemController : Controller
     }  
 
     [HttpPost(Name = "CreateMenuItemApi")]
-    public async Task<IActionResult> Create(MenuItem newMenuItem)
+    public async Task<IActionResult> Create(CreateMenuItemCommand newMenuItem)
     {
         try
         {
@@ -76,7 +91,8 @@ public class MenuItemController : Controller
             //     return base.View(viewName: "Create");
             // }
             newMenuItem.MenuId = (int)TempData["MenuId"]!;
-            await this._menuItemService.CreateAsync(entity: newMenuItem);
+
+            await this.sender.Send(request: newMenuItem);
             return base.RedirectToRoute(routeName: "MenuDetails", new { menuId = (int)TempData["MenuId"]! });
         }
         catch (System.Exception ex)
@@ -86,11 +102,11 @@ public class MenuItemController : Controller
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] MenuItem newMenuItem)
+    public async Task<IActionResult> Update([FromBody] UpdateMenuItemCommand newMenuItem)
     {
         try
         {
-            await this._menuItemService.PutAsync(entity: newMenuItem);
+            await this.sender.Send(request: newMenuItem);
             return base.Ok();
         }
         catch (System.Exception ex)
@@ -104,7 +120,11 @@ public class MenuItemController : Controller
     {
         try
         {
-            await this._menuItemService.DeleteByIdAsync(id: menuItemId);
+            var query = new DeleteMenuItemCommand() {
+                Id = menuItemId
+            };
+
+            await this.sender.Send(query);
             return base.Ok();
         }
         catch (System.Exception ex)

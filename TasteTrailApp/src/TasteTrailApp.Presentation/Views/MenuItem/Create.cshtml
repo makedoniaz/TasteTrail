@@ -1,7 +1,6 @@
-﻿@model MenuItem
-@{
-    ViewData["Title"] = "Create Menu Item Page";
-}
+﻿@using TasteTrailApp.Core.MenuItems.Commands;
+
+@model CreateMenuItemCommand
 
 <form asp-route="CreateMenuItemApi" method="post" class="createForm"> 
     <div>
@@ -38,7 +37,6 @@
     <button type="submit">Add Menu Item</button>
     </div>
 </form>
-
 <style>
     .createForm {
         background-color: #fff;

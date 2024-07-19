@@ -17,6 +17,6 @@ public class MenuItem
         public int PopularityRate { get; set; }
 
         public int? MenuId { get; set; }
-        
+
         public Menu Menu { get; set; }
 }
