@@ -9,29 +9,24 @@
     <a href="/" class="mt-5 mb-4 p-lg-5 back-link"><i class="fas fa-arrow-left"></i></a>
     <div class="wrapper">
         <div class="title"><span>Registration Form</span></div>
+        <div class="text-danger" asp-validation-summary="Error"></div>
+
 
         <form asp-route="RegistrationEndpoint" method="post" enctype="multipart/form-data">
-            <div class="mb-4">
-                <label class="image-upload-label">
-                    <i class="fas fa-image"></i> 
-                    Photo
-                    <input class="custom-file-input" type="file" name="file-name" onchange="updateFileName(this)">
-                </label>
-                <span id="file-name">No file chosen</span>
-                <span class="text-danger" asp-validation-for="FirstName"></span>
-            </div>
+            @*<div class="mb-4">
+            <label class="image-upload-label">
+            <i class="fas fa-image"></i>
+            Photo
+            <input class="custom-file-input" type="file" name="file-name" onchange="updateFileName(this)">
+            </label>
+            <span id="file-name">No file chosen</span>
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+            </div> *@
             <div class="mb-3">
-                <span class="text-danger" asp-validation-for="FirstName"></span>
+                <span class="text-danger" asp-validation-for="Name"></span>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    <input asp-for="FirstName" type="text" class="form-control" placeholder="First Name" required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <span class="text-danger" asp-validation-for="LastName"></span>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    <input asp-for="LastName" type="text" class="form-control" placeholder="Last Name" required>
+                    <input asp-for="Name" type="text" class="form-control" placeholder="Name" required>
                 </div>
             </div>
             <div class="mb-3">

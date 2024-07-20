@@ -9,9 +9,11 @@ using TasteTrailApp.Core.Venues.Models;
 using TasteTrailApp.Core.VenuesPhotos.Models;
 using TasteTrailApp.Core.Feedbacks.Models;
 using TasteTrailApp.Core.Menus.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TasteTrailApp.Infrastructure.Common.Data;
-public class TasteTrailDbContext : DbContext //: IdentityDbContext<User, IdentityRole, string>
+public class TasteTrailDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public DbSet<Menu> Menus { get; set; }
     public DbSet<Venue> Venues { get; set; }
@@ -19,10 +21,8 @@ public class TasteTrailDbContext : DbContext //: IdentityDbContext<User, Identit
     public DbSet<VenuePhotos> VenuePhotos { get; set; }
     public DbSet<Feedback> Feedbacks { get; set; }
 
-    public TasteTrailDbContext(DbContextOptions<TasteTrailDbContext> options) : base(options)
-    {
-
-    }
+    public TasteTrailDbContext(DbContextOptions options) : base(options)
+    {}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

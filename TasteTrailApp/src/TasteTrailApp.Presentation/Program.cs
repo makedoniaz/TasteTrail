@@ -26,6 +26,7 @@ using TasteTrailApp.Infrastructure.Venues.Services;
 
 using TasteTrailApp.Infrastructure.VenuesPhotos.Repositories;
 using TasteTrailApp.Infrastructure.VenuesPhotos.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,13 @@ builder.Services.AddDbContext<TasteTrailDbContext>(
         connectionString: builder.Configuration.GetConnectionString("SqlConnection")
     )
 );
+#endregion
+
+#region [ DI Asp Identity ]
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => {
+    //options.Password.RequireDigit = true;
+}).AddEntityFrameworkStores<TasteTrailDbContext>();
 #endregion
 
 #region [ DI Repositories ]
