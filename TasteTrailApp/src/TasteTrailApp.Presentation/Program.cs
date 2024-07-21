@@ -27,6 +27,10 @@ using TasteTrailApp.Infrastructure.Venues.Services;
 
 using TasteTrailApp.Infrastructure.VenuesPhotos.Repositories;
 using TasteTrailApp.Infrastructure.VenuesPhotos.Services;
+using TasteTrailApp.Core.Feedbacks.Queries;
+using TasteTrailApp.Infrastructure.Common.Assembly;
+using TasteTrailApp.Core.Feedbacks.Repositories;
+using TasteTrailApp.Infrastructure.Feedbacks.Repositories;
 
 using Microsoft.AspNetCore.Identity;
 using TasteTrailApp.Core.Users.Models;
@@ -74,6 +78,7 @@ builder.Services.AddTransient<IMenuItemRepository, MenuItemEFCoreRepository>();
 builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosEFCoreRepository>();
 builder.Services.AddTransient<IVenueRepository, VenueEFCoreRepository>();
 builder.Services.AddTransient<IMenuRepository, MenuEFCoreRepository>();
+builder.Services.AddTransient<IFeedbackRepository, FeedbackEFCoreRepository>();
 
 #endregion
 
@@ -88,6 +93,16 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IIdentityAuthService, IdentityAuthService>();
 
+
+#endregion
+
+#region [ DI Mediator ]
+
+builder.Services.AddMediatR(configuration => {
+    configuration.RegisterServicesFromAssembly(
+        typeof(InfrastructureAssemblyMaker).Assembly
+    );
+});
 
 #endregion
 
