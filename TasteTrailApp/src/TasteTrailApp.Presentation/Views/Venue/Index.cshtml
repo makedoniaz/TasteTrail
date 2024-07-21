@@ -1,6 +1,8 @@
 ﻿@model List<Venue>
 @{
     ViewData["Title"] = "Search Page";
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
+
 }
 
 <h1 style="font-size: 2rem; font-family: 'Alice', serif; margin-bottom: 3px;">Search Smth</h1>
@@ -15,7 +17,7 @@
                 </button>
             </div>
         </div>
-    </div> 
+    </div>
 
 </div>
 
@@ -29,60 +31,60 @@
 }
 else
 {
-<div class="content mt-3 mt-md-5">
-    <div class="container">
-        <div class="row restorantsContainers column" id="restorantsContainers">
+    <div class="content mt-3 mt-md-5">
+        <div class="container">
+            <div class="row restorantsContainers column" id="restorantsContainers">
 
-            @foreach (var venue in Model)
-            {
-                <!-- Restourant Item -->
-                <div class="col-md-3 restaurantItem mb-4 venue-item" data-title="Restourant Title 1" data-date="2023-01-02">
-                    <div class="card mb-4 restorantCard h-100 ">
-                        <img src="@(venue.LogoUrlPath ?? "images/not-available.jpg" )" class="card-img-top fixed-size"
-                            alt="Restourant Title 1">
-                        <div class="card-body venue-details">
-                            <h5 class="card-title m-2">@venue.Name</h5>
-                            <!-- Rating -->
-                            <div class="rating m-2">
-                                <span class="text-warning">
-                                    @for (var i = 0; i < @venue.OverallRating; i++)
-                                    {
-                                        <i class="fas fa-star star"></i>
-                                    }
-                                    @if (venue.OverallRating < 5)
-                                    {
-                                        for (var j = @venue.OverallRating; j < 5; j++)
+                @foreach (var venue in Model)
+                {
+                    <!-- Restourant Item -->
+                    <div class="col-md-3 restaurantItem mb-4 venue-item" data-title="Restourant Title 1" data-date="2023-01-02">
+                        <div class="card mb-4 restorantCard h-100 ">
+                            <img src="@(venue.LogoUrlPath ?? "images/not-available.jpg" )" class="card-img-top fixed-size"
+                                alt="Restourant Title 1">
+                            <div class="card-body venue-details">
+                                <h5 class="card-title m-2">@venue.Name</h5>
+                                <!-- Rating -->
+                                <div class="rating m-2">
+                                    <span class="text-warning">
+                                        @for (var i = 0; i < @venue.OverallRating; i++)
                                         {
-                                            <i class="far fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
                                         }
-                                    }
-                                </span>
-                                <span class="badge bg-secondary ms-2">@venue.OverallRating</span>
-                            </div>
-                            <p class="card-text">@venue.Description</p>
-                            <!-- Tags -->
-                            @* <div class="mt-3 m-1">
+                                        @if (venue.OverallRating < 5)
+                                        {
+                                            for (var j = @venue.OverallRating; j < 5; j++)
+                                            {
+                                                <i class="far fa-star star"></i>
+                                            }
+                                        }
+                                    </span>
+                                    <span class="badge bg-secondary ms-2">@venue.OverallRating</span>
+                                </div>
+                                <p class="card-text">@venue.Description</p>
+                                <!-- Tags -->
+                                @* <div class="mt-3 m-1">
                         <span class="badge bg-primary">Family-friendly</span>
                         <span class="badge bg-secondary">Outdoor Seating</span>
                         <span class="badge bg-success">Vegetarian Options</span>
                         <span class="badge bg-danger">Pet-friendly</span>
                         </div> *@
-                            <div class="venue-actions">
-                                <a asp-controller="Venue" asp-action="VenueDetails" asp-route-venueId="@venue?.Id"
-                                    class="btn btn-primary m-1">View Details</a>
-                                <br>
-                                <button class="update-btn btn-close-white  m-1"
-                                    onclick="showUpdateForm('@venue!.Id')">Update</button>
-                                <button class="delete-btn btn-danger  m-1"
-                                    onclick="deleteVenue('@venue!.Id')">Delete</button>
+                                <div class="venue-actions">
+                                    <a asp-controller="Venue" asp-action="VenueDetails" asp-route-venueId="@venue?.Id"
+                                        class="btn btn-primary m-1">View Details</a>
+                                    <br>
+                                    <button class="update-btn btn-close-white  m-1"
+                                        onclick="showUpdateForm('@venue!.Id')">Update</button>
+                                    <button class="delete-btn btn-danger  m-1"
+                                        onclick="deleteVenue('@venue!.Id')">Delete</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-</div>
 }
 
 
@@ -137,12 +139,13 @@ else
 
 
 <style>
+    
     .fixed-size {
         height: 350px;
         width: 100%;
 
     }
-    
+
     .venue-actions {
         flex-shrink: 0;
     }
@@ -209,8 +212,7 @@ else
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <script>
         $(document).ready(function () {
@@ -271,8 +273,8 @@ else
         function updateStars(rating) {
             const stars = document.querySelectorAll('.newrating .star');
             stars.forEach((star, index) => {
-                if (index < rating) { 
-                
+                if (index < rating) {
+
                     star.classList.remove('far');
                     star.classList.add('fas');
                 } else {
@@ -366,7 +368,7 @@ else
 
         function filterVenues() {
             var input = document.getElementById('searchInput').value.toLowerCase();
-            var items = document.querySelectorAll('.venue-item'); 
+            var items = document.querySelectorAll('.venue-item');
 
             items.forEach(function (item) {
                 console.log(item.querySelector('.venue-details h5').textContent)
@@ -381,7 +383,7 @@ else
     </script>
 
     <script>
-         $(document).ready(function () {
+        $(document).ready(function () {
             $(".newrating i").click(function () {
                 var rating = $(this).data('value');
                 $(".newrating i").each(function (index) {
@@ -394,7 +396,7 @@ else
                 $('#newOverallRating').val(rating);
             });
         });
-            
+
     </script>
 
 }

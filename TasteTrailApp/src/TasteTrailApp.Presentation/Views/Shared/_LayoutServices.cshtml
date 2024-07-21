@@ -3,7 +3,6 @@
 @{
     var IsAuthenticated = base.User.Identity?.IsAuthenticated ?? false;
     var IsAdmin = base.User.IsInRole("Admin");
-    var firstnameCookie = base.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name)?.Value;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +14,7 @@
     <link rel="stylesheet" href="~/css/styles.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    <title>@ViewData["Title"] - TasteTrailApp</title>
+    <title>@ViewData["Title"] - TasteTrailApp Services</title>
 </head>
 
 <body>
@@ -34,12 +31,29 @@
                     <i class="ri-menu-line"></i>
                 </div>
             </div>
+
             <ul class="nav_links" id="nav-links">
                 <li> <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a> </li>
-                <li><a class="nav-link" href="#special">Special</a></li>
-                <li><a class="nav-link" href="#menu">Menu</a></li>
-                <li><a class="nav-link" href="#event">Events</a></li>
-                <li><a class="nav-link" href="#contact">Contact Us</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">Services
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Venue" asp-action="Index">Venue
+                                Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="Index">Menu
+                                Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MenuItem" asp-action="Index">Menu
+                                Item
+                                Page</a>
+                        </li>
+                    </ul>
+                </li>
                 @if (IsAuthenticated)
                 {
                     <li class="nav-item dropdown">
@@ -73,138 +87,67 @@
 
             </ul>
         </nav>
-        <div class="section_container header_container" id="home">
-            <div class="header_image">
-                <img src="~/Assets/header.png" alt="header" />
-            </div>
-            <div class="header_content">
-                <h2>IT IS GOOD TIME FOR THE GREATEST TASTE OF US</h2>
-                <h1>Travel<br /><span>Week</span></h1>
-            </div>
-        </div>
     </header>
 
-    <section class="section_container banner_container" id="special">
-        <div class="banner_card">
-            <h4>MOST POPULAR Venues</h4>
-        </div>
-        <div class="banner_card">
-            <p>TRY IT OUT TODAY</p>
-            <h4>MORE FUN<br />MORE TASTE</h4>
-        </div>
-        <div class="banner_card">
-            <p>TRY IT OUT TODAY</p>
-            <h4>FRESH & CHILI</h4>
-        </div>
-    </section>
-
-    <section class="section_container order_container" id="menu">
-        <h3>ALWAYS TASTE WITH US</h3>
-        <h2 class="section_header">CHOOSE & ENJOY</h2>
-        <p class="section_description">
-            Discover a world of flavor at TasteTrail, where classic tastes meet bold new creations. Whether you're in
-            the mood for time-honored favorites or innovative culinary experiments, this is your destination. Indulge in
-            a personalized burger experience like no other with Burger Company. Savor every bite and let your taste buds
-            explore new horizons.
-        </p>
-        <div class="order_grid">
-            <div class="order_card">
-                <img src="assets/order-1.png" alt="order" />
-                <h4>Grilled Steak</h4>
-                <p>
-                    Savor the rich, succulent flavors of our Grilled Steak, expertly prepared to highlight the natural
-                    tenderness of premium cuts. Perfectly seasoned and cooked to your preferred level of doneness, this
-                    dish offers a hearty and satisfying experience with each bite. Indulge in a culinary classic that
-                    embodies excellence and flavor.
-                </p>
-                <!-- <button class="btn">ORDER NOW</button> -->
-            </div>
-            <div class="order_card">
-                <img src="assets/order-2.png" alt="order" />
-                <h4>Food Pyramid Plate</h4>
-                <p>
-                    Discover a balanced and nutritious meal with our Food Pyramid Plate. This dish beautifully
-                    incorporates elements from each food group, offering a harmonious blend of proteins, grains,
-                    vegetables, and fruits. Enjoy a thoughtfully crafted plate that promotes healthy eating while
-                    delivering delicious and satisfying flavors.
-                </p>
-                <!-- <button class="btn">ORDER NOW</button> -->
-            </div>
-            <div class="order_card">
-                <img src="assets/order-3.png" alt="order" />
-                <h4>Gourmet Pizza</h4>
-                <p>
-                    Delight in the rich, savory taste of our Gourmet Pizza, crafted with the finest ingredients and
-                    baked to perfection. Each slice features a crispy, golden crust topped with a blend of fresh,
-                    high-quality cheeses, vibrant vegetables, and your choice of premium meats. Enjoy a mouthwatering
-                    experience that brings together classic flavors and inventive combinations for a truly exceptional
-                    pizza.
-                </p>
-                <!-- <button class="btn">ORDER NOW</button> -->
-            </div>
-        </div>
-    </section>
-
-    <section class="reservation" id="contact">
-        <div class="section_container reservation_container">
-            <h2 class="section_header">Contact Us</h2>
-            <form action="/">
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <textarea placeholder="Message"></textarea>
-                <button class="btn" type="submit">Send Email</button>
-            </form>
-        </div>
-        <img src="assets/reservation-bg-1.png" alt="reservation" class="reservation_bg-1" />
-        <img src="assets/reservation-bg-2.png" alt="reservation" class="reservation_bg-2" />
-    </section>
-        <div class="container">
+    <div class="container mb-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="footer">
-        <div class="section_container footer_container">
-            <div class="footer_logo">
-                <img src="assets/logo-white.png" alt="logo" />
-            </div>
-            <div class="footer_content">
-                <p>
-                    Welcome to TasteTrail, where a love for exceptional cuisine and heartfelt hospitality converge. Our
-                    story is a journey of dedication to creating unforgettable dining experiences, from selecting the
-                    highest quality ingredients to serving dishes that delight in every bite. Join us and savor the
-                    passion we pour into every meal as we bring you a taste of excellence and a commitment to culinary
-                    perfection.
-                </p>
-                <div>
-                    <ul class="footer_links">
-                        <li>
-                            <span><i class="ri-map-pin-2-fill"></i></span>
-                            MG Road, Bangalore, 500089
-                        </li>
-                        <li>
-                            <span><i class="ri-mail-fill"></i></span>
-                            info@tasteTrail.com
-                        </li>
-                    </ul>
-                    <div class="footer_socials">
-                        <a href="#"><i class="ri-facebook-circle-fill"></i></a>
-                        <a href="#"><i class="ri-instagram-fill"></i></a>
-                        <a href="#"><i class="ri-twitter-fill"></i></a>
-                        <a href="#"><i class="ri-whatsapp-fill"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer_bar">
-            Copyright © 2024 TasteTrail. All rights reserved.
-        </div>
-    </footer>
-
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+<footer class="footer">
+    <div class="section_container footer_container">
+        <div class="footer_logo">
+            <img src="assets/logo-white.png" alt="logo" />
+        </div>
+        <div class="footer_content">
+            <p>
+                Welcome to TasteTrail, where a love for exceptional cuisine and heartfelt hospitality converge. Our
+                story is a journey of dedication to creating unforgettable dining experiences, from selecting the
+                highest quality ingredients to serving dishes that delight in every bite. Join us and savor the
+                passion we pour into every meal as we bring you a taste of excellence and a commitment to culinary
+                perfection.
+            </p>
+            <div>
+                <ul class="footer_links">
+                    <li>
+                        <span><i class="ri-map-pin-2-fill"></i></span>
+                        MG Road, Bangalore, 500089
+                    </li>
+                    <li>
+                        <span><i class="ri-mail-fill"></i></span>
+                        info@tasteTrail.com
+                    </li>
+                </ul>
+                <div class="footer_socials">
+                    <a href="#"><i class="ri-facebook-circle-fill"></i></a>
+                    <a href="#"><i class="ri-instagram-fill"></i></a>
+                    <a href="#"><i class="ri-twitter-fill"></i></a>
+                    <a href="#"><i class="ri-whatsapp-fill"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer_bar">
+        Copyright © 2024 TasteTrail. All rights reserved.
+    </div>
+</footer>
 
 </html>
+
+<style>
+    main {
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 8px ;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    .footer
+    {
+        margin-top: 10rem;
+    }
+</style>

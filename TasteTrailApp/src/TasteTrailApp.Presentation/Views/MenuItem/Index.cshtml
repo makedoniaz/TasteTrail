@@ -1,6 +1,8 @@
 ﻿@model List<MenuItem>;
 @{
     ViewData["Title"] = "Menu Item Page";
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
+
 }
 
 <h1> MenuItems List</h1>
@@ -30,7 +32,7 @@ else
 {
     <ol class="card-list">
         @foreach (var menuItem in Model)
-    {
+        {
 
             <li class="menuItemContainer">
                 <a class="nav-link" asp-controller="MenuItem" asp-action="MenuItemDetails" asp-route-menuItemId="@menuItem?.Id">
@@ -85,7 +87,7 @@ else
                 <i class="fas fa-star star" data-value="4"></i>
                 <i class="far fa-star star" data-value="5"></i>
             </span>
-            <span class="badge bg-secondary ms-2 badgeValue">4</span> 
+            <span class="badge bg-secondary ms-2 badgeValue">4</span>
         </div>
     </div>
     <div>
@@ -199,37 +201,37 @@ else
     }
 
     function updateStars(rating) {
-            const stars = document.querySelectorAll('.newrating .star');
-            stars.forEach((star, index) => {
-                if (index < rating) { 
-                
-                    star.classList.remove('far');
-                    star.classList.add('fas');
-                } else {
-                    star.classList.remove('fas');
-                    star.classList.add('far');
+        const stars = document.querySelectorAll('.newrating .star');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+        document.querySelector('.badgeValue').textContent = rating;
+        document.getElementById('newPopularityRate').value = rating;
+    }
+
+
+    $(document).ready(function () {
+        $(".newrating i").click(function () {
+            var rating = $(this).data('value');
+            $(".newrating i").each(function (index) {
+                $(this).removeClass('fas fa-star').addClass('far fa-star');
+                if (index < rating) {
+                    $(this).removeClass('far fa-star').addClass('fas fa-star');
                 }
             });
-            document.querySelector('.badgeValue').textContent = rating;
-            document.getElementById('newPopularityRate').value = rating;
-        }
-    
-    
-         $(document).ready(function () {
-            $(".newrating i").click(function () {
-                var rating = $(this).data('value');
-                $(".newrating i").each(function (index) {
-                    $(this).removeClass('fas fa-star').addClass('far fa-star');
-                    if (index < rating) {
-                        $(this).removeClass('far fa-star').addClass('fas fa-star');
-                    }
-                });
-                $(".badgeValue").text(rating);
-                $('#newPopularityRate').val(rating);
-            });
+            $(".badgeValue").text(rating);
+            $('#newPopularityRate').val(rating);
         });
-            
-     
+    });
+
+
 
     function deleteMenuItem(id) {
         if (confirm('Are you sure you want to delete this menu-item?')) {
@@ -250,7 +252,7 @@ else
                 .catch(ex => console.log(ex))
         }
     }
-</script> 
+</script>
 <style>
     h1 {
         color: #333;
@@ -358,7 +360,7 @@ else
         border: none;
         border-top: 1px solid #e0e0e0;
     }
-    
+
     .update-form {
         position: absolute;
         top: 45%;

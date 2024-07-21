@@ -177,18 +177,18 @@ nav {
 .header_content h1 span {
     font-size: 3.5rem;
 }
- .dropdown-menu {
-    display: block;  
+.dropdown-menu {
     position: absolute;
-    top: 100%;  
+    top: 100%;
     left: 0;
-    z-index: 1000;  
-    display: none;  
+    z-index: 1000;
 }
 
- .navbar-nav .show {
-    display: block !important;  
- }
+
+.navbar-nav .show {
+    display: block !important;
+}
+
 .banner_container {
     display: grid;
     gap: 1rem;
