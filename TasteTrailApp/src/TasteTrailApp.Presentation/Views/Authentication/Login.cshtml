@@ -1,0 +1,144 @@
+@model LoginDto
+
+@{
+    Layout = "~/Views/Shared/_LayoutMinimal.cshtml";
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i></a>
+    <div class="wrapper">
+        <div class="title"><span>Login Form</span></div>
+
+        <div class="text-danger">@TempData["error"]</div>
+
+        <form asp-route="LoginEndPoint" method="post">
+            <div class="mb-3">
+                <span class="text-danger" asp-validation-for="Username"></span>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input asp-for="Username" type="text" class="form-control" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <span class="text-danger" asp-validation-for="Password"></span>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="d-grid">
+                <input type="submit" class="btn btn-primary" value="Sign in">
+            </div>
+            <div class="text-center mt-3">
+                Not a member? <a asp-route="RegistrationView">Signup now</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #194f7ce5;
+        overflow: hidden;
+    }
+
+    .back-link {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 35px;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    ::selection {
+        background: rgba(26, 188, 156, 0.3);
+    }
+
+    .container {
+        max-width: 440px;
+        padding: 0 20px;
+        margin: 170px auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.178);
+    }
+
+    .wrapper .title {
+        height: 90px;
+        background: #1662a0;
+        border-radius: 5px 5px 0 0;
+        color: #fff;
+        font-size: 30px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .wrapper form {
+        padding: 30px 25px 25px 25px;
+    }
+
+    .wrapper form .input-group {
+        margin-bottom: 15px;
+    }
+
+    .wrapper form .input-group .form-control:focus {
+        border-color: #1662a0;
+        box-shadow: inset 0px 0px 2px 2px rgba(26, 188, 156, 0.25);
+    }
+
+    .wrapper form .input-group .input-group-text {
+        background: #1662a0;
+        color: #fff;
+        border: 1px solid #1662a0;
+    }
+
+    .wrapper form .input-group .input-group-text i {
+        font-size: 18px;
+    }
+
+    .wrapper form .btn-primary {
+        background: #1662a0;
+        border: 1px solid #1662a0;
+    }
+
+    .wrapper form .btn-primary:hover {
+        background: #0f6bb6e5;
+    }
+
+    .text-center a {
+        color: #1662a0;
+        text-decoration: none;
+    }
+
+    .text-center a:hover {
+        text-decoration: underline;
+    }
+
+    .text-danger {
+        font-size: 14px;
+    }
+</style>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TasteTrailApp.Infrastructure.Common.Data;
@@ -11,13 +12,15 @@ using TasteTrailApp.Infrastructure.Common.Data;
 namespace TasteTrailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(TasteTrailDbContext))]
-    partial class TasteTrailDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240721084825_IdentityCreate")]
+    partial class IdentityCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -172,15 +175,13 @@ namespace TasteTrailApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("VenueId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("VenueId");
 
@@ -200,6 +201,7 @@ namespace TasteTrailApp.Infrastructure.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<int?>("MenuId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -363,12 +365,7 @@ namespace TasteTrailApp.Infrastructure.Migrations
                     b.Property<float>("OverallRating")
                         .HasColumnType("real");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Venues");
                 });
@@ -449,18 +446,11 @@ namespace TasteTrailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("TasteTrailApp.Core.Feedbacks.Models.Feedback", b =>
                 {
-                    b.HasOne("TasteTrailApp.Core.Users.Models.User", "User")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("TasteTrailApp.Core.Venues.Models.Venue", "Venue")
                         .WithMany("Feedbacks")
                         .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("User");
 
                     b.Navigation("Venue");
                 });
@@ -469,7 +459,9 @@ namespace TasteTrailApp.Infrastructure.Migrations
                 {
                     b.HasOne("TasteTrailApp.Core.Menus.Models.Menu", "Menu")
                         .WithMany("MenuItems")
-                        .HasForeignKey("MenuId");
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Menu");
                 });
@@ -483,16 +475,6 @@ namespace TasteTrailApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Venue");
-                });
-
-            modelBuilder.Entity("TasteTrailApp.Core.Venues.Models.Venue", b =>
-                {
-                    b.HasOne("TasteTrailApp.Core.Users.Models.User", "User")
-                        .WithMany("Venues")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TasteTrailApp.Core.VenuesPhotos.Models.VenuePhotos", b =>
@@ -509,13 +491,6 @@ namespace TasteTrailApp.Infrastructure.Migrations
             modelBuilder.Entity("TasteTrailApp.Core.Menus.Models.Menu", b =>
                 {
                     b.Navigation("MenuItems");
-                });
-
-            modelBuilder.Entity("TasteTrailApp.Core.Users.Models.User", b =>
-                {
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Venues");
                 });
 
             modelBuilder.Entity("TasteTrailApp.Core.Venues.Models.Venue", b =>

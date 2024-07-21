@@ -13,6 +13,7 @@ using TasteTrailApp.Core.Venues.Services;
 
 using TasteTrailApp.Core.VenuesPhotos.Repositories;
 using TasteTrailApp.Core.VenuesPhotos.Services;
+
 using TasteTrailApp.Infrastructure.Common.Data;
 
 using TasteTrailApp.Infrastructure.Menus.Repositories;
@@ -31,6 +32,16 @@ using TasteTrailApp.Infrastructure.Common.Assembly;
 using TasteTrailApp.Core.Feedbacks.Repositories;
 using TasteTrailApp.Infrastructure.Feedbacks.Repositories;
 
+using Microsoft.AspNetCore.Identity;
+using TasteTrailApp.Core.Users.Models;
+using TasteTrailApp.Core.Users.Services;
+using TasteTrailApp.Infrastructure.Users.Services;
+using TasteTrailApp.Core.Roles.Services;
+using TasteTrailApp.Infrastructure.Roles.Services;
+using System.Security.Principal;
+using TasteTrailApp.Core.Authentications.Services;
+using TasteTrailApp.Infrastructure.Authentications.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -46,6 +57,17 @@ builder.Services.AddDbContext<TasteTrailDbContext>(
         connectionString: builder.Configuration.GetConnectionString("SqlConnection")
     )
 );
+#endregion
+
+#region [ DI Asp Identity ]
+
+builder.Services.AddIdentity<User, IdentityRole>(options => {
+    //options.Password.RequireDigit = true;
+})
+    .AddEntityFrameworkStores<TasteTrailDbContext>()
+    .AddDefaultTokenProviders()
+    .AddSignInManager();
+
 #endregion
 
 #region [ DI Repositories ]
@@ -67,6 +89,11 @@ builder.Services.AddTransient<IMenuItemService, MenuItemService>();
 builder.Services.AddTransient<IMenuService, MenuSerivce>();
 builder.Services.AddTransient<IVenuePhotosService, VenuePhotosService>();
 
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IIdentityAuthService, IdentityAuthService>();
+
+
 #endregion
 
 #region [ DI Mediator ]
@@ -86,6 +113,14 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 #endregion
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
+    await roleService.SetupRolesAsync();
+}
+
+
     
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
