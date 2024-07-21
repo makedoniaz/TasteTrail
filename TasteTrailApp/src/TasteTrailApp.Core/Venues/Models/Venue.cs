@@ -2,6 +2,7 @@
 
 using TasteTrailApp.Core.Feedbacks.Models;
 using TasteTrailApp.Core.Menus.Models;
+using TasteTrailApp.Core.Users.Models;
 using TasteTrailApp.Core.VenuesPhotos.Models;
 
 namespace TasteTrailApp.Core.Venues.Models;
@@ -32,5 +33,7 @@ public class Venue
 
     public ICollection<Feedback> Feedbacks { get; set; }
 
-    //public int OwnerId { get; set; }
+    public string? UserId { get; set; }
+
+    public User User { get; set; }
 }

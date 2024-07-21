@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TasteTrailApp.Infrastructure.Common.Data;
@@ -11,9 +12,11 @@ using TasteTrailApp.Infrastructure.Common.Data;
 namespace TasteTrailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(TasteTrailDbContext))]
-    partial class TasteTrailDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240721151552_AddUserIdToVenue")]
+    partial class AddUserIdToVenue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
