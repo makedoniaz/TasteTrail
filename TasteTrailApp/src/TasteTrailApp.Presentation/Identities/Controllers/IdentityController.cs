@@ -13,7 +13,9 @@ namespace TasteTrailApp.Presentation.Identities.Controllers
     public class IdentityController : Controller
     {
         private readonly SignInManager<IdentityUser> signInManager;
+
         private readonly UserManager<IdentityUser> userManager;
+        
         private readonly RoleManager<IdentityRole> roleManager;
 
         public IdentityController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
