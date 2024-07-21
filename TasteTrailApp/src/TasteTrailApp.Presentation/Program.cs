@@ -1,33 +1,42 @@
 using System.Reflection;
 using FluentValidation;
-using TasteTrailApp.Core.Feedback.Repositories;
-using TasteTrailApp.Core.Feedback.Services;
-using TasteTrailApp.Core.Menu.Repositories;
-using TasteTrailApp.Core.Menu.Services;
+using Microsoft.EntityFrameworkCore;
 
-using TasteTrailApp.Core.MenuItem.Repositories;
-using TasteTrailApp.Core.MenuItem.Services;
+using TasteTrailApp.Core.Menus.Repositories;
+using TasteTrailApp.Core.Menus.Services;
 
-using TasteTrailApp.Core.Venue.Repositories;
-using TasteTrailApp.Core.Venue.Services;
+using TasteTrailApp.Core.MenuItems.Repositories;
+using TasteTrailApp.Core.MenuItems.Services;
 
-using TasteTrailApp.Core.VenuePhotos.Repositories;
-using TasteTrailApp.Core.VenuePhotos.Services;
+using TasteTrailApp.Core.Venues.Repositories;
+using TasteTrailApp.Core.Venues.Services;
 
-using TasteTrailApp.Infrastructure.Context;
-using TasteTrailApp.Infrastructure.Feedback.Repositories;
-using TasteTrailApp.Infrastructure.Feedback.Services;
-using TasteTrailApp.Infrastructure.Menu.Repositories;
-using TasteTrailApp.Infrastructure.Menu.Services;
+using TasteTrailApp.Core.VenuesPhotos.Repositories;
+using TasteTrailApp.Core.VenuesPhotos.Services;
 
-using TasteTrailApp.Infrastructure.MenuItem.Repositories;
-using TasteTrailApp.Infrastructure.MenuItem.Services;
+using TasteTrailApp.Infrastructure.Common.Data;
 
-using TasteTrailApp.Infrastructure.Venue.Repositories;
-using TasteTrailApp.Infrastructure.Venue.Services;
+using TasteTrailApp.Infrastructure.Menus.Repositories;
+using TasteTrailApp.Infrastructure.Menus.Services;
 
-using TasteTrailApp.Infrastructure.VenuePhotos.Repositories;
-using TasteTrailApp.Infrastructure.VenuePhotos.Services;
+using TasteTrailApp.Infrastructure.MenuItems.Repositories;
+using TasteTrailApp.Infrastructure.MenuItems.Services;
+
+using TasteTrailApp.Infrastructure.Venues.Repositories;
+using TasteTrailApp.Infrastructure.Venues.Services;
+
+using TasteTrailApp.Infrastructure.VenuesPhotos.Repositories;
+using TasteTrailApp.Infrastructure.VenuesPhotos.Services;
+
+using Microsoft.AspNetCore.Identity;
+using TasteTrailApp.Core.Users.Models;
+using TasteTrailApp.Core.Users.Services;
+using TasteTrailApp.Infrastructure.Users.Services;
+using TasteTrailApp.Core.Roles.Services;
+using TasteTrailApp.Infrastructure.Roles.Services;
+using System.Security.Principal;
+using TasteTrailApp.Core.Authentications.Services;
+using TasteTrailApp.Infrastructure.Authentications.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,18 +46,34 @@ builder.Services.AddControllersWithViews();
 //One more
 builder.Services.AddSwaggerGen();
 
+#region [ DI DbContext ]
+
+builder.Services.AddDbContext<TasteTrailDbContext>(
+    (optionsBuilder) => optionsBuilder.UseNpgsql(
+        connectionString: builder.Configuration.GetConnectionString("SqlConnection")
+    )
+);
+#endregion
+
+#region [ DI Asp Identity ]
+
+builder.Services.AddIdentity<User, IdentityRole>(options => {
+    //options.Password.RequireDigit = true;
+})
+    .AddEntityFrameworkStores<TasteTrailDbContext>()
+    .AddDefaultTokenProviders()
+    .AddSignInManager();
+
+#endregion
+
 #region [ DI Repositories ]
 
-builder.Services.AddSingleton<DapperContext>();
+// builder.Services.AddSingleton<TasteTrailDbContext>();
 
-builder.Services.AddTransient<IMenuItemRepository, MenuItemDapperRepository>();
-builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosDapperRepository>();
-
-builder.Services.AddTransient<IVenueRepository, VenueDapperRepository>();
-builder.Services.AddTransient<IMenuRepository, MenuDapperRepository>();
-
-builder.Services.AddTransient<IFeedbackRepository, FeedbackDapperRepository>();
-builder.Services.AddTransient<IFeedbackService, FeedbackService>();
+builder.Services.AddTransient<IMenuItemRepository, MenuItemEFCoreRepository>();
+builder.Services.AddTransient<IVenuePhotosRepository, VenuePhotosEFCoreRepository>();
+builder.Services.AddTransient<IVenueRepository, VenueEFCoreRepository>();
+builder.Services.AddTransient<IMenuRepository, MenuEFCoreRepository>();
 
 #endregion
 
@@ -59,6 +84,11 @@ builder.Services.AddTransient<IMenuItemService, MenuItemService>();
 builder.Services.AddTransient<IMenuService, MenuSerivce>();
 builder.Services.AddTransient<IVenuePhotosService, VenuePhotosService>();
 
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IIdentityAuthService, IdentityAuthService>();
+
+
 #endregion
 
 #region [ Fluent Validation ]
@@ -68,6 +98,14 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 #endregion
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
+    await roleService.SetupRolesAsync();
+}
+
+
     
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

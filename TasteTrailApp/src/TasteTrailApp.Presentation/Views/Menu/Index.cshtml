@@ -157,7 +157,6 @@ else
     </script>
 <script>
     function deleteMenu(id) {
-        alert(1)
         if (confirm('Are you sure you want to delete this menu?')) {
             fetch(`/Menu/${id}`, {
                 method: 'DELETE',

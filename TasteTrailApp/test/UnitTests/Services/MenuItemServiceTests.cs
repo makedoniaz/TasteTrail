@@ -1,7 +1,7 @@
 using Moq;
-using TasteTrailApp.Core.MenuItem.Models;
-using TasteTrailApp.Core.MenuItem.Repositories;
-using TasteTrailApp.Infrastructure.Services;
+using TasteTrailApp.Core.MenuItems.Models;
+using TasteTrailApp.Core.MenuItems.Repositories;
+using TasteTrailApp.Infrastructure.MenuItems.Services;
 
 namespace UnitTests.Services;
 
