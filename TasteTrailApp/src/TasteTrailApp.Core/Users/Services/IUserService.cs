@@ -19,4 +19,6 @@ public interface IUserService
     Task<IdentityResult> AssignRoleToUserAsync(string username, UserRoles role);
 
     Task<IdentityResult> RemoveRoleFromUserAsync(string username, UserRoles role);
+
+    Task<bool> HasRegisteredUsers();
 }

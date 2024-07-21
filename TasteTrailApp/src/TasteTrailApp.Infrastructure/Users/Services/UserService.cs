@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TasteTrailApp.Core.Roles.Enums;
 using TasteTrailApp.Core.Users.Exceptions;
 using TasteTrailApp.Core.Users.Models;
@@ -32,7 +33,7 @@ public class UserService : IUserService
 
     public async Task<User> GetUserByUsernameAsync(string username)
     {
-        var user = await _userManager.FindByEmailAsync(username) ?? throw new UserNotFoundException(username);
+        var user = await _userManager.FindByNameAsync(username) ?? throw new UserNotFoundException(username);
 
         return user;
     }   
@@ -54,7 +55,7 @@ public class UserService : IUserService
 
     public async Task<IdentityResult> AssignRoleToUserAsync(string username, UserRoles role)
     {
-        var user = await _userManager.FindByIdAsync(username);
+        var user = await _userManager.FindByNameAsync(username);
         var roleName = role.ToString();
 
         if (user == null)
@@ -78,5 +79,9 @@ public class UserService : IUserService
             return IdentityResult.Failed(new IdentityError { Description = $"Role {roleName} not found." });
 
         return await _userManager.RemoveFromRoleAsync(user, roleName);
+    }
+
+    public async Task<bool> HasRegisteredUsers() {
+        return await _userManager.Users.AnyAsync();
     }
 }

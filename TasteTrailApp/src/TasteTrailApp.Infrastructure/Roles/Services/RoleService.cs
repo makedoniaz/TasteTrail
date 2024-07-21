@@ -34,4 +34,23 @@ public class RoleService : IRoleService
 
         return await _roleManager.DeleteAsync(roleToDelete);
     }
+
+    public async Task SetupRolesAsync()
+    {
+        List<string> roleNames = ["Admin", "User"];
+        
+        foreach (var roleName in roleNames)
+        {
+            var roleExists = await this._roleManager.RoleExistsAsync(roleName);
+            if (!roleExists)
+            {
+                var role = new IdentityRole(roleName);
+                var result = await this._roleManager.CreateAsync(role);
+                
+                if (!result.Succeeded)
+                    foreach (var error in result.Errors)
+                        Console.WriteLine($"Error creating role {roleName}: {error.Description}");
+            }
+        }
+    }
 }

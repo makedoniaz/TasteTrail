@@ -4,6 +4,7 @@ using TasteTrailApp.Presentation.Common.Dtos;
 using TasteTrailApp.Core.Authentications.Services;
 using TasteTrailApp.Core.Users.Services;
 using TasteTrailApp.Core.Users.Models;
+using TasteTrailApp.Core.Roles.Enums;
 
 namespace TasteTrailApp.Presentation.Identities.Controllers;
 
@@ -39,17 +40,21 @@ public class AuthenticationController : Controller
     [HttpPost]
     [Route("/api/[controller]/[action]", Name = "LoginEndPoint")]
     public async Task<IActionResult> Login([FromForm] LoginDto loginDto)
-    {        
-        var result = await this.identityAuthService.SignInAsync(loginDto.Username, loginDto.Password, true);
+    {
+        try {
+            var result = await this.identityAuthService.SignInAsync(loginDto.Username, loginDto.Password, true);
 
-        if (!result.Succeeded) {
-            base.TempData["error"] = "Incorrect login or password!";
-            return base.RedirectToRoute("LoginView");
+            if (!result.Succeeded) {
+                base.TempData["error"] = "Incorrect login or password!";
+                return base.RedirectToRoute("LoginView");
+            }
+            
+            return base.RedirectToAction(actionName: "Index", controllerName: "Home");
         }
-        
-        return base.RedirectToAction(actionName: "Index", controllerName: "Home");
+        catch (Exception ex) {
+            return BadRequest(ex.Message);
+        }
     }
-
 
     [HttpGet]
     [Route("[action]", Name = "RegistrationView")]
@@ -62,24 +67,32 @@ public class AuthenticationController : Controller
         return base.View();
     }
 
-
     [HttpPost]
     [Route("[action]", Name = "RegistrationEndpoint")]
     public async Task<IActionResult> Registration([FromForm] RegistrationDto registrationDto)
     {
-        var user = new User() 
-        {
-            Email = registrationDto.Email,
-            UserName = registrationDto.Name,
-        };
+        try {
+            var user = new User() 
+            {
+                Email = registrationDto.Email,
+                UserName = registrationDto.Name,
+            };
 
-        var result = await userService.CreateUserAsync(user, registrationDto.Password);
+            var roleToAssign = await userService.HasRegisteredUsers() ? UserRoles.User : UserRoles.Admin;
+            var result = await userService.CreateUserAsync(user, registrationDto.Password);
 
-        base.TempData["error"] = result.Succeeded ? "" : string.Join("\n", result.Errors.Select(error => error.Description));
+            if (!result.Succeeded) {
+                base.TempData["error"] = result.Succeeded ? "" : string.Join("\n", result.Errors.Select(error => error.Description));
+                return RedirectToAction("RegistrationView");
+            }
 
-        return result.Succeeded
-            ? RedirectToRoute("LoginView")
-            : RedirectToAction("Registration", "Identity");
+            await userService.AssignRoleToUserAsync(registrationDto.Name, roleToAssign);
+
+            return RedirectToRoute("LoginView");
+        }
+        catch (Exception ex) {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet]
@@ -87,9 +100,13 @@ public class AuthenticationController : Controller
     [Route("[action]", Name = "LogOut")]
     public async Task<IActionResult> Logout()
     {
-        await this.identityAuthService.SignOutAsync();
-
-        return base.RedirectToAction(actionName: "Index", controllerName: "Home");
+        try {
+            await this.identityAuthService.SignOutAsync();
+            return base.RedirectToAction(actionName: "Index", controllerName: "Home");
+        }
+        catch (Exception ex) {
+            return BadRequest(ex.Message);
+        }
 
     }
 }

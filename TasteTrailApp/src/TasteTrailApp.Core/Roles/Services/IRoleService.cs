@@ -8,4 +8,6 @@ public interface IRoleService
     Task<IdentityResult> CreateRoleAsync(UserRoles role);
 
     Task<IdentityResult> DeleteRoleAsync(UserRoles role);
+
+    Task SetupRolesAsync();
 }

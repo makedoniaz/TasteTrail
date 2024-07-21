@@ -98,6 +98,14 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 #endregion
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
+    await roleService.SetupRolesAsync();
+}
+
+
     
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
