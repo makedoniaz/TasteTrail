@@ -1,3 +1,4 @@
+using TasteTrailApp.Core.Feedbacks.Models;
 using TasteTrailApp.Core.Menus.Models;
 using TasteTrailApp.Core.Venues.Models;
 
@@ -8,5 +9,6 @@ public class VenueViewModel
     public Venue? Venue { get; set; }
     
     public IEnumerable<Menu>? Menus { get; set; }
-    
+
+    public IEnumerable<Feedback> Feedbacks { get; set; }
 }

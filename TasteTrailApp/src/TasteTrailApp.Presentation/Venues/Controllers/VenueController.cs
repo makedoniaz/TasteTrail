@@ -35,12 +35,15 @@ public class VenueController : Controller
     [Route("[action]/{venueId:int}", Name = "VenueDetails")]
     public async Task<IActionResult> VenueDetails(int venueId)
     {
+        var venue = await this._venueService.GetByIdAsync(id: venueId);
+
         try
         {
             var viewmodel = new VenueViewModel()
             {
-                Venue = await this._venueService.GetByIdAsync(id: venueId),
-                Menus = await this._menuService.GetAllMenusByVenueId(venueId)
+                Venue = venue,
+                Menus = venue.Menus,
+                Feedbacks = venue.Feedbacks
             };
 
             return base.View(model: viewmodel);
@@ -109,7 +112,7 @@ public class VenueController : Controller
             await this._venueService.PutAsync(entity: venue);
             return base.Ok();
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
@@ -130,6 +133,4 @@ public class VenueController : Controller
             return base.StatusCode(statusCode: StatusCodes.Status500InternalServerError, value: ex.Message);
         }
     }
-
-      
 }
