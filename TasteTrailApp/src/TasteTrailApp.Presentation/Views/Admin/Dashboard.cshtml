@@ -1,0 +1,90 @@
+﻿@model AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin Dashboard</h1>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text">@Model.TotalUsers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Feedbacks</h5>
+                    <p class="card-text">@Model.TotalFeedbacks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Venues</h5>
+                    <p class="card-text">@Model.TotalVenues</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Statistics Graphs</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="userChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="feedbackChart"></canvas>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx1 = document.getElementById('userChart').getContext('2d');
+        var userChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Total Users'],
+                datasets: [{
+                    label: 'Users',
+                    data: [@Model.TotalUsers],
+                    backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                    borderColor: ['rgba(54, 162, 235, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var ctx2 = document.getElementById('feedbackChart').getContext('2d');
+        var feedbackChart = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Feedbacks'],
+                datasets: [{
+                    label: 'Feedbacks',
+                    data: [@Model.TotalFeedbacks],
+                    backgroundColor: ['rgba(255, 159, 64, 0.2)'],
+                    borderColor: ['rgba(255, 159, 64, 1)'],
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>
+}
