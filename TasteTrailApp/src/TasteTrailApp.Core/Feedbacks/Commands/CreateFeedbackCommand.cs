@@ -4,7 +4,7 @@ namespace TasteTrailApp.Core.Feedbacks.Commands;
 
 public class CreateFeedbackCommand : IRequest
 {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     public string? Text { get; set; }
 
