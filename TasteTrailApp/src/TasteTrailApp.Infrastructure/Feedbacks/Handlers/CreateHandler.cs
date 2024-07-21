@@ -17,7 +17,7 @@ public class CreateHandler : IRequestHandler<CreateFeedbackCommand>
     public async Task Handle(CreateFeedbackCommand request, CancellationToken cancellationToken)
     {
         var newFeedback = new Feedback {
-            UserId = request.UserId,
+            UserId = request.UserId.ToString(),
             Text = request.Text,
             Rating = request.Rating,
             CreationDate = DateTime.Now,

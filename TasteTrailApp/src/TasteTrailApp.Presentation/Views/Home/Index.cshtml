@@ -1,42 +1,74 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-<style>
-    body, .colorBox{
-        background-color: rgb(12, 12, 12)  ;
-    }
-</style>
-<div id="welcomeSection" class="container-fluid text-white py-5 colorBox">
-    <div class="text-center">
-        <h1 class="display-4">Welcome to Taste Trail</h1>
+﻿<section class="section_container banner_container" id="special">
+    <div class="banner_card">
+        <h4>MOST POPULAR Venues</h4>
     </div>
-</div>
+    <div class="banner_card">
+        <p>TRY IT OUT TODAY</p>
+        <h4>MORE FUN<br />MORE TASTE</h4>
+    </div>
+    <div class="banner_card">
+        <p>TRY IT OUT TODAY</p>
+        <h4>FRESH & CHILI</h4>
+    </div>
+</section>
 
-<div id="venueCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        
-        <div class="carousel-item active">
-            <img src="~/images/venueCarousel.jpg" class="d-block w-100" alt="First slide">
+<section class="section_container order_container" id="menu">
+    <h3>ALWAYS TASTE WITH US</h3>
+    <h2 class="section_header">CHOOSE & ENJOY</h2>
+    <p class="section_description">
+        Discover a world of flavor at TasteTrail, where classic tastes meet bold new creations. Whether you're in
+        the mood for time-honored favorites or innovative culinary experiments, this is your destination. Indulge in
+        a personalized burger experience like no other with Burger Company. Savor every bite and let your taste buds
+        explore new horizons.
+    </p>
+    <div class="order_grid">
+        <div class="order_card">
+            <img src="assets/order-1.png" alt="order" />
+            <h4>Grilled Steak</h4>
+            <p>
+                Savor the rich, succulent flavors of our Grilled Steak, expertly prepared to highlight the natural
+                tenderness of premium cuts. Perfectly seasoned and cooked to your preferred level of doneness, this
+                dish offers a hearty and satisfying experience with each bite. Indulge in a culinary classic that
+                embodies excellence and flavor.
+            </p>
+            <!-- <button class="btn">ORDER NOW</button> -->
         </div>
-        <div class="carousel-item">
-            <img src="~/images/venueCarousel2.jpg" class="d-block w-100" alt="Second slide">
+        <div class="order_card">
+            <img src="assets/order-2.png" alt="order" />
+            <h4>Food Pyramid Plate</h4>
+            <p>
+                Discover a balanced and nutritious meal with our Food Pyramid Plate. This dish beautifully
+                incorporates elements from each food group, offering a harmonious blend of proteins, grains,
+                vegetables, and fruits. Enjoy a thoughtfully crafted plate that promotes healthy eating while
+                delivering delicious and satisfying flavors.
+            </p>
+            <!-- <button class="btn">ORDER NOW</button> -->
         </div>
-        <div class="carousel-item">
-            <img src="~/images/venueCarousel3.jpg" class="d-block w-100" alt="Third slide">
+        <div class="order_card">
+            <img src="assets/order-3.png" alt="order" />
+            <h4>Gourmet Pizza</h4>
+            <p>
+                Delight in the rich, savory taste of our Gourmet Pizza, crafted with the finest ingredients and
+                baked to perfection. Each slice features a crispy, golden crust topped with a blend of fresh,
+                high-quality cheeses, vibrant vegetables, and your choice of premium meats. Enjoy a mouthwatering
+                experience that brings together classic flavors and inventive combinations for a truly exceptional
+                pizza.
+            </p>
+            <!-- <button class="btn">ORDER NOW</button> -->
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#venueCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#venueCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
+</section>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-lVAB2Hk65Nqmgw2Q9FmZQbQlXR1GnD2llWZeAD5BUH9ubT/I4+0l5pACzE0YkO5G" crossorigin="anonymous"></script>
-}
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEa1fqO1LRNrfjGhEjzl25NfMjw7OH" crossorigin="anonymous">
+<section class="reservation" id="contact">
+    <div class="section_container reservation_container">
+        <h2 class="section_header">Contact Us</h2>
+        <form action="/">
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <textarea placeholder="Message"></textarea>
+            <button class="btn" type="submit">Send Email</button>
+        </form>
+    </div>
+    <img src="assets/reservation-bg-1.png" alt="reservation" class="reservation_bg-1" />
+    <img src="assets/reservation-bg-2.png" alt="reservation" class="reservation_bg-2" />
+</section>
