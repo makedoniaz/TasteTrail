@@ -7,6 +7,7 @@ namespace TasteTrailApp.Infrastructure.Users.Services;
 
 public class UserService : IUserService
 {
+
     private readonly UserManager<User> _userManager;
 
     public UserService(UserManager<User> userManager)

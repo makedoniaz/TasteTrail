@@ -64,7 +64,6 @@ public class RoleService : IRoleService
         if (!await _roleManager.RoleExistsAsync(roleName))
             return IdentityResult.Failed(new IdentityError { Description = $"Role {roleName} not found." });
 
-
         return await _userManager.RemoveFromRoleAsync(user, roleName);
     }
 }
