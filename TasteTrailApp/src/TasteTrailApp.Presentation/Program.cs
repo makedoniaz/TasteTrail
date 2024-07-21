@@ -13,6 +13,7 @@ using TasteTrailApp.Core.Venues.Services;
 
 using TasteTrailApp.Core.VenuesPhotos.Repositories;
 using TasteTrailApp.Core.VenuesPhotos.Services;
+
 using TasteTrailApp.Infrastructure.Common.Data;
 
 using TasteTrailApp.Infrastructure.Menus.Repositories;
@@ -26,8 +27,16 @@ using TasteTrailApp.Infrastructure.Venues.Services;
 
 using TasteTrailApp.Infrastructure.VenuesPhotos.Repositories;
 using TasteTrailApp.Infrastructure.VenuesPhotos.Services;
+
 using Microsoft.AspNetCore.Identity;
 using TasteTrailApp.Core.Users.Models;
+using TasteTrailApp.Core.Users.Services;
+using TasteTrailApp.Infrastructure.Users.Services;
+using TasteTrailApp.Core.Roles.Services;
+using TasteTrailApp.Infrastructure.Roles.Services;
+using System.Security.Principal;
+using TasteTrailApp.Core.Authentications.Services;
+using TasteTrailApp.Infrastructure.Authentications.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +63,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options => {
     .AddEntityFrameworkStores<TasteTrailDbContext>()
     .AddDefaultTokenProviders()
     .AddSignInManager();
+
 #endregion
 
 #region [ DI Repositories ]
@@ -73,6 +83,11 @@ builder.Services.AddTransient<IVenueService, VenueService>();
 builder.Services.AddTransient<IMenuItemService, MenuItemService>();
 builder.Services.AddTransient<IMenuService, MenuSerivce>();
 builder.Services.AddTransient<IVenuePhotosService, VenuePhotosService>();
+
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IIdentityAuthService, IdentityAuthService>();
+
 
 #endregion
 

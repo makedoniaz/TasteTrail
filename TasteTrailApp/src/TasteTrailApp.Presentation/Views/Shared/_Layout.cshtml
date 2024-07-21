@@ -1,7 +1,10 @@
-﻿@{
+﻿@using System.Security.Claims
+
+@{
     var IsAuthenticated = base.User.Identity?.IsAuthenticated ?? false;
     var IsAdmin = base.User.IsInRole("Admin");
-     var firstnameCookie = base.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name);
+
+    var firstnameCookie = base.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name);
 }
 <!DOCTYPE html>
 <html lang="en">
