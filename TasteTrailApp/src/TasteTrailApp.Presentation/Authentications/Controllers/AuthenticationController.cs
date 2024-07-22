@@ -41,17 +41,20 @@ public class AuthenticationController : Controller
     [Route("/api/[controller]/[action]", Name = "LoginEndPoint")]
     public async Task<IActionResult> Login([FromForm] LoginDto loginDto)
     {
-        try {
+        try
+        {
             var result = await this.identityAuthService.SignInAsync(loginDto.Username, loginDto.Password, true);
 
-            if (!result.Succeeded) {
+            if (!result.Succeeded)
+            {
                 base.TempData["error"] = "Incorrect login or password!";
                 return base.RedirectToRoute("LoginView");
             }
-            
+
             return base.RedirectToAction(actionName: "Index", controllerName: "Home");
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -71,8 +74,9 @@ public class AuthenticationController : Controller
     [Route("[action]", Name = "RegistrationEndpoint")]
     public async Task<IActionResult> Registration([FromForm] RegistrationDto registrationDto)
     {
-        try {
-            var user = new User() 
+        try
+        {
+            var user = new User()
             {
                 Email = registrationDto.Email,
                 UserName = registrationDto.Name,
@@ -81,7 +85,8 @@ public class AuthenticationController : Controller
             var roleToAssign = await userService.HasRegisteredUsers() ? UserRoles.User : UserRoles.Admin;
             var result = await userService.CreateUserAsync(user, registrationDto.Password);
 
-            if (!result.Succeeded) {
+            if (!result.Succeeded)
+            {
                 base.TempData["error"] = result.Succeeded ? "" : string.Join("\n", result.Errors.Select(error => error.Description));
                 return RedirectToAction("RegistrationView");
             }
@@ -90,7 +95,8 @@ public class AuthenticationController : Controller
 
             return RedirectToRoute("LoginView");
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -100,13 +106,23 @@ public class AuthenticationController : Controller
     [Route("[action]", Name = "LogOut")]
     public async Task<IActionResult> Logout()
     {
-        try {
+        try
+        {
             await this.identityAuthService.SignOutAsync();
             return base.RedirectToAction(actionName: "Index", controllerName: "Home");
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
 
+    }
+
+    [HttpGet]
+    [Authorize]
+    [Route("[action]", Name = "UserInfo")]
+    public async Task<IActionResult> UserInfo()
+    {
+        return View();
     }
 }

@@ -1,0 +1,139 @@
+@using System.Security.Claims
+
+@{
+    var IsAuthenticated = base.User.Identity?.IsAuthenticated ?? false;
+    var Name = base.User.Identity?.Name;
+    var Email = User.FindFirst(ClaimTypes.Email)?.Value;
+    var Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var IsAdmin = base.User.IsInRole("Admin");
+
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="container mt-5">
+    <div class="row"> 
+        <div class="col-md-8 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">@Name</h5>
+                    <p class="card-text">
+                        <strong>Role:</strong> @(IsAdmin ? "Admin" : "User")
+                    </p>
+                    <p class="card-text">
+                        <strong>Email:</strong> @Email
+                    </p>
+
+                    <button class="btn btn-warning me-2 mb-3" onclick="showUpdateForm('@Id')">Edit
+                        Profile</button>
+
+                    <div id="updateForm" class="update-form" style="display:none;">
+                        <div class="card">
+                            <h3 class="card-header">Update User</h3>
+                            <input type="hidden" id="userId">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="newName" class="form-label">Name:</label>
+                                    <input type="text" id="newName" class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="newEmail" class="form-label">Email:</label>
+                                    <input type="text" id="newEmail" class="form-control">
+                                </div> 
+
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-success" onclick="updateUser()">Save</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="hideUpdateForm()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showUpdateForm(id) { 
+            fetchUserAndUpdateForm(id);
+        }
+
+        function fetchUserAndUpdateForm(id) {
+            fetch(`/User/Json/${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch user.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    updateFormWithUserData(data);
+                })
+                .catch(error => console.error('Error fetching user:', error));
+        }
+        function updateFormWithUserData(data) {
+            document.getElementById('userId').value = data.id;
+            document.getElementById('Name').value = data.name;
+            document.getElementById('Email').value = data.email; 
+            document.getElementById('updateForm').style.display = 'block';
+        }
+
+        function hideUpdateForm() {
+            document.getElementById('updateForm').style.display = 'none';
+        }
+
+        function updateUser() {
+            const userId = document.getElementById('userId').value;
+            const name = document.getElementById('Name').value;
+            const email = document.getElementById('Email').value;
+  
+            const updatedUser = {
+                id: userId,
+                name: name,
+                email: email
+            };
+
+            fetch(`/User`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedUser)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('User updated successfully!');
+                        hideUpdateForm();
+                        window.location.reload();
+                    } else {
+                        alert('Failed to update user.');
+                    }
+                })
+                .catch(error => console.error('Error updating user:', error));
+        }
+    </script>
+   
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<style>
+    .card-title {
+        margin-bottom: 0.5rem;
+        color: #343a40;
+    }
+
+    .card-text {
+        color: #6c757d;
+    }
+
+    .container{
+        margin-bottom: 5rem;
+    }
+ 
+</style>
