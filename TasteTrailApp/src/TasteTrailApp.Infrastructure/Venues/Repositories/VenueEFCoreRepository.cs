@@ -46,7 +46,7 @@ public class VenueEFCoreRepository : IVenueRepository
 
     public async Task<Venue?> GetByIdAsync(int id)
     {
-        return await context.Venues.FindAsync(id);
+        return await context.Venues.Include(m => m.Menus).Include(f => f.Feedbacks).FirstOrDefaultAsync(v => v.Id == id);
     }
 
     public async Task PatchLogoUrlPathAsync(Venue venue, string logoUrlPath)

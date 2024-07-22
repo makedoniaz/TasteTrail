@@ -101,61 +101,41 @@
     <div id="map" style="height: 300px;"></div>
 </div>
 
-<!-- Feedback Section -->
-@* <div class="mt-5">
-<h2>Reviews</h2>
-<div class="list-group">
-<div class="list-group-item d-flex align-items-start">
-<img src="/images/user.png" class="rounded-circle me-3" alt="Alice's logo" style="width: 50px;">
-<div>
-<h5 class="mb-1">Alice</h5>
-<div class="rating" data-rating="5">
-<span class="text-warning">
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-</span>
-<span class="badge bg-secondary ms-2">5.0</span>
-</div>
-<p class="mb-1">The ambiance is fantastic and the food is even better. Highly recommend the
-appetizers!</p>
-<small class="text-muted">Posted on 2023-01-01</small>
-<!-- Edit Button in Footer -->
-<div class="mt-2">
-<button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
-class="fas fa-pencil-alt"></i></button>
-</div>
-</div>
-</div>
-<div class="list-group-item d-flex align-items-start">
-<img src="/images/user.png" class="rounded-circle me-3" alt="Bob's logo" style="width: 50px;">
-<div>
-<h5 class="mb-1">Bob</h5>
-<div class="rating" data-rating="4">
-<span class="text-warning">
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="far fa-star"></i>
-</span>
-<span class="badge bg-secondary ms-2">4.0</span>
-</div>
-<p class="mb-1">Great place for a family outing. The outdoor seating is perfect for sunny days.</p>
-<small class="text-muted">Posted on 2023-01-02</small>
-<!-- Edit Button in Footer -->
-<div class="mt-2">
-<button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
-class="fas fa-pencil-alt"></i></button>
-</div>
-</div>
-</div>
-</div>
-</div> *@
+<div class="mt-5">
+    <h2>Reviews</h2>
+    <div class="list-group" style="position: relative;">
+        @foreach (var feedback in Model.Feedbacks)
+        {
+            <div class="list-group-item d-flex align-items-start">
+                <img src="/images/user.png" class="rounded-circle me-3" alt="Alice's logo" style="width: 50px;">
+                <div>
+                    <h5 class="mb-1">@feedback.User</h5>
+                    <div class="rating" data-rating="@feedback.Rating">
+                        <span class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+                        <span class="badge bg-secondary ms-2">@feedback.Rating</span>
+                    </div>
+                    <p class="mb-1">@feedback.Text
+                    </p>
+                    <small class="text-muted">Posted on @feedback.CreationDate</small>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
+                                class="fas fa-pencil-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+        <button type="button" class="btn btn-primary btn-lg rounded-circle" id="addFeedbackBtn"
+            style="position: absolute; bottom: -10px; right: -15px;"><i class="fas fa-plus"></i> </button>
+    </div>
 
-<!-- Comment Form Section -->
+</div>
+
 <div class="mt-5" id="commentFormSection" style="display: none;">
     <h2>Add/Edit Comment</h2>
     <form id="commentForm">
@@ -200,44 +180,116 @@ class="fas fa-pencil-alt"></i></button>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <script>
         $(document).ready(function () {
-        @* const stars = $('.rating .star');
+            const stars = $('.rating .star');
 
             stars.on('click', function () {
-            const value = parseInt($(this).data('value'));
-            const container = $(this).closest('.rating');
-            const restaurantRatingElement = container.find('.badge');
-            const restaurantRating = parseFloat(container.data('rating'));
+                const value = parseInt($(this).data('value'));
+                const container = $(this).closest('.rating');
+                const restaurantRatingElement = container.find('.badge');
+                const restaurantRating = parseFloat(container.data('rating'));
 
-            stars.removeClass('fas fa-star fa-star-half-alt far');
+                stars.removeClass('fas fa-star fa-star-half-alt far');
 
-            for (let i = 0; i < value; i++) {
-            stars.eq(i).addClass('fas fa-star');
-            }
+                for (let i = 0; i < value; i++) {
+                    stars.eq(i).addClass('fas fa-star');
+                }
 
-            if (value < 5) {
-            for (let j = value; j < stars.length; j++) {
-            stars.eq(j).addClass('far fa-star');
-            }
-            }
+                if (value > restaurantRating) {
+                    stars.eq(value - 1).addClass('fa-star-half-alt');
+                } else if (value < restaurantRating) {
+                    stars.eq(value).addClass('far fa-star');
+                }
 
-            restaurantRatingElement.text(value.toFixed(1));
-            container.data('rating', value.toFixed(1));
-            }); *@
+                container.data('rating', value);
+                restaurantRatingElement.text(value.toFixed(1));
+            });
 
-                // Edit Feedback Button Click Handler
-                $('.edit-feedback').click(function () {
-                    $('#commentFormSection').slideDown();
-                    // Add logic to populate form with existing feedback data based on your backend implementation
-                    // Example: Fetch data and populate the form fields based on the selected feedback.
-                });
+            $('#addFeedbackBtn').on('click', function () {
 
-            // Initialize the map with Leaflet
+                const isAlreadyOpen = $('#commentFormSection').is(':visible');
+
+                if (!isAlreadyOpen) {
+                    $('#commentName').val("");
+                    $('#commentRating').val("");
+                    $('#commentMessage').val("");
+
+                    if (!isAlreadyOpen) {
+                        $('#commentFormSection').slideDown();
+                    }
+                } else {
+                    $('#commentFormSection').slideUp();
+                }
+                $('html, body').animate({
+                    scrollTop: $('#commentFormSection').offset().top
+                }, 500);
+            });
+
+            $('#commentForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const commentName = $('#commentName').val();
+                const commentRating = $('#commentRating').val();
+                const commentMessage = $('#commentMessage').val();
+
+                const feedbackHtml = `
+                                                <div class="list-group-item d-flex align-items-start">
+                                                    <img src="/images/user.png" class="rounded-circle me-3" alt="${commentName}'s logo" style="width: 50px;">
+                                                    <div>
+                                                        <h5 class="mb-1">${commentName}</h5>
+                                                        <div class="rating" data-rating="${commentRating}">
+                                                            <span class="text-warning">
+                                                                ${[...Array(parseInt(commentRating))].map(() => '<i class="fas fa-star"></i>').join('')}
+                                                                ${[...Array(5 - parseInt(commentRating))].map(() => '<i class="far fa-star"></i>').join('')}
+                                                            </span>
+                                                            <span class="badge bg-secondary ms-2">${parseFloat(commentRating).toFixed(1)}</span>
+                                                        </div>
+                                                        <p class="mb-1">${commentMessage}</p>
+                                                        <small class="text-muted">Posted on ${new Date().toLocaleDateString()}</small>
+                                                        <!-- Edit Button in Footer -->
+                                                        <div class="mt-2">
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i class="fas fa-pencil-alt"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+
+                $('.list-group').append(feedbackHtml);
+                $('#commentFormSection').slideUp();
+                $('#commentForm')[0].reset();
+            });
+
+            $(document).on('click', '.edit-feedback', function () {
+                const feedbackItem = $(this).closest('.list-group-item');
+                const commentName = feedbackItem.find('h5').text();
+                const commentRating = feedbackItem.find('.rating').data('rating');
+                const commentMessage = feedbackItem.find('p.mb-1').text();
+
+                const isAlreadyOpen = $('#commentFormSection').is(':visible');
+
+                if (!isAlreadyOpen || $('#commentName').val() !== commentName) {
+                    $('#commentName').val(commentName);
+                    $('#commentRating').val(commentRating);
+                    $('#commentMessage').val(commentMessage);
+
+                    if (!isAlreadyOpen) {
+                        $('#commentFormSection').slideDown();
+                    }
+                } else {
+                    $('#commentFormSection').slideUp();
+                }
+
+                $('html, body').animate({
+                    scrollTop: $('#commentFormSection').offset().top
+                }, 500);
+            });
+
+
             var map = L.map('map').setView([40.3820624, 49.877007], 15);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -19,6 +19,7 @@ public class AdminPanelController : Controller
     }
 
     [HttpGet]
+    [Route("[action]")]
     public async Task<IActionResult> Dashboard()
     {
         var model = new AdminDashboardViewModel
@@ -29,5 +30,12 @@ public class AdminPanelController : Controller
         };
 
         return View(model);
+    }
+
+    [HttpGet]
+    [Route("[action]")]
+    public async Task<IActionResult> Index()
+    {
+        return View();
     }
 }

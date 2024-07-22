@@ -5,6 +5,7 @@ using TasteTrailApp.Core.Menus.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
 using TasteTrailApp.Core.Venues.Services;
 using TasteTrailApp.Core.Venues.Models;
+using TasteTrailApp.Core.Feedbacks.Repositories;
 
 namespace TasteTrailApp.Presentation.Venues.Controllers;
 
@@ -37,10 +38,12 @@ public class VenueController : Controller
     {
         try
         {
+            var venue = await this._venueService.GetByIdAsync(id: venueId);
             var viewmodel = new VenueViewModel()
             {
-                Venue = await this._venueService.GetByIdAsync(id: venueId),
-                Menus = await this._menuService.GetAllMenusByVenueId(venueId)
+                Venue = venue,
+                Menus = venue.Menus,
+                Feedbacks = venue.Feedbacks 
             };
 
             return base.View(model: viewmodel);
