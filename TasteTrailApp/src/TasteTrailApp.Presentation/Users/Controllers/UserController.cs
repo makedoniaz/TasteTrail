@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Roles.Services;
 using TasteTrailApp.Core.Users.Services;
-using TasteTrailApp.Infrastructure.Users.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
 
-namespace TasteTrailApp.Presentation.Common.Controllers;
+namespace TasteTrailApp.Presentation.Users.Controllers;
 
 [Route("[controller]")]
 public class UserController : Controller
