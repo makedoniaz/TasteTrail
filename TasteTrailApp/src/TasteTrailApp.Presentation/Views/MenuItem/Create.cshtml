@@ -1,19 +1,19 @@
 ﻿@using TasteTrailApp.Core.MenuItems.Commands;
 @{
-        Layout = "~/Views/Shared/_LayoutServices.cshtml";
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
 
 }
 @model CreateMenuItemCommand
 
-<form asp-route="CreateMenuItemApi" method="post" class="createForm"> 
+<form asp-route="CreateMenuItemApi" method="post" class="createForm">
     <div>
-        <label asp-for="Name">Menu Item Name:</label> 
-        <input asp-for="Name" type="text" /> 
-        <span class="text-danger"  asp-validation-for="Name"></span> 
+        <label asp-for="Name">Menu Item Name:</label>
+        <input asp-for="Name" type="text" />
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
     <div>
-       <label asp-for="PopularityRate">Popularity Rate:</label>
-        <input asp-for="PopularityRate" type="number" hidden/> 
+        <label asp-for="PopularityRate">Popularity Rate:</label>
+        <input asp-for="PopularityRate" type="number" hidden />
         <div class="rating" data-rating="0">
             <span class="text-warning">
                 <i class="far fa-star star" data-value="1"></i>
@@ -25,30 +25,22 @@
             <span class="badge bg-secondary ms-2">0</span>
         </div>
         <span class="text-danger" asp-validation-for="PopularityRate"></span>
-    </div> 
-    <div>
-        <label asp-for="Price">Price:</label> 
-        <input asp-for="Price" type="number" /> 
-        <span class="text-danger" asp-validation-for="Price" ></span>
-    </div> 
-     <div>
-        <label asp-for="Description">Description:</label> 
-        <textarea asp-for="Description"></textarea> 
-        <span class="text-danger" asp-validation-for="Description" ></span> 
     </div>
-    
+    <div>
+        <label asp-for="Price">Price:</label>
+        <input asp-for="Price" type="number" />
+        <span class="text-danger" asp-validation-for="Price"></span>
+    </div>
+    <div>
+        <label asp-for="Description">Description:</label>
+        <textarea asp-for="Description"></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
     <button type="submit">Add Menu Item</button>
     </div>
 </form>
 <style>
-    .createForm {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-
     .createForm div {
         margin-bottom: 15px;
     }
@@ -125,7 +117,7 @@
         margin-left: 10px;
     }
 
-     table {
+    table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 10px;
@@ -141,19 +133,22 @@
     th {
         background-color: #f2f2f2;
     }
-    th:first-child, td:first-child {
+
+    th:first-child,
+    td:first-child {
         width: 3px;
         text-align: center;
     }
 
-    #toggleSelectAll{
+    #toggleSelectAll {
         background-color: #f2f2f2;
         color: #ccc;
         border: none;
         padding: 10px 15px;
         border-radius: 4px;
         cursor: pointer;
-    } 
+    }
+
     button {
         background-color: #5cb85c;
         color: white;
@@ -179,7 +174,7 @@
             var fileNameDisplay = document.getElementById('file-name');
             fileNameDisplay.textContent = fileName;
         }
-            $(document).ready(function () {
+        $(document).ready(function () {
             const stars = $('.rating .star');
 
             stars.on('click', function () {

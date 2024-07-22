@@ -233,7 +233,7 @@
             $('#commentForm').on('submit', function (e) {
                 e.preventDefault();
 
-                const commentName = $('#commentName').val();
+                @* const commentName = $('#commentName').val();
                 const commentRating = $('#commentRating').val();
                 const commentMessage = $('#commentMessage').val();
 
@@ -261,7 +261,7 @@
 
                 $('.list-group').append(feedbackHtml);
                 $('#commentFormSection').slideUp();
-                $('#commentForm')[0].reset();
+                $('#commentForm')[0].reset(); *@
             });
 
             $(document).on('click', '.edit-feedback', function () {

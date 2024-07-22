@@ -43,6 +43,12 @@ public class VenueService : IVenueService
         return result;
     }
 
+    public async Task<List<Venue>> GetAllAsync()
+    {
+        var result = await this.venueRepository.GetAllAsync();
+        return result;
+    }
+
     public async Task<Venue> GetByIdAsync(int id)
     {
         var result = await this.venueRepository.GetByIdAsync(id);

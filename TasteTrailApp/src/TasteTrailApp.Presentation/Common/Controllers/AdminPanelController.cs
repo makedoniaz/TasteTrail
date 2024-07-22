@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Roles.Services;
 using TasteTrailApp.Core.Users.Services;
+using TasteTrailApp.Core.Venues.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
 
 namespace TasteTrailApp.Presentation.Common.Controllers;
@@ -8,13 +9,14 @@ namespace TasteTrailApp.Presentation.Common.Controllers;
 [Route("[controller]")]
 public class AdminPanelController : Controller
 {
-    private readonly IUserService userService;
-
+    private readonly IUserService _userService;
+    private readonly IVenueService _venueService;
     private readonly IRoleService roleService;
 
-    public AdminPanelController(IUserService userService, IRoleService roleService)
+    public AdminPanelController(IUserService userService, IVenueService venueService, IRoleService roleService)
     {
-        this.userService = userService;
+        this._userService = userService;
+        this._venueService = venueService;
         this.roleService = roleService;
     }
 
@@ -22,11 +24,24 @@ public class AdminPanelController : Controller
     [Route("[action]")]
     public async Task<IActionResult> Dashboard()
     {
+        var users = await this._userService.GetAllAsync();
+        int feedbacks = 0;
+
+        // foreach (var user in users)
+        // {
+        //     if(user.Feedbacks.Count() == 0)
+        //     {
+        //         continue;
+        //     }
+        //     feedbacks += user.Feedbacks.Count();
+        // }
+        var venues = await this._venueService.GetAllAsync();
+
         var model = new AdminDashboardViewModel
         {
-            TotalUsers = 0,
-            TotalFeedbacks = 0,
-            TotalVenues = 0
+            TotalUsers = users.Count(),
+            TotalFeedbacks = feedbacks,
+            TotalVenues = venues.Count()
         };
 
         return View(model);

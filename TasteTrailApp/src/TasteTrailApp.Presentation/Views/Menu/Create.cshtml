@@ -1,20 +1,20 @@
 ﻿@model Menu
 @{
     ViewData["Title"] = "Create Menu Page";
-        Layout = "~/Views/Shared/_LayoutServices.cshtml";
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
 
- }
+}
 
 <form asp-route="CreateMenuApi" method="post" class="createForm">
     <div>
-        <label for="Name">Menu Name:</label> 
-        <input name="Name" type="text" /> 
-        <span class="text-danger" asp-validation-for="Name"></span> 
+        <label for="Name">Menu Name:</label>
+        <input name="Name" type="text" />
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
     <div>
-        <label for="Description">Description:</label> 
-        <textarea name="Description" type="textarea"></textarea> 
-        <span class="text-danger" asp-validation-for="Description"></span> 
+        <label for="Description">Description:</label>
+        <textarea name="Description" type="textarea"></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
     </div>
     <button type="submit">Add Menu</button>
 </form>
@@ -25,13 +25,6 @@
         color: #333;
     }
 
-    .createForm {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
 
     .createForm div {
         margin-bottom: 15px;

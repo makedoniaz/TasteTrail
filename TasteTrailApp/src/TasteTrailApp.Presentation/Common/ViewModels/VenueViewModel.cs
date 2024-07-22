@@ -12,4 +12,3 @@ public class VenueViewModel
     public ICollection<Feedback>? Feedbacks { get; set; }
     
 }
-

@@ -39,6 +39,10 @@ public class VenueEFCoreRepository : IVenueRepository
         return 0;
     }
 
+    public async Task<List<Venue>> GetAllAsync()
+    {
+        return await context.Venues.ToListAsync();
+    }
     public async Task<List<Venue>> GetByCountAsync(int count)
     {
         return await context.Venues.Take(count).ToListAsync();

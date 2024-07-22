@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Roles.Enums;
 using TasteTrailApp.Core.Roles.Services;
@@ -20,16 +21,42 @@ public class UserController : Controller
     }
 
     [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var users = await this._userService.GetAllAsync();
+
+        var userViewModels = new List<UserViewModel>();
+
+        foreach (var user in users)
+        {
+            var role = await this._userService.GetRoleByUsernameAsync(user.UserName!);
+
+            var userViewModel = new UserViewModel
+            {
+                User = user,
+                Role = role.First()
+            };
+
+            userViewModels.Add(userViewModel);
+        }
+
+        return View(userViewModels);
+    }
+
+
+    [HttpGet]
     [Route("Json/{id}")]
     public async Task<IActionResult> Json(string id)
     {
         var user = await this._userService.GetUserByIdAsync(id);
+        var role = await this._userService.GetRoleByUsernameAsync(user.UserName!);
+
         if (user == null)
         {
             return NotFound();
         }
 
-        return Json(new { id = user.Id, name = user.UserName, email = user.Email });
+        return Json(new { id = user.Id, name = user.UserName, email = user.Email, role = role });
     }
 
     [HttpPut]
@@ -60,11 +87,14 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[controller]/[action]", Name = "AssignUserRole")]
-    public async Task<IActionResult> AssignRole([FromQuery] string username, [FromQuery] UserRoles role) {
-        try {
+    public async Task<IActionResult> AssignRole([FromQuery] string username, [FromQuery] UserRoles role)
+    {
+        try
+        {
             await _userService.AssignRoleToUserAsync(username, role);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             BadRequest(ex.Message);
         }
 
@@ -73,11 +103,14 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[action]", Name = "RemoveUserRole")]
-    public async Task<IActionResult> RemoveRole([FromQuery] string username, [FromQuery] UserRoles role) {
-        try {
+    public async Task<IActionResult> RemoveRole([FromQuery] string username, [FromQuery] UserRoles role)
+    {
+        try
+        {
             await _userService.RemoveRoleFromUserAsync(username, role);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             BadRequest(ex.Message);
         }
 
@@ -86,27 +119,46 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[action]/{userId}", Name = "ToggleMute")]
-    public async Task<IActionResult> ToggleMuteUser(string userId) {
-        try {
+    public async Task<IActionResult> ToggleMuteUser(string userId)
+    {
+        try
+        {
             await _userService.ToggleMuteUser(userId);
+            return Ok();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpPost]
+    [Route("[controller]/[action]/{userId}", Name = "ToggleBanUser")]
+    public async Task<IActionResult> ToggleBanUser(string userId)
+    {
+        try
+        {
+            await _userService.ToggleBanUser(userId);
+        }
+        catch (Exception ex)
+        {
             BadRequest(ex.Message);
         }
 
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
-    [Route("[controller]/[action]/{userId}", Name = "ToggleBanUser")]
-    public async Task<IActionResult> ToggleBanUser(string userId) {
-        try {
-            await _userService.ToggleBanUser(userId);
+    [HttpGet]
+    [Authorize]
+    [Route("/[controller]/{userId}")]
+    public async Task<IActionResult> UserInfo(string userId)
+    {
+        var user = await this._userService.GetUserByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound();
         }
-        catch (Exception ex) {
-            BadRequest(ex.Message);
-        }
-
-        return RedirectToAction("Index");
+        return View(user);
     }
 }

@@ -1,0 +1,54 @@
+@model User
+
+@{
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
+    var IsAdmin = base.User.IsInRole("Admin");
+    var defaultAvatarUrl = "../images/user.png";
+
+    ViewData["Title"] = "Login Page";
+}
+
+
+<div class="card-body row">
+    <div class="col-md-2">
+        <div class="avatar-container text-center">
+            <img id="avatarPreview" src="@defaultAvatarUrl" class="img-fluid rounded-circle avatar-image"
+                alt="User Avatar">
+            <input type="file" id="avatarInput" name="avatarInput" accept="image/*" style="display: none;">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h5 class="card-title mb-3">@Model.UserName</h5>
+        <p class="card-text"> <strong>Role:</strong> @(IsAdmin ? "Admin" : "User") </p>
+        <p class="card-text"> <strong>Email:</strong> @Model.Email </p>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<style>
+    .card-title {
+        margin-bottom: 0.5rem;
+        color: #343a40;
+    }
+
+    .card-text {
+        color: #6c757d;
+    }
+
+    .avatar-container {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .avatar-container .avatar-image {
+        transition: transform 0.2s;
+    }
+
+    .avatar-container:hover .avatar-image {
+        transform: scale(1.1);
+    }
+</style>
