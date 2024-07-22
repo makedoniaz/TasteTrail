@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using TasteTrailApp.Core.Roles.Enums;
 using TasteTrailApp.Core.Users.Models;
@@ -19,6 +20,12 @@ public interface IUserService
     Task<IdentityResult> AssignRoleToUserAsync(string username, UserRoles role);
 
     Task<IdentityResult> RemoveRoleFromUserAsync(string username, UserRoles role);
+
+    Task AddUserClaimAsync(User user, Claim claim);
+
+    Task ToggleBanUser(string userId);
+
+    Task ToggleMuteUser(string userId);
 
     Task<bool> HasRegisteredUsers();
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TasteTrailApp.Core.Roles.Enums;
 using TasteTrailApp.Core.Roles.Services;
 using TasteTrailApp.Core.Users.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
@@ -55,5 +56,57 @@ public class UserController : Controller
         }
 
         return BadRequest(ModelState);
+    }
+
+    [HttpPost]
+    [Route("[controller]/[action]", Name = "AssignUserRole")]
+    public async Task<IActionResult> AssignRole([FromQuery] string username, [FromQuery] UserRoles role) {
+        try {
+            await _userService.AssignRoleToUserAsync(username, role);
+        }
+        catch (Exception ex) {
+            BadRequest(ex.Message);
+        }
+
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("[action]", Name = "RemoveUserRole")]
+    public async Task<IActionResult> RemoveRole([FromQuery] string username, [FromQuery] UserRoles role) {
+        try {
+            await _userService.RemoveRoleFromUserAsync(username, role);
+        }
+        catch (Exception ex) {
+            BadRequest(ex.Message);
+        }
+
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("[action]/{userId}", Name = "ToggleMute")]
+    public async Task<IActionResult> ToggleMuteUser(string userId) {
+        try {
+            await _userService.ToggleMuteUser(userId);
+        }
+        catch (Exception ex) {
+            BadRequest(ex.Message);
+        }
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [Route("[controller]/[action]/{userId}", Name = "ToggleBanUser")]
+    public async Task<IActionResult> ToggleBanUser(string userId) {
+        try {
+            await _userService.ToggleBanUser(userId);
+        }
+        catch (Exception ex) {
+            BadRequest(ex.Message);
+        }
+
+        return RedirectToAction("Index");
     }
 }

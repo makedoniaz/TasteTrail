@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TasteTrailApp.Core.Roles.Enums;
@@ -83,5 +84,49 @@ public class UserService : IUserService
 
     public async Task<bool> HasRegisteredUsers() {
         return await _userManager.Users.AnyAsync();
+    }
+
+    public async Task ToggleMuteUser(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+            throw new Exception("User not found!");
+
+        user.IsMuted = !user.IsMuted;
+        await _userManager.UpdateAsync(user);
+
+        var claims = await _userManager.GetClaimsAsync(user);
+        var isMutedClaim = claims.FirstOrDefault(c => c.Type == "IsMuted");
+
+        if (isMutedClaim == null)
+            throw new Exception("Muted claim doesn't exist!");
+        
+        await _userManager.ReplaceClaimAsync(user, isMutedClaim, new Claim("IsMuted", user.IsMuted.ToString()));
+    }
+
+    public async Task ToggleBanUser(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+            throw new Exception("User not found!");
+
+        user.IsBanned = !user.IsBanned;
+        await _userManager.UpdateAsync(user);
+    }
+
+    public async Task<IList<Claim>> GetUserClaimsAsync(User user)
+    {
+        return await _userManager.GetClaimsAsync(user);
+    }
+
+    public async Task AddUserClaimAsync(User user, Claim claim)
+    {
+        var existingClaim = (await _userManager.GetClaimsAsync(user))
+                .FirstOrDefault(c => c.Type == claim.Type);
+
+        if (existingClaim is null)
+            await _userManager.AddClaimAsync(user, claim);
     }
 }
