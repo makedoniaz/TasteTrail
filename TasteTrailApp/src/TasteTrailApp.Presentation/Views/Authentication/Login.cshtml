@@ -10,14 +10,14 @@
     <div class="wrapper">
         <div class="title"><span>Login Form</span></div>
 
-        <div class="text-danger">@TempData["error"]</div>
 
         <form asp-route="LoginEndPoint" method="post">
+        <div class="text-danger">@TempData["error"]</div>
             <div class="mb-3">
                 <span class="text-danger" asp-validation-for="Username"></span>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input asp-for="Username" type="text" class="form-control" placeholder="Email" required>
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input asp-for="Username" type="text" class="form-control" placeholder="Username" required>
                 </div>
             </div>
             <div class="mb-3">
