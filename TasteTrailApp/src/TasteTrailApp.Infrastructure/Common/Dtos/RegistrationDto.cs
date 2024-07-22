@@ -1,5 +1,5 @@
 #pragma warning disable CS8618
-namespace TasteTrailApp.Presentation.Common.Dtos;
+namespace TasteTrailApp.Infrastructure.Common.Dtos;
 
 public class RegistrationDto
 {

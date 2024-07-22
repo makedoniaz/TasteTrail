@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using TasteTrailApp.Presentation.Common.Dtos;
 using TasteTrailApp.Core.Authentications.Services;
 using TasteTrailApp.Core.Users.Services;
 using TasteTrailApp.Core.Users.Models;
 using TasteTrailApp.Core.Roles.Enums;
+using TasteTrailApp.Infrastructure.Common.Dtos;
 
 namespace TasteTrailApp.Presentation.Identities.Controllers;
 
@@ -43,19 +43,13 @@ public class AuthenticationController : Controller
     {
         try
         {
-            var result = await this.identityAuthService.SignInAsync(loginDto.Username, loginDto.Password, true);
-
-            if (!result.Succeeded)
-            {
-                base.TempData["error"] = "Incorrect login or password!";
-                return base.RedirectToRoute("LoginView");
-            }
-
+            await identityAuthService.SignInAsync(loginDto.Username, loginDto.Password, true);
             return base.RedirectToAction(actionName: "Index", controllerName: "Home");
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            base.TempData["error"] = ex.Message;
+            return base.RedirectToRoute("LoginView");
         }
     }
 
@@ -83,7 +77,7 @@ public class AuthenticationController : Controller
             };
 
             var roleToAssign = await userService.HasRegisteredUsers() ? UserRoles.User : UserRoles.Admin;
-            var result = await userService.CreateUserAsync(user, registrationDto.Password);
+            var result = await identityAuthService.RegisterAsync(user, registrationDto.Password);
 
             if (!result.Succeeded)
             {

@@ -68,6 +68,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options => {
     .AddDefaultTokenProviders()
     .AddSignInManager();
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("NotMuted", policy => {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("IsMuted", "False");
+});
+
 #endregion
 
 #region [ DI Repositories ]
@@ -114,11 +120,15 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
+#region [ Authentication and Authorization ]
+
 using (var scope = app.Services.CreateScope())
 {
     var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
     await roleService.SetupRolesAsync();
 }
+
+#endregion
 
 
     
