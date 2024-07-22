@@ -1,25 +1,27 @@
 ﻿@model Venue
 @{
     ViewData["Title"] = "Create Venue Page";
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
+
 }
 
 <form asp-route="CreateVenueApi" method="post" class="createForm" enctype="multipart/form-data">
     <div class="row custom-file">
-        @* <label class="image-upload-label"  for="logo"  id="file-name">Upload Logo</label>
-        <input class= "custom-file-input"  name="logo" type="file" onchange="updateFileName(this)">
-       <hr>  *@
+        @* <label class="image-upload-label" for="logo" id="file-name">Upload Logo</label>
+        <input class= "custom-file-input" name="logo" type="file" onchange="updateFileName(this)">
+        <hr> *@
         <label for="logo" class="custom-file-label">Venue logo:</label>
-        <input class="custom-file-input"   type="file" name="logo"> 
-       
+        <input class="custom-file-input" type="file" name="logo">
+
     </div>
     <div>
         <label asp-for="Name">Venue Name:</label>
         <input asp-for="Name" type="text" />
-        <span class="text-danger" asp-validation-for="Name"></span> 
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
     <div>
         <label asp-for="OverallRating">Overall Rating:</label>
-        <input asp-for="OverallRating" type="number" hidden/> 
+        <input asp-for="OverallRating" type="number" hidden />
         <div class="rating" data-rating="0">
             <span class="text-warning">
                 <i class="far fa-star star" data-value="1"></i>
@@ -51,27 +53,27 @@
     <div>
         <label asp-for="Email">Email:</label>
         <input asp-for="Email" type="text" />
-        <span class="text-danger" asp-validation-for="Email"></span> 
+        <span class="text-danger" asp-validation-for="Email"></span>
     </div>
     <div>
         <label asp-for="Address">Address:</label>
         <input asp-for="Address" type="text" />
-        <span class="text-danger" asp-validation-for="Address"></span> 
+        <span class="text-danger" asp-validation-for="Address"></span>
     </div>
     <div>
         <label asp-for="ContactNumber">ContactNumber:</label>
-        <input asp-for="ContactNumber" type="text"  />
-        <span class="text-danger" asp-validation-for="ContactNumber"></span> 
+        <input asp-for="ContactNumber" type="text" />
+        <span class="text-danger" asp-validation-for="ContactNumber"></span>
     </div>
     <div>
         <label asp-for="AveragePrice">AveragePrice:</label>
         <input asp-for="AveragePrice" type="number" />
-        <span class="text-danger" asp-validation-for="AveragePrice"></span> 
+        <span class="text-danger" asp-validation-for="AveragePrice"></span>
     </div>
     <div>
         <label asp-for="Description">Description:</label>
         <textarea asp-for="Description"></textarea>
-        <span class="text-danger" asp-validation-for="Description"></span> 
+        <span class="text-danger" asp-validation-for="Description"></span>
     </div>
     <button type="submit">Add Menu Item</button>
 </form>
@@ -109,7 +111,7 @@
         background-color: #16a085;
         color: white;
     }
- 
+
 
     .createForm div label {
         display: block;

@@ -3,6 +3,8 @@
 @{
     var IsAuthenticated = base.User.Identity?.IsAuthenticated ?? false;
     var IsAdmin = base.User.IsInRole("Admin");
+    var Name = base.User.Identity?.Name;
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/styles.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
     <title>@ViewData["Title"] - TasteTrailApp Services</title>
 </head>
 
@@ -23,8 +25,7 @@
             <div class="nav_header">
                 <div class="nav_logo">
                     <a asp-controller="Home" asp-action="Index">
-                        <img src="assets/logo-dark.png" alt="logo" class="nav_logo-dark" />
-                        <img src="assets/logo-white.png" alt="logo" class="nav_logo-white" />
+                        <img src="~/Assets/logo-dark.png" alt="logo" class="nav_logo-dark" />
                     </a>
                 </div>
                 <div class="nav_menu_btn" id="menu-btn">
@@ -33,7 +34,11 @@
             </div>
 
             <ul class="nav_links" id="nav-links">
-                <li> <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a> </li>
+                <li> <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                @if (IsAdmin)
+                {
+                    <li><a class="nav-link" asp-controller="AdminPanel" asp-action="Dashboard">Dashboard</a></li>
+                }
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">Services
@@ -58,8 +63,7 @@
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        </a>
+                            aria-expanded="false"> Hello, @Name </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" asp-route="UserInfo">Account</a></li>
                             <li>
@@ -89,20 +93,22 @@
         </nav>
     </header>
 
-    <div class="container mb-5">
+    <div class="container mt-5 mb-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
+ 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 <footer class="footer">
     <div class="section_container footer_container">
         <div class="footer_logo">
-            <img src="assets/logo-white.png" alt="logo" />
+            <img src="~/Assets/logo-white.png" alt="logo" />
         </div>
         <div class="footer_content">
             <p>
@@ -132,9 +138,6 @@
             </div>
         </div>
     </div>
-    <div class="footer_bar">
-        Copyright © 2024 TasteTrail. All rights reserved.
-    </div>
 </footer>
 
 </html>
@@ -143,11 +146,11 @@
     main {
         padding: 2rem;
         background-color: #ffffff;
-        border-radius: 8px ;
+        border-radius: 8px;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     }
-    .footer
-    {
+
+    .footer {
         margin-top: 10rem;
     }
 </style>

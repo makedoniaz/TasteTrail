@@ -1,56 +1,58 @@
 @using System.Security.Claims
 
 @{
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
     var IsAuthenticated = base.User.Identity?.IsAuthenticated ?? false;
     var Name = base.User.Identity?.Name;
     var Email = User.FindFirst(ClaimTypes.Email)?.Value;
     var Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     var IsAdmin = base.User.IsInRole("Admin");
+    var defaultAvatarUrl = "../images/user.png";
 
-    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
     ViewData["Title"] = "Login Page";
 }
 
-<div class="container mt-5">
-    <div class="row"> 
-        <div class="col-md-8 mt-5">
+
+<div class="card-body row">
+    <div class="col-md-2">
+        <div class="avatar-container text-center">
+            <img id="avatarPreview" src="@defaultAvatarUrl" class="img-fluid rounded-circle avatar-image"
+                alt="User Avatar">
+            <input type="file" id="avatarInput" name="avatarInput" accept="image/*" style="display: none;">
+        </div>
+    </div>
+    <div class="col-md-3">
+
+        <h5 class="card-title mb-3">@Name</h5>
+        <p class="card-text">
+            <strong>Role:</strong> @(IsAdmin ? "Admin" : "User")
+        </p>
+        <p class="card-text">
+            <strong>Email:</strong> @Email
+        </p>
+
+        <button class="btn btn-warning me-2 mb-3" onclick="showUpdateForm('@Id')">Edit
+            Profile</button>
+
+        <div id="updateForm" class="update-form" style="display:none;">
             <div class="card">
+                <h3 class="card-header">Update User</h3>
+                <input type="hidden" id="userId">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">@Name</h5>
-                    <p class="card-text">
-                        <strong>Role:</strong> @(IsAdmin ? "Admin" : "User")
-                    </p>
-                    <p class="card-text">
-                        <strong>Email:</strong> @Email
-                    </p>
-
-                    <button class="btn btn-warning me-2 mb-3" onclick="showUpdateForm('@Id')">Edit
-                        Profile</button>
-
-                    <div id="updateForm" class="update-form" style="display:none;">
-                        <div class="card">
-                            <h3 class="card-header">Update User</h3>
-                            <input type="hidden" id="userId">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="newName" class="form-label">Name:</label>
-                                    <input type="text" id="newName" class="form-control">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="newEmail" class="form-label">Email:</label>
-                                    <input type="text" id="newEmail" class="form-control">
-                                </div> 
-
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-success" onclick="updateUser()">Save</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        onclick="hideUpdateForm()">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="newName" class="form-label">Name:</label>
+                        <input type="text" id="newName" class="form-control">
                     </div>
 
+                    <div class="mb-3">
+                        <label for="newEmail" class="form-label">Email:</label>
+                        <input type="text" id="newEmail" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-success" onclick="updateUser()">Save</button>
+                        <button type="button" class="btn btn-secondary" onclick="hideUpdateForm()">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,7 +61,7 @@
 
 @section Scripts {
     <script>
-        function showUpdateForm(id) { 
+        function showUpdateForm(id) {
             fetchUserAndUpdateForm(id);
         }
 
@@ -78,8 +80,8 @@
         }
         function updateFormWithUserData(data) {
             document.getElementById('userId').value = data.id;
-            document.getElementById('Name').value = data.name;
-            document.getElementById('Email').value = data.email; 
+            document.getElementById('newName').value = data.name;
+            document.getElementById('newEmail').value = data.email;
             document.getElementById('updateForm').style.display = 'block';
         }
 
@@ -89,9 +91,9 @@
 
         function updateUser() {
             const userId = document.getElementById('userId').value;
-            const name = document.getElementById('Name').value;
-            const email = document.getElementById('Email').value;
-  
+            const name = document.getElementById('newName').value;
+            const email = document.getElementById('newEmail').value;
+
             const updatedUser = {
                 id: userId,
                 name: name,
@@ -117,7 +119,7 @@
                 .catch(error => console.error('Error updating user:', error));
         }
     </script>
-   
+
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
@@ -132,8 +134,16 @@
         color: #6c757d;
     }
 
-    .container{
-        margin-bottom: 5rem;
+    .avatar-container {
+        position: relative;
+        cursor: pointer;
     }
- 
+
+    .avatar-container .avatar-image {
+        transition: transform 0.2s;
+    }
+
+    .avatar-container:hover .avatar-image {
+        transform: scale(1.1);
+    }
 </style>

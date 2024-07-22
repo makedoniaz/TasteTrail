@@ -18,7 +18,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     scroll-behavior: smooth;
     font-family: "Montserrat", sans-serif;
 }
@@ -45,20 +46,6 @@ html, body {
     line-height: 1.75rem;
 }
 
-.btn {
-    padding: 1rem 1.5rem;
-    outline: none;
-    border: none;
-    font-size: 1rem;
-    color: var(--black);
-    background-color: var(--tertiary-color);
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background-color: var(--primary-color);
-}
 
 img {
     display: block;
@@ -90,7 +77,6 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--primary-color);
 }
 
 .nav_logo img {
@@ -177,6 +163,7 @@ nav {
 .header_content h1 span {
     font-size: 3.5rem;
 }
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -339,21 +326,21 @@ nav {
     gap: 1rem;
 }
 
-.reservation_container input, 
+.reservation_container input,
 .reservation_container textarea {
     padding: 0.75rem 1rem;
     outline: none;
     border: 1px solid var(--text-dark);
     font-size: 1rem;
     color: var(--text-dark);
-    width: 100%; 
+    width: 100%;
 }
 
 .reservation_container textarea {
     height: 5rem;
 }
 
-.reservation_container input::placeholder, 
+.reservation_container input::placeholder,
 .reservation_container textarea::placeholder {
     color: var(--text-dark);
 }
@@ -452,7 +439,7 @@ nav {
 
     .nav_header {
         padding: 0;
-        background-color: transparent;
+        background-color: _;
     }
 
     .nav_logo img {

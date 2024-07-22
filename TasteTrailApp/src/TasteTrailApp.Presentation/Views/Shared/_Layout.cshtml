@@ -32,12 +32,15 @@
                     <i class="ri-menu-line"></i>
                 </div>
             </div>
-
             <ul class="nav_links" id="nav-links">
                 <li> <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a> </li>
                 <li><a class="nav-link" href="#special">Special</a></li>
                 <li><a class="nav-link" href="#menu">Menu</a></li>
                 <li><a class="nav-link" href="#contact">Contact Us</a></li>
+                @if (IsAdmin)
+                {
+                    <li><a class="nav-link" asp-controller="AdminPanel" asp-action="Dashboard">Dashboard</a></li>
+                }
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">Services
@@ -58,6 +61,7 @@
                         </li>
                     </ul>
                 </li>
+
                 @if (IsAuthenticated)
                 {
                     <li class="nav-item dropdown">
@@ -105,7 +109,6 @@
     @RenderBody()
 
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 <footer class="footer">
@@ -141,9 +144,23 @@
             </div>
         </div>
     </div>
-    <div class="footer_bar">
-        Copyright © 2024 TasteTrail. All rights reserved.
-    </div>
 </footer>
 
 </html>
+
+<style>
+    .btn {
+        padding: 1rem 1.5rem;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+        color: var(--black) !important;
+        background-color: #df1c1c !important;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: var(--primary-color);
+    }
+</style>
