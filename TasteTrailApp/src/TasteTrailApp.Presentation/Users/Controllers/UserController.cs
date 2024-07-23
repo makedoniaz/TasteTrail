@@ -13,13 +13,11 @@ public class UserController : Controller
 {
     private readonly IUserService _userService;
     private readonly IIdentityAuthService _identityAuthService;
-    private readonly IRoleService _roleService;
 
-    public UserController(IIdentityAuthService identityAuthService, IUserService userService, IRoleService roleService)
+    public UserController(IIdentityAuthService identityAuthService, IUserService userService)
     {
         this._identityAuthService = identityAuthService;
         this._userService = userService;
-        this._roleService = roleService;
     }
 
     [HttpGet]
@@ -63,6 +61,7 @@ public class UserController : Controller
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> Update([FromBody] UpdateUserViewModel model)
     {
         if (ModelState.IsValid)
@@ -93,6 +92,7 @@ public class UserController : Controller
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [Route("[action]", Name = "AssignRole")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AssignRole([FromQuery] string userId, [FromQuery] UserRoles role)
     {
         try
@@ -143,6 +143,7 @@ public class UserController : Controller
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [Route("[action]/{userId}", Name = "ToggleBanUser")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ToggleBan(string userId)
     {
         try

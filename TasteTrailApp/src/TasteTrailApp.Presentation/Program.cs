@@ -68,6 +68,11 @@ builder.Services.AddIdentity<User, IdentityRole>(options => {
     .AddDefaultTokenProviders()
     .AddSignInManager();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Authentication/Login";
+});
+
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("NotMuted", policy => {
         policy.RequireAuthenticatedUser();

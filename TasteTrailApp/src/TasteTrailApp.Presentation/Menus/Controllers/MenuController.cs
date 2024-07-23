@@ -67,6 +67,7 @@ public class MenuController : Controller
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [Route("[action]/{venueId}", Name = "CreateMenuPage")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Create(int venueId)
     {
         TempData["VenueId"] = venueId;
@@ -76,6 +77,7 @@ public class MenuController : Controller
     [HttpPost(Name = "CreateMenuApi")]
     [Authorize(Roles = "Admin")]
     [Route("[action]")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(Menu newMenu)
     {
         try
