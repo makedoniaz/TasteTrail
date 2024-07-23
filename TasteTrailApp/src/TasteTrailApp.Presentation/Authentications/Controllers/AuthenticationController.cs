@@ -85,7 +85,8 @@ public class AuthenticationController : Controller
                 return RedirectToAction("RegistrationView");
             }
 
-            await userService.AssignRoleToUserAsync(registrationDto.Name, roleToAssign);
+            var registratedUser = await userService.GetUserByUsernameAsync(registrationDto.Name);
+            await userService.AssignRoleToUserAsync(registratedUser.Id, roleToAssign);
 
             return RedirectToRoute("LoginView");
         }
