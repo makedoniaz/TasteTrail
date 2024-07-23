@@ -28,6 +28,7 @@ public class MenuItemEFCoreRepository : IMenuItemRepository
     public async Task<int> DeleteByIdAsync(int id)
     {
         var entity = await context.MenuItems.FindAsync(id);
+        
         if (entity == null)
             throw new ArgumentException($"Entity with id {id} not found.", nameof(id));
 

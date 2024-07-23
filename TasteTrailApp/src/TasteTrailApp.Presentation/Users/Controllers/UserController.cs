@@ -74,8 +74,7 @@ public class UserController : Controller
             user.Email = model.Email;
 
             var result = await _userService.UpdateUserAsync(user);
-            if (result.Succeeded)
-            {
+            if (result.Succeeded) {
                 return Ok();
             }
 
@@ -86,19 +85,18 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    [Route("[controller]/[action]", Name = "AssignUserRole")]
-    public async Task<IActionResult> AssignRole([FromQuery] string username, [FromQuery] UserRoles role)
+    [Route("[action]", Name = "AssignRole")]
+    public async Task<IActionResult> AssignRole([FromQuery] string userId, [FromQuery] UserRoles role)
     {
         try
         {
-            await _userService.AssignRoleToUserAsync(username, role);
+            await _userService.AssignRoleToUserAsync(userId, role);
+            return Ok();
         }
         catch (Exception ex)
         {
-            BadRequest(ex.Message);
+            return BadRequest(ex.Message); // Возвращаем ошибку 400 при исключении
         }
-
-        return Ok();
     }
 
     [HttpPost]
@@ -119,7 +117,7 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[action]/{userId}", Name = "ToggleMute")]
-    public async Task<IActionResult> ToggleMuteUser(string userId)
+    public async Task<IActionResult> ToggleMute(string userId)
     {
         try
         {
@@ -134,8 +132,8 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    [Route("[controller]/[action]/{userId}", Name = "ToggleBanUser")]
-    public async Task<IActionResult> ToggleBanUser(string userId)
+    [Route("[action]/{userId}", Name = "ToggleBanUser")]
+    public async Task<IActionResult> ToggleBan(string userId)
     {
         try
         {

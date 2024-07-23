@@ -19,9 +19,9 @@ public interface IUserService
 
     Task<IdentityResult> DeleteUserAsync(string userId);
 
-    Task<IdentityResult> AssignRoleToUserAsync(string username, UserRoles role);
+    Task<IdentityResult> AssignRoleToUserAsync(string userId, UserRoles role);
 
-    Task<IdentityResult> RemoveRoleFromUserAsync(string username, UserRoles role);
+    Task<IdentityResult> RemoveRoleFromUserAsync(string userId, UserRoles role);
 
     Task AddUserClaimAsync(User user, Claim claim);
 
