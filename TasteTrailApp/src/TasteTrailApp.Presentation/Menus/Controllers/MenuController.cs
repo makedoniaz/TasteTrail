@@ -4,6 +4,7 @@ using TasteTrailApp.Core.Menus.Services;
 using TasteTrailApp.Core.MenuItems.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
 using TasteTrailApp.Core.Menus.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TasteTrailApp.Presentation.Menus.Controllers;
 
@@ -64,6 +65,7 @@ public class MenuController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     [Route("[action]/{venueId}", Name = "CreateMenuPage")]
     public IActionResult Create(int venueId)
     {
@@ -72,6 +74,7 @@ public class MenuController : Controller
     }
 
     [HttpPost(Name = "CreateMenuApi")]
+    [Authorize(Roles = "Admin")]
     [Route("[action]")]
     public async Task<IActionResult> Create(Menu newMenu)
     {
@@ -98,6 +101,7 @@ public class MenuController : Controller
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update([FromBody] Menu newMenu)
     {
         try
@@ -112,6 +116,7 @@ public class MenuController : Controller
     }
 
     [HttpDelete("{menuId:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int menuId)
     {
         try

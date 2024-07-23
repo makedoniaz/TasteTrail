@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_LayoutServices.cshtml";
     ViewData["Title"] = "Venue Details";
     var path = Model.Venue.LogoUrlPath == null ? "/images/not-available.jpg" : "/" + Model.Venue.LogoUrlPath;
+    var IsAdmin = base.User.IsInRole("Admin");
+    var Name = base.User.Identity?.Name;
 }
 
 <div class="container mt-4">
@@ -68,8 +70,10 @@
 
         </div>
     </div>
+    @if (IsAdmin) {
     <a asp-route="CreateMenuPage" asp-route-venueId="@Model.Venue.Id" class="btn btn-primary w-25 mt-5 mb-3">Create new
         Menu</a>
+    }
     <div class="row">
 
 
@@ -86,7 +90,9 @@
                             <br>
                             @* <button class="update-btn btn-close-white m-1"
                         onclick="showUpdateForm('@menu!.Id')">Update</button> *@
+                         @if (IsAdmin) {
                             <button class="delete-btn btn-danger  m-1" onclick="deleteMenu('@menu!.Id')">Delete</button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -123,10 +129,12 @@
                     <p class="mb-1">@feedback.Text
                     </p>
                     <small class="text-muted">Posted on @feedback.CreationDate</small>
+                     @if (IsAdmin || feedback.User.UserName == Name) {
                     <div class="mt-2">
                         <button type="button" class="btn btn-sm btn-outline-secondary edit-feedback">Edit <i
                                 class="fas fa-pencil-alt"></i></button>
                     </div>
+                    }
                 </div>
             </div>
         }

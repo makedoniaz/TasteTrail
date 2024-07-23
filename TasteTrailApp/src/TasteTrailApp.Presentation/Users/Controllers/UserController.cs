@@ -4,6 +4,7 @@ using TasteTrailApp.Core.Roles.Enums;
 using TasteTrailApp.Core.Roles.Services;
 using TasteTrailApp.Core.Users.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
+using TasteTrailApp.Core.Authentications.Services;
 
 namespace TasteTrailApp.Presentation.Users.Controllers;
 
@@ -11,16 +12,18 @@ namespace TasteTrailApp.Presentation.Users.Controllers;
 public class UserController : Controller
 {
     private readonly IUserService _userService;
-
+    private readonly IIdentityAuthService _identityAuthService;
     private readonly IRoleService _roleService;
 
-    public UserController(IUserService userService, IRoleService roleService)
+    public UserController(IIdentityAuthService identityAuthService, IUserService userService, IRoleService roleService)
     {
+        this._identityAuthService = identityAuthService;
         this._userService = userService;
         this._roleService = roleService;
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Index()
     {
         var users = await this._userService.GetAllAsync();
@@ -76,7 +79,9 @@ public class UserController : Controller
             var result = await _userService.UpdateUserAsync(user);
             if (result.Succeeded)
             {
-                return Ok();
+                await this._identityAuthService.SignOutAsync();
+                return base.RedirectToAction(actionName: "LoginView", controllerName: "Authentication");
+        
             }
 
             return BadRequest(result.Errors);
@@ -86,6 +91,7 @@ public class UserController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [Route("[controller]/[action]", Name = "AssignUserRole")]
     public async Task<IActionResult> AssignRole([FromQuery] string username, [FromQuery] UserRoles role)
     {
@@ -103,6 +109,7 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[action]", Name = "RemoveUserRole")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> RemoveRole([FromQuery] string username, [FromQuery] UserRoles role)
     {
         try
@@ -119,6 +126,7 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[action]/{userId}", Name = "ToggleMute")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ToggleMuteUser(string userId)
     {
         try
@@ -135,6 +143,7 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("[controller]/[action]/{userId}", Name = "ToggleBanUser")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ToggleBanUser(string userId)
     {
         try
@@ -150,7 +159,7 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("/[controller]/{userId}")]
     public async Task<IActionResult> UserInfo(string userId)
     {

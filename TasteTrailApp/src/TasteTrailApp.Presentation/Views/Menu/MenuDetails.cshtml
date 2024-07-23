@@ -1,8 +1,8 @@
 ﻿@model MenuViewModel
 @{
     ViewData["Title"] = "Venue Details";
-        Layout = "~/Views/Shared/_LayoutServices.cshtml";
-
+    Layout = "~/Views/Shared/_LayoutServices.cshtml";
+    var IsAdmin = base.User.IsInRole("Admin");
 }
 
 @* <div class="container mt-4">
@@ -50,7 +50,9 @@
             <p class="mt-3"><strong>Description: </strong>@Model.Menu.Description</p> 
         </div>
     </div>
+    @if (IsAdmin) {
         <a asp-route="CreateMenuItemPage" asp-route-menuId="@Model.Menu.Id" class="btn btn-primary w-25 mt-2 mb-3">Create new MenuItem</a>
+    }
     <div class="row">
         @foreach (var menuItem in Model.MenuItems)
         {
@@ -63,7 +65,7 @@
                             <a asp-controller="MenuItem" asp-action="MenuItemDetails" asp-route-menuItemId="@menuItem?.Id" class="btn btn-primary m-1">Menu Item Details</a>
                             <br>
                             @* <button class="update-btn btn-close-white m-1" onclick="showUpdateForm('@menu!.Id')">Update</button> *@
-                            <button class="delete-btn btn-danger  m-1" onclick="deleteMenuItem('@menuItem!.Id')">Delete</button>
+                            @if (IsAdmin) {<button class="delete-btn btn-danger  m-1" onclick="deleteMenuItem('@menuItem!.Id')">Delete</button>}
                         </div>
                     </div>
                 </div></div>

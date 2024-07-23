@@ -21,7 +21,7 @@
             <input type="file" id="avatarInput" name="avatarInput" accept="image/*" style="display: none;">
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
 
         <h5 class="card-title mb-3">@Name</h5>
         <p class="card-text"> <strong>Role:</strong> @(IsAdmin ? "Admin" : "User") </p>
@@ -46,6 +46,7 @@
                     <div class="mb-3">
                         <button type="button" class="btn btn-success" onclick="updateUser()">Save</button>
                         <button type="button" class="btn btn-secondary" onclick="hideUpdateForm()">Cancel</button>
+                        <p class="card-text mt-3 mb-3"> You  will logout after update! </p>
                     </div>
                 </div>
             </div>

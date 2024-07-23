@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Venue Details";
     Layout = "~/Views/Shared/_LayoutServices.cshtml";
-
+    var IsAdmin = base.User.IsInRole("Admin");
 }
 <div class="container mt-4">
     <div class="row">

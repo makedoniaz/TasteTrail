@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Menu Item Page";
     Layout = "~/Views/Shared/_LayoutServices.cshtml";
-
+    var IsAdmin = base.User.IsInRole("Admin");
 }
 
 <h1> MenuItems List</h1>
@@ -59,10 +59,12 @@ else
                     </div>
                 </a>
                 <br>
+                @if (IsAdmin) {
                 <div class="menu-item-actions">
                     <button class="update-btn btn-close-white" onclick="showUpdateForm('@menuItem!.Id')">Update</button>
                     <button class="delete-btn btn-danger" onclick="deleteMenuItem('@menuItem!.Id')">Delete</button>
                 </div>
+                }
             </li>
         }
     </ol>

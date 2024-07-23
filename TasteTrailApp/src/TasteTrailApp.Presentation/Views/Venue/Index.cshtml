@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Search Page";
     Layout = "~/Views/Shared/_LayoutServices.cshtml";
-
+    var IsAdmin = base.User.IsInRole("Admin");
 }
 
 <h1 style="font-size: 2rem; font-family: 'Alice', serif; margin-bottom: 3px;">Search Smth</h1>
@@ -20,8 +20,10 @@
     </div>
 
 </div>
-
-<a asp-route="CreateVenuePage" class="btn btn-primary w-25 mt-2 mb-3">Create new Venue</a>
+@if (IsAdmin)
+{
+    <a asp-route="CreateVenuePage" class="btn btn-primary w-25 mt-2 mb-3">Create new Venue</a>
+}
 @if (!Model.Any())
 {
     <div class="no-menu-items">
@@ -72,10 +74,11 @@ else
                                     <a asp-controller="Venue" asp-action="VenueDetails" asp-route-venueId="@venue?.Id"
                                         class="btn btn-primary m-1">View Details</a>
                                     <br>
-                                    <button class="update-btn btn-close-white  m-1"
-                                        onclick="showUpdateForm('@venue!.Id')">Update</button>
-                                    <button class="delete-btn btn-danger  m-1"
-                                        onclick="deleteVenue('@venue!.Id')">Delete</button>
+                                    @if (IsAdmin)
+                                    {
+                                        <button class="update-btn btn-close-white  m-1" onclick="showUpdateForm('@venue!.Id')">Update</button>
+                                        <button class="delete-btn btn-danger  m-1" onclick="deleteVenue('@venue!.Id')">Delete</button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -86,7 +89,8 @@ else
     </div>
 }
 
-
+@if (IsAdmin)
+{
 <div id="updateForm" class="update-form" style="display:none;">
     <h3>Update Venue</h3>
     <input type="hidden" id="venueId">
@@ -134,6 +138,7 @@ else
         <button onclick="hideUpdateForm()">Cancel</button>
     </div>
 </div>
+}
 
 
 

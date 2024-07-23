@@ -1,9 +1,11 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.Feedbacks.Commands;
 
 
 namespace TasteTrailApp.Presentation.Feedbacks.Controllers;
+
 
 [Route("[controller]")]
 public class FeedbackController : Controller
@@ -19,7 +21,8 @@ public class FeedbackController : Controller
     {
         return View();
     }
-
+    
+    [Authorize]
     [HttpPost(Name = "CreateFeedbackApi")]
     public async Task<IActionResult> Create(CreateFeedbackCommand newFeedback)
     {
@@ -47,6 +50,7 @@ public class FeedbackController : Controller
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> Update([FromBody] UpdateFeedbackCommand newFeedback)
     {
         try
@@ -61,6 +65,7 @@ public class FeedbackController : Controller
     }
 
     [HttpDelete("{feedbackId:int}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int feedbackId)
     {
         try
