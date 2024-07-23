@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TasteTrailApp.Core.MenuItems.Commands;
 using TasteTrailApp.Core.MenuItems.Queries;
@@ -69,6 +70,7 @@ public class MenuItemController : Controller
 
     [HttpGet]
     [Route("[action]/{menuId}", Name = "CreateMenuItemPage")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Create(int menuId)
     {
         TempData["MenuId"] = menuId;
@@ -76,6 +78,7 @@ public class MenuItemController : Controller
     }  
 
     [HttpPost(Name = "CreateMenuItemApi")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(CreateMenuItemCommand newMenuItem)
     {
         try
@@ -102,6 +105,7 @@ public class MenuItemController : Controller
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update([FromBody] UpdateMenuItemCommand newMenuItem)
     {
         try
@@ -116,6 +120,7 @@ public class MenuItemController : Controller
     }
 
     [HttpDelete("{menuItemId:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int menuItemId)
     {
         try

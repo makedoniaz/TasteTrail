@@ -5,7 +5,7 @@ using TasteTrailApp.Core.Menus.Services;
 using TasteTrailApp.Presentation.Common.ViewModels;
 using TasteTrailApp.Core.Venues.Services;
 using TasteTrailApp.Core.Venues.Models;
-using TasteTrailApp.Core.Feedbacks.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TasteTrailApp.Presentation.Venues.Controllers;
 
@@ -70,6 +70,7 @@ public class VenueController : Controller
 
     [HttpGet]
     [Route("[action]", Name = "CreateVenuePage")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return base.View();
@@ -77,6 +78,7 @@ public class VenueController : Controller
 
     [HttpPost]
     [Route("/api/[controller]/[action]", Name = "CreateVenueApi")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromForm] Venue newVenue, IFormFile? logo)
     {
         try
@@ -105,6 +107,7 @@ public class VenueController : Controller
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateVenue([FromBody] Venue venue)
     {
         try
@@ -119,6 +122,7 @@ public class VenueController : Controller
     }
 
     [HttpDelete("{venueId:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteVenue(int venueId)
     {
         try
