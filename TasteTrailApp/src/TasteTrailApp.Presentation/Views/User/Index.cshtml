@@ -48,8 +48,8 @@ else
                                     <p class="card-text"><strong>Role:</strong> @viewData.Role</p>
                                     <div class="mt-auto d-flex justify-content-between">
                                         <div>
-                                            <a class="btn btn-primary" asp-controller="User" asp-action="UserInfo"
-                                                asp-route-userId="@viewData.User.Id">View</a>
+                                            @* <a class="btn btn-primary" asp-controller="User" asp-action="UserInfo"
+                                                asp-route-userId="@viewData.User.Id">View</a> *@
                                             <button class="btn btn-warning m-2"
                                                 onclick="showUpdateForm('@viewData.User.Id')">Update</button>
                                             <button class="btn btn-danger"
