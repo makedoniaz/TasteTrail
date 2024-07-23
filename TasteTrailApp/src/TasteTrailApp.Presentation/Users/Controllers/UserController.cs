@@ -92,19 +92,18 @@ public class UserController : Controller
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    [Route("[controller]/[action]", Name = "AssignUserRole")]
-    public async Task<IActionResult> AssignRole([FromQuery] string username, [FromQuery] UserRoles role)
+    [Route("[action]", Name = "AssignRole")]
+    public async Task<IActionResult> AssignRole([FromQuery] string userId, [FromQuery] UserRoles role)
     {
         try
         {
-            await _userService.AssignRoleToUserAsync(username, role);
+            await _userService.AssignRoleToUserAsync(userId, role);
+            return Ok();
         }
         catch (Exception ex)
         {
-            BadRequest(ex.Message);
+            return BadRequest(ex.Message); // Возвращаем ошибку 400 при исключении
         }
-
-        return Ok();
     }
 
     [HttpPost]
@@ -127,7 +126,7 @@ public class UserController : Controller
     [HttpPost]
     [Route("[action]/{userId}", Name = "ToggleMute")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> ToggleMuteUser(string userId)
+    public async Task<IActionResult> ToggleMute(string userId)
     {
         try
         {
@@ -142,9 +141,9 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    [Route("[controller]/[action]/{userId}", Name = "ToggleBanUser")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> ToggleBanUser(string userId)
+    [Route("[action]/{userId}", Name = "ToggleBanUser")]
+    public async Task<IActionResult> ToggleBan(string userId)
     {
         try
         {

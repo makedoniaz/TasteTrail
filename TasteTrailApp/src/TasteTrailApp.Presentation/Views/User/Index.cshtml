@@ -53,9 +53,9 @@ else
                                             <button class="btn btn-warning m-2"
                                                 onclick="showUpdateForm('@viewData.User.Id')">Update</button>
                                             <button class="btn btn-danger"
-                                                onclick="deleteUser('@viewData.User.Id')">Delete</button>
+                                                onclick="banUser('@viewData.User.Id', '@viewData.User.IsBanned')">@(viewData.User.IsBanned ? "Unban" : "Ban")</button>
                                             <button class="btn btn-secondary m-2"
-                                                onclick="toggleMuteUser('@viewData.User.Id', @viewData.User.IsMuted)">@(viewData.User.IsMuted ? "Unmute" : "Mute")</button>
+                                                onclick="toggleMuteUser('@viewData.User.Id', '@viewData.User.IsMuted')">@(viewData.User.IsMuted ? "Unmute" : "Mute")</button>
                                         </div>
                                     </div>
                                 </div>
@@ -94,8 +94,14 @@ else
 </div>
 
 <script>
+    function stringToBool(str) {
+        return str.toLowerCase() === 'true';
+    }
+
     function toggleMuteUser(userId, isMuted) {
-        const action = isMuted ? 'Unmute' : 'Mute';
+        const muted = stringToBool(isMuted)
+
+        const action = muted ? 'Unmute' : 'Mute';
         if (confirm(`Are you sure you want to ${action.toLowerCase()} this user?`)) {
             fetch(`/User/ToggleMute/${userId}`, {
                 method: 'POST',
@@ -155,8 +161,8 @@ else
             name: name
         };
 
-        fetch(`/User/AssignRole`, {
-            method: 'PUT',
+        fetch(`/User/AssignRole?userId=${userId}&role=${role}`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -174,20 +180,24 @@ else
             .catch(error => console.error('Error updating user:', error));
     }
 
-    function deleteUser(id) {
-        if (confirm('Are you sure you want to delete this user?')) {
-            fetch(`/User/${id}`, {
-                method: 'DELETE',
+    function banUser(userId, isBanned) {
+        const banned = stringToBool(isBanned)
+
+        const action = banned ? 'Unban' : 'Ban';
+
+        if (confirm(`Are you sure you want to ${action.toLowerCase()} this user?`)) {
+            fetch(`/User/ToggleBan/${userId}`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
                     if (response.ok) {
-                        alert('User deleted successfully!');
+                        alert(`User ${action.toLowerCase()} successfully!`);
                         window.location.reload();
                     } else {
-                        alert('Failed to delete user.');
+                        alert(`Failed to ${action.toLowerCase()} user.`);
                     }
                 });
         }

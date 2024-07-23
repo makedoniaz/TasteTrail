@@ -109,7 +109,6 @@ public class AuthenticationController : Controller
         {
             return BadRequest(ex.Message);
         }
-
     }
 
     [HttpGet]

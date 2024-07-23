@@ -19,6 +19,7 @@ public class MenuConfiguration : IEntityTypeConfiguration<Menu>
 
             builder.HasMany(m => m.MenuItems)
                 .WithOne(mi => mi.Menu)
-                .HasForeignKey(mi => mi.MenuId);
+                .HasForeignKey(mi => mi.MenuId)
+                .OnDelete(DeleteBehavior.Cascade);
     }
 }
