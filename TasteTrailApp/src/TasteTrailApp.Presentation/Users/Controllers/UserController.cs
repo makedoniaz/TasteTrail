@@ -79,7 +79,7 @@ public class UserController : Controller
             if (result.Succeeded)
             {
                 await this._identityAuthService.SignOutAsync();
-                return base.RedirectToAction(actionName: "LoginView", controllerName: "Authentication");
+                return base.Ok();
         
             }
 

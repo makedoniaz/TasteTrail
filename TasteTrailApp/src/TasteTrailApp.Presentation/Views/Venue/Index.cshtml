@@ -98,7 +98,7 @@ else
         <label for="newName">Name:</label>
         <input type="text" id="newName">
     </div>
-    <div>
+    @* <div>
         <label for="newOverallRating">Overall Rating:</label>
         <input id="newOverallRating" type="number" hidden />
         <div class="newrating" data-rating="4">
@@ -111,7 +111,7 @@ else
             </span>
             <span class="badge bg-secondary ms-2 badgeValue">4</span>
         </div>
-    </div>
+    </div> *@
     <div>
         <label for="newEmail">Email:</label>
         <input type="text" id="newEmail">
@@ -269,11 +269,11 @@ else
             document.getElementById('newContactNumber').value = data.contactNumber;
             document.getElementById('newEmail').value = data.email;
             document.getElementById('newAveragePrice').value = data.averagePrice;
-            document.getElementById('newOverallRating').value = data.overallRating;
+            @* document.getElementById('newOverallRating').value = data.overallRating; *@
             document.getElementById('updateForm').style.display = 'block';
             updateStars(data.overallRating);
         }
-        function updateStars(rating) {
+        @* function updateStars(rating) {
             const stars = document.querySelectorAll('.newrating .star');
             stars.forEach((star, index) => {
                 if (index < rating) {
@@ -287,7 +287,7 @@ else
             });
             document.querySelector('.badgeValue').textContent = rating;
             document.getElementById('newOverallRating').value = rating;
-        }
+        } *@
 
         function hideUpdateForm() {
             document.getElementById('updateForm').style.display = 'none';
@@ -301,7 +301,7 @@ else
             const newContactNumber = document.getElementById('newContactNumber').value;
             const newEmail = document.getElementById('newEmail').value;
             const newAveragePrice = document.getElementById('newAveragePrice').value;
-            const newOverallRating = document.getElementById('newOverallRating').value;
+            @* const newOverallRating = document.getElementById('newOverallRating').value; *@
 
             const updatedVenue = {
                 id: venueId,
@@ -311,7 +311,7 @@ else
                 contactNumber: newContactNumber,
                 email: newEmail,
                 averagePrice: newAveragePrice,
-                overallRating: newOverallRating
+                @* overallRating: newOverallRating *@
             };
             console.log(updatedVenue)
 
